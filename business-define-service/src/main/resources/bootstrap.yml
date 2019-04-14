@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: businessdefineservice
+  profiles:
+    active:
+      default
+  cloud:
+    config:
+      enabled: true

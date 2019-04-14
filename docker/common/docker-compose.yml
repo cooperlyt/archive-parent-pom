@@ -1,0 +1,94 @@
+version: '2'
+services:
+  eurekaserver:
+     image:   coopersoft/archive-eurekasvr:archives
+     ports:
+         - "8761:8761"
+  configserver:
+      image: coopersoft/archive-confsvr:archives
+      ports:
+         - "8888:8888"
+      environment:
+         EUREKASERVER_PORT: 8761
+         EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+         ENCRYPT_KEY:       "IMSYMMETRIC"
+      links:
+        - eurekaserver:discovery
+  zuulserver:
+      image: coopersoft/archive-zuulsvr:archives
+      ports:
+        - "5555:5555"
+      environment:
+        PROFILE: "default"
+        SERVER_PORT: "5555"
+        CONFIGSERVER_PORT: 8888
+        EUREKASERVER_PORT: 8761
+        CONFIGSERVER_URI: "http://configserver:8888"
+        EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      links:
+        - eurekaserver:discovery
+  database:
+      image: postgres:9.5
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=p0stgr@s
+        - POSTGRES_DB=archives
+
+  authenticationservice:
+      image: coopersoft/archive-authentication-service:archives
+      ports:
+        - "8901:8901"
+      environment:
+        PROFILE: "default"
+        SERVER_PORT: "8901"
+        DATABASE_PORT:     5432
+        CONFIGSERVER_PORT: 8888
+        EUREKASERVER_PORT: 8761
+        CONFIGSERVER_URI: "http://configserver:8888"
+        EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+        ENCRYPT_KEY:       "IMSYMMETRIC"
+      links:
+          - eurekaserver:discovery
+  roomservice:
+      image: coopersoft/archive-room-service:archives
+      ports:
+        - "8085:8085"
+      environment:
+        PROFILE: "default"
+        SERVER_PORT: "8085"
+        DATABASE_PORT:     5432
+        CONFIGSERVER_PORT: 8888
+        EUREKASERVER_PORT: 8761
+        AUTHSERVER_PORT:   8091
+        CONFIGSERVER_URI: "http://configserver:8888"
+        EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+        AUTHSERVER_URI:   "http://authenticationservice:8901/auth/user"
+        ENCRYPT_KEY:       "IMSYMMETRIC"
+      links:
+        - eurekaserver:discovery
+  businessdefineservice:
+      image: coopersoft/archive-define-service:archives
+      ports:
+        - "8086:8086"
+      environment:
+        PROFILE: "default"
+        SERVER_PORT: "8086"
+        DATABASE_PORT:     5432
+        CONFIGSERVER_PORT: 8888
+        EUREKASERVER_PORT: 8761
+        AUTHSERVER_PORT:   8091
+        CONFIGSERVER_URI: "http://configserver:8888"
+        EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+        AUTHSERVER_URI:   "http://authenticationservice:8901/auth/user"
+        ENCRYPT_KEY:       "IMSYMMETRIC"
+      links:
+        - eurekaserver:discovery
+
+#  webclient:
+#    image: coopersoft/archive-web-client:archives
+#    ports:
+#      - "80:80"
+#    environment:
+#      ZUUL_PORT: 5555

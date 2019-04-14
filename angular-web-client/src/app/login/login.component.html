@@ -1,0 +1,8 @@
+<h1>Login</h1>
+
+<div *ngIf="fail">
+    登录失败！ 请检查用户名和密码！
+</div>
+<input type="text" [(ngModel)]="loginData.username" />
+<input type="password"  [(ngModel)]="loginData.password"/>
+<button (click)="login()" type="submit">Login</button>
