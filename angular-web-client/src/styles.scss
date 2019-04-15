@@ -1,2 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/bootstrap/scss/bootstrap';
+
+
+
+.p-0 {
+    padding: 0!important;
+}
+
+.mt-3 {
+    margin-top: 16px!important;
+}
+
+
+.d-inline-block {
+    display: inline-block!important;
+}
+
+.width-full {
+    width: 100%!important;
+}
+
+.UnderlineNav-actions {
+    align-self: center;
+}
+
+.details-reset>summary {
+    list-style: none;
+}
+
+.no-underline {
+    text-decoration: none!important;
+}
+
+.text-bold {
+    font-weight: 600!important;
+}
+
+.text-gray-dark {
+    color: #24292e!important;
+}
+
+
+
+.select-menu-button-gravatar {
+    float: left;
+    margin-right: 5px;
+}
+
+.select-menu-button-gravatar, .select-menu-item-gravatar {
+    line-height: 0;
+    overflow: hidden;
+    width: 20px;
+}
+
+.css-truncate.css-truncate-target, .css-truncate .css-truncate-target {
+    display: inline-block;
+    max-width: 125px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+summary {
+    outline: none;            // 1、去掉点击时的外边框
+    user-select: none;    // 2、不能点击选中
+    cursor: pointer;         // 3、鼠标经过效果
+}
+
+details summary::-webkit-details-marker {
+    display: none; 
+}

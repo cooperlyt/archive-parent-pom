@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
-import { Router } from '@angular/router';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -9,19 +9,16 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  faUser = faUser;
+
   user: string;
 
-  constructor(private _service: AuthenticationService, private _router: Router) { }
+  constructor(private _service: AuthenticationService) { }
 
   ngOnInit() {
       this._service.getUserInfo().subscribe(data => this.user = data.user);
   }
 
-  logout() {
-    this.user = null;
-    this._service.logout();
-    this._router.navigate(['/login'])
-  }
 
 
 }
