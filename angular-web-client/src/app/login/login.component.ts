@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
 import {Router} from '@angular/router';
 import { catchError } from 'rxjs/operators';
-import { throwError, EMPTY } from 'rxjs';
+import { EMPTY } from 'rxjs';
+import { faCoins } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-login',
@@ -10,17 +11,30 @@ import { throwError, EMPTY } from 'rxjs';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
+
+  faCoins = faCoins;
+
   loginData = {username: "", password: ""};
 
   fail = false;
 
-  constructor(private _service: AuthenticationService,private _router:Router) { }
+  constructor(private elementRef: ElementRef, private _service: AuthenticationService,private _router:Router) { }
 
   ngOnInit() {
     this.fail = false;
   }
 
+
+  ngAfterViewInit(){
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#f9f9f9';
+  }
+  ngOnDestroy(): void {
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor ="#fff";
+  }
+
+  closeAlert(){
+    this.fail = false;
+  }
 
   login(){
     

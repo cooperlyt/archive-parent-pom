@@ -10,8 +10,6 @@ import java.util.Map;
 
 public class JWTTokenEnhancer implements TokenEnhancer {
 
-
-
     private String getOrgId(String userName){
         return "data";
     }

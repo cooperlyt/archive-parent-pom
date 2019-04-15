@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2019-04-13 23:07:19</creation_date>
-			<updated_date>2019-04-14 00:24:03</updated_date>
+			<updated_date>2019-04-15 09:38:11</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -231,7 +231,7 @@
 		</word>
 		<word>
 			<id>4</id>
-			<length>32</length>
+			<length>512</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>

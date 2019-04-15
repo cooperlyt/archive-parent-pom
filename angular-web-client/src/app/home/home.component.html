@@ -1,3 +1,24 @@
+<div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-md-3 px-3 px-md-4 px-lg-4">
+            <div class="border-bottom py-3 mt-3 mb-4">
+                <details class="width-full UnderlineNav-actions details-reset select-menu account-switcher d-inline-block details-overlay">
+                    <summary class="no-underline btn-link text-gray-dark text-bold select-menu-button width-full">
+                            <div class="select-menu-button-gravatar">
+                                <fa-icon [icon]="faUser" size="lg"></fa-icon>
+                            </div>
+                            <span class="css-truncate css-truncate-target">{{user}}</span>
+                    </summary>
+                </details>
+            </div>
 
-<span>Welcome !! -- {{user}} --</span>
-<a (click)="logout()" href="#">Logout</a>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+
+        <div class="col-md-3">
+
+        </div>
+    </div>
+</div>
