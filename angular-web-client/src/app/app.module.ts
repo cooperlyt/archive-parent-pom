@@ -17,6 +17,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { BusinessCreateComponent } from './business-create/business-create.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     HomeComponent,
     HomeLayoutComponent,
     LoginLayoutComponent,
-    NavbarComponent
+    NavbarComponent,
+    BusinessCreateComponent
   ],
   imports: [
     BrowserModule,

@@ -61,8 +61,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
         if(!newToken){
           console.log(" intercept no token ! go to login")
-          localStorage.clear();
-          this._router.navigate(['/login']);
+          //localStorage.clear();
+          //this._router.navigate(['/login']);
           return EMPTY;
         }
 

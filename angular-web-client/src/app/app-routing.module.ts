@@ -5,6 +5,8 @@ import { LoginComponent } from './login/login.component';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { AuthGuard } from './auth.guard';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
+import { BusinessCreateComponent } from './business-create/business-create.component';
+
 
 const routes: Routes = [
   {
@@ -15,6 +17,10 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent   // {3}
+      },
+      {
+        path: 'business-create/:id',
+        component: BusinessCreateComponent
       }
     ]
   },

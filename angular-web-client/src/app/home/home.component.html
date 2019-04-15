@@ -11,6 +11,35 @@
                     </summary>
                 </details>
             </div>
+            <div class="mb-3 Details">
+                <div>
+                    <h2 class="f4 hide-sm hide-md mb-1 f5 d-flex flex-justify-between flex-items-center">
+                        业务
+                    </h2>
+                    <div class="mt-2 mb-3" role="search">
+
+                    </div>
+                    <ul class="list-style-none">
+                        <li *ngFor="let define of defines" class="public source no-description">
+                            <div class="width-full text-bold">
+                                <a routerLink="/business-create/{{define.id}}" class="d-inline-flex flex-items-baseline f5 mb-2 dashboard-underlined-link width-fit">
+                                    <div class="text-gray-light mr-2">
+                                        <fa-icon [icon]="faBook"></fa-icon>
+                                    </div>
+                                    <span class="flex-shrink-0 css-truncate css-truncate-target">
+                                        {{define.category}}
+                                    </span>
+                                    /
+                                    <span class="css-truncate css-truncate-target">
+                                        {{define.name}}
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
 
         </div>
         <div class="col-md-6">

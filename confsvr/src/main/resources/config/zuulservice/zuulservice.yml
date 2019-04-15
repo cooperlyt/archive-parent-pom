@@ -2,6 +2,7 @@
 zuul.prefix:  /api
 zuul.routes.authenticationservice: /auth/**
 zuul.routes.roomservice: /rooms/**
+zuul.routes.businessdefineservice: /define/**
 #zuul.routes.licensestatic.path: /licensestatic/**
 #zuul.routes.licensestatic.url:  http://licenseservice-static:8081
 #zuul.routes.licensestatic.serviceId: licensestatic
