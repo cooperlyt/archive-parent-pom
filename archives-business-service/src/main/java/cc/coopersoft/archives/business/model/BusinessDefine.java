@@ -1,4 +1,6 @@
-package cc.coopersoft.archives.business.define.model;
+package cc.coopersoft.archives.business.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -166,6 +168,7 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
         this.defaultRack = defaultRack;
     }
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "businessDefine", orphanRemoval = true)
     public Set<TaskAction> getTaskActions() {
         return taskActions;
@@ -175,13 +178,7 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
         this.taskActions = taskActions;
     }
 
-    @Transient
-    public List<TaskAction> getTaskActionList(){
-        List<TaskAction> result = new ArrayList<>(getTaskActions());
-        Collections.sort(result);
-        return result;
-    }
-
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "businessDefine", orphanRemoval = true)
     public Set<CreateRole> getCreateRoles() {
         return createRoles;
@@ -191,6 +188,8 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
         this.createRoles = createRoles;
     }
 
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,optional = false)
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     public BusinessCategory getBusinessCategory() {
@@ -201,6 +200,7 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
         this.businessCategory = businessCategory;
     }
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "businessDefine", orphanRemoval = true )
     public Set<FieldDefine> getFields() {
         return fields;

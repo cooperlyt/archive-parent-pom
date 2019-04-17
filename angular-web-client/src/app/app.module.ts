@@ -18,6 +18,9 @@ import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BusinessCreateComponent } from './business-create/business-create.component';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressRouterModule } from '@ngx-progressbar/router';
+import { ResolveStart, ResolveEnd } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,18 @@ import { BusinessCreateComponent } from './business-create/business-create.compo
     FormsModule,
     HttpClientModule,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgProgressModule.withConfig(
+      {
+        spinner: false
+      }
+    ),
+    NgProgressRouterModule.withConfig(
+      {
+        startEvents: [ResolveStart],
+        completeEvents: [ResolveEnd],
+      }
+    )
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

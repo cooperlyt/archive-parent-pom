@@ -1,4 +1,4 @@
-package cc.coopersoft.archives.business.define;
+package cc.coopersoft.archives.business;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -10,9 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableResourceServer
 public class Application {
 
-
     public static void main(String[] args){
         SpringApplication.run(Application.class,args);
     }
-
 }

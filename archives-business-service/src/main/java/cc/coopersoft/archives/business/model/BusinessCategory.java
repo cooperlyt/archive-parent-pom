@@ -1,4 +1,4 @@
-package cc.coopersoft.archives.business.define.model;
+package cc.coopersoft.archives.business.model;
 
 import javax.persistence.*;
 

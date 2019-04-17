@@ -22,7 +22,7 @@
     <module>zuulsvr</module>
     <module>room-service</module>
       <module>authentication-service</module>
-      <module>business-define-service</module>
+      <module>archives-business-service</module>
 
   </modules>
   <build>

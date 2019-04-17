@@ -43,7 +43,7 @@ export class AuthenticationService {
     const isTokenExpired = helper.isTokenExpired(token);
 
     const decodedToken = helper.decodeToken(token);
-    console.log("token:" + JSON.stringify(decodedToken));
+
 
     if (!isTokenExpired) {
       return of(token);
@@ -88,7 +88,13 @@ export class AuthenticationService {
   }
 
   getUserInfo(): Observable<any>{
-    return this._http.get(`${environment.apiUrl}/auth/auth/user`);
+    return this.getAccessToken().pipe(
+      map(res => {
+        const helper = new JwtHelperService();
+        return helper.decodeToken(res)
+      })
+    );
+    //return this._http.get(`${environment.apiUrl}/auth/auth/user`);
   }
 
 }

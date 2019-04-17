@@ -68,13 +68,13 @@ services:
         ENCRYPT_KEY:       "IMSYMMETRIC"
       links:
         - eurekaserver:discovery
-  businessdefineservice:
-      image: coopersoft/archive-define-service:archives
+  archivesbusinessservice:
+      image: coopersoft/archive-business-service:archives
       ports:
-        - "8086:8086"
+        - "8087:8087"
       environment:
         PROFILE: "default"
-        SERVER_PORT: "8086"
+        SERVER_PORT: "8087"
         DATABASE_PORT:     5432
         CONFIGSERVER_PORT: 8888
         EUREKASERVER_PORT: 8761
@@ -85,6 +85,8 @@ services:
         ENCRYPT_KEY:       "IMSYMMETRIC"
       links:
         - eurekaserver:discovery
+
+
 
 #  webclient:
 #    image: coopersoft/archive-web-client:archives

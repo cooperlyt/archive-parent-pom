@@ -6,11 +6,10 @@
     <groupId>cc.coopersoft</groupId>
     <version>0.0.1-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>business-define-service</artifactId>
+    <artifactId>archives-business-service</artifactId>
 
-
-    <name>Business Define Service</name>
-    <description>Business Define Service</description>
+    <name>Business Service</name>
+    <description>Business Service</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -108,8 +107,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>cc.coopersoft.archives.business.define.Application</start-class>
-        <docker.image.name>coopersoft/archive-define-service</docker.image.name>
+        <start-class>cc.coopersoft.archives.business.Application</start-class>
+        <docker.image.name>coopersoft/archive-business-service</docker.image.name>
         <docker.image.tag>archives</docker.image.tag>
     </properties>
 

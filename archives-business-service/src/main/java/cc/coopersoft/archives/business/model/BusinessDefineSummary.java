@@ -1,16 +1,17 @@
-package cc.coopersoft.archives.business.define.model;
+package cc.coopersoft.archives.business.model;
 
 public class BusinessDefineSummary {
 
     public BusinessDefineSummary() {
     }
 
-    public BusinessDefineSummary(String id, String name, String category, int priority, int categoryPriority) {
+    public BusinessDefineSummary(String id, String name, String category, int priority, int categoryPriority, String memo) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.priority = priority;
         this.categoryPriority = categoryPriority;
+        this.memo = memo;
     }
 
     private String id;
@@ -22,6 +23,8 @@ public class BusinessDefineSummary {
     private int priority;
 
     private int categoryPriority;
+
+    private String memo;
 
     public String getId() {
         return id;
@@ -61,5 +64,13 @@ public class BusinessDefineSummary {
 
     public void setCategoryPriority(int categoryPriority) {
         this.categoryPriority = categoryPriority;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }

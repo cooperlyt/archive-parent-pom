@@ -1,6 +1,6 @@
 spring:
   application:
-    name: businessdefineservice
+    name: archivesbusinessservice
   profiles:
     active:
       default
