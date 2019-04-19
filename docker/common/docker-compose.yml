@@ -28,13 +28,22 @@ services:
       links:
         - eurekaserver:discovery
   database:
-      image: postgres:9.5
+      image: coopersoft/mariadb-min:v1
+      restart: always
+#      command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
       ports:
-        - "5432:5432"
+        - "3306:3306"
+#      volumes:
+#        - "/Users/cooper/Documents/mysql:/var/lib/mysql"
       environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=p0stgr@s
-        - POSTGRES_DB=archives
+        - MYSQL_ROOT_PASSWORD=p0stgr@s
+        - MYSQL_DATABASE=archives
+#        - MYSQL_USER=testuser
+#        - MYSQL_PASSWORD=testpassword
+
+
+#        docker run --name mariadb_test -e MYSQL_ROOT_PASSWORD=my-secret=pw -d
+#        docker run -d --name mariadb_volume -P -v /data/Db/mariadb:/var/lib/mysql mariadb
 
   authenticationservice:
       image: coopersoft/archive-authentication-service:archives
@@ -43,7 +52,7 @@ services:
       environment:
         PROFILE: "default"
         SERVER_PORT: "8901"
-        DATABASE_PORT:     5432
+        DATABASE_PORT:     3306
         CONFIGSERVER_PORT: 8888
         EUREKASERVER_PORT: 8761
         CONFIGSERVER_URI: "http://configserver:8888"
@@ -58,7 +67,7 @@ services:
       environment:
         PROFILE: "default"
         SERVER_PORT: "8085"
-        DATABASE_PORT:     5432
+        DATABASE_PORT:     3306
         CONFIGSERVER_PORT: 8888
         EUREKASERVER_PORT: 8761
         AUTHSERVER_PORT:   8091
@@ -68,6 +77,23 @@ services:
         ENCRYPT_KEY:       "IMSYMMETRIC"
       links:
         - eurekaserver:discovery
+  businesstemplateservice:
+        image: coopersoft/business-template-service:archives
+        ports:
+          - "8086:8086"
+        environment:
+          PROFILE: "default"
+          SERVER_PORT: "8086"
+          DATABASE_PORT:     3306
+          CONFIGSERVER_PORT: 8888
+          EUREKASERVER_PORT: 8761
+          AUTHSERVER_PORT:   8091
+          CONFIGSERVER_URI: "http://configserver:8888"
+          EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+          AUTHSERVER_URI:   "http://authenticationservice:8901/auth/user"
+          ENCRYPT_KEY:       "IMSYMMETRIC"
+        links:
+          - eurekaserver:discovery
   archivesbusinessservice:
       image: coopersoft/archive-business-service:archives
       ports:
@@ -75,7 +101,24 @@ services:
       environment:
         PROFILE: "default"
         SERVER_PORT: "8087"
-        DATABASE_PORT:     5432
+        DATABASE_PORT:     3306
+        CONFIGSERVER_PORT: 8888
+        EUREKASERVER_PORT: 8761
+        AUTHSERVER_PORT:   8091
+        CONFIGSERVER_URI: "http://configserver:8888"
+        EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+        AUTHSERVER_URI:   "http://authenticationservice:8901/auth/user"
+        ENCRYPT_KEY:       "IMSYMMETRIC"
+      links:
+        - eurekaserver:discovery
+  joincorpservice:
+      image: coopersoft/join-corp-service:archives
+      ports:
+        - "8089:8089"
+      environment:
+        PROFILE: "default"
+        SERVER_PORT: "8089"
+        DATABASE_PORT:     3306
         CONFIGSERVER_PORT: 8888
         EUREKASERVER_PORT: 8761
         AUTHSERVER_PORT:   8091

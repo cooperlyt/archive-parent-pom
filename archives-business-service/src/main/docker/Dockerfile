@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
 RUN  apk update && apk upgrade && apk add netcat-openbsd
-RUN mkdir -p /usr/local/businessdefineservice
+RUN mkdir -p /usr/local/businessservice
 ADD @project.build.finalName@.jar /usr/local/businessservice/
 ADD run.sh run.sh
 RUN chmod +x run.sh

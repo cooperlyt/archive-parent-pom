@@ -1,7 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/bootstrap/scss/bootstrap';
+@import "~@ng-select/ng-select/themes/default.theme.css";
 
+summary {
+    outline: none;            // 1、去掉点击时的外边框
+    user-select: none;    // 2、不能点击选中
+    cursor: pointer;         // 3、鼠标经过效果
+}
 
+details summary::-webkit-details-marker {
+    display: none; 
+}
+
+ol, ul {
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+label {
+    margin: 0;
+}
+
+dl.form-group{
+    margin-bottom: 0;
+}
+
+.form-contro, ng-select{
+    margin-bottom: 16px;
+}
 
 .p-0 {
     padding: 0!important;
@@ -66,8 +93,32 @@
     color: #24292e!important;
 }
 
+.note {
+    color: #586069;
+    font-size: 12px;
+    margin: 4px 0 2px;
+    min-height: 17px;
+}
 
+dd {
+    margin-left: 0;
+}
 
+.form-group dt {
+    margin: 0 0 6px;
+}
+
+.form-group label {
+    position: static;
+}
+
+.form-group .ng-select{
+    width: 100%;
+}
+
+.form-group .form-control.long {
+    width: 100%;
+}
 
 
 .select-menu-button-gravatar {
@@ -90,22 +141,6 @@
     white-space: nowrap;
 }
 
-summary {
-    outline: none;            // 1、去掉点击时的外边框
-    user-select: none;    // 2、不能点击选中
-    cursor: pointer;         // 3、鼠标经过效果
-}
-
-details summary::-webkit-details-marker {
-    display: none; 
-}
-
-ol, ul {
-    margin-bottom: 0;
-    margin-top: 0;
-    padding-left: 0;
-}
-
 .Subhead {
     border-bottom: 1px solid #e1e4e8;
     display: flex;
@@ -125,5 +160,9 @@ ol, ul {
     flex: 1 100%;
     font-size: 14px;
 }
+
+
+
+
 
 // custome 

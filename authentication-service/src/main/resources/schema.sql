@@ -72,6 +72,8 @@ insert into oauth_client_details(client_id,client_secret,scope,authorized_grant_
 
 */
 
+SET SESSION FOREIGN_KEY_CHECKS=0;
+
 /* Drop Tables */
 
 DROP TABLE IF EXISTS user_role;
@@ -88,24 +90,24 @@ CREATE TABLE role
 	authority varchar(32) NOT NULL,
 	name varchar(32) NOT NULL,
 	PRIMARY KEY (authority)
-) WITHOUT OIDS;
+) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
 
 
 CREATE TABLE user_role
 (
 	username varchar(32) NOT NULL,
 	authority varchar(32) NOT NULL
-) WITHOUT OIDS;
+) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
 
 
 CREATE TABLE _user
 (
 	username varchar(32) NOT NULL,
-	password varchar(128) NOT NULL,
+	password varchar(512) NOT NULL,
 	name varchar(64) NOT NULL,
 	enabled boolean NOT NULL,
 	PRIMARY KEY (username)
-) WITHOUT OIDS;
+) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
 
 
 
@@ -113,19 +115,22 @@ CREATE TABLE _user
 
 ALTER TABLE user_role
 	ADD FOREIGN KEY (authority)
-	REFERENCES role (authority)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+REFERENCES role (authority)
+ON UPDATE RESTRICT
+ON DELETE RESTRICT
 ;
-
 
 
 ALTER TABLE user_role
 	ADD FOREIGN KEY (username)
-	REFERENCES _user (username)
-	ON UPDATE RESTRICT
-	ON DELETE RESTRICT
+REFERENCES _user (username)
+ON UPDATE RESTRICT
+ON DELETE RESTRICT
 ;
+
+
+
+
 
 insert into role(authority, name) VALUES ('USER','普通用户');
 insert into role(authority,name) VALUES('ADMIN','管理员');

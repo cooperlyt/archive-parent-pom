@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../authentication.service';
-import { DefineService } from '../services/business.service';
+import { BusinessService } from '../services/business.service';
 
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   user: any;
   defines: any;
 
-  constructor(private _service: AuthenticationService, private _businessSvr: DefineService) { }
+  constructor(private _service: AuthenticationService, private _businessSvr: BusinessService) { }
 
   ngOnInit() {
       this._service.getUserInfo().subscribe(data => this.user = data);

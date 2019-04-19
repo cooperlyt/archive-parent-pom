@@ -1,3 +1,4 @@
+SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
@@ -15,24 +16,24 @@ CREATE TABLE role
 	authority varchar(32) NOT NULL,
 	name varchar(32) NOT NULL,
 	PRIMARY KEY (authority)
-) WITHOUT OIDS;
+) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
 
 
 CREATE TABLE user_role
 (
 	username varchar(32) NOT NULL,
 	authority varchar(32) NOT NULL
-) WITHOUT OIDS;
+) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
 
 
 CREATE TABLE _user
 (
 	username varchar(32) NOT NULL,
-	password varchar(32) NOT NULL,
+	password varchar(512) NOT NULL,
 	name varchar(64) NOT NULL,
 	enabled boolean NOT NULL,
 	PRIMARY KEY (username)
-) WITHOUT OIDS;
+) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
 
 
 

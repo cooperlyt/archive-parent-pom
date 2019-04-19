@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -21,6 +21,10 @@ import { BusinessCreateComponent } from './business-create/business-create.compo
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { ResolveStart, ResolveEnd } from '@angular/router';
+import { FieldInputComponent } from './field-input/field-input.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CorpSelectComponent } from './corp-select/corp-select.component';
+
 
 @NgModule({
   declarations: [
@@ -30,12 +34,16 @@ import { ResolveStart, ResolveEnd } from '@angular/router';
     HomeLayoutComponent,
     LoginLayoutComponent,
     NavbarComponent,
-    BusinessCreateComponent
+    BusinessCreateComponent,
+    FieldInputComponent,
+    CorpSelectComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
     HttpClientModule,
     NgbModule,
     FontAwesomeModule,

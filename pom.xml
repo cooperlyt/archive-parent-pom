@@ -21,9 +21,10 @@
     <module>eurekasvr</module>
     <module>zuulsvr</module>
     <module>room-service</module>
-      <module>authentication-service</module>
-      <module>archives-business-service</module>
-
+    <module>authentication-service</module>
+    <module>archives-business-service</module>
+    <module>business-template-service</module>
+    <module>join-corp-service</module>
   </modules>
   <build>
     <plugins>

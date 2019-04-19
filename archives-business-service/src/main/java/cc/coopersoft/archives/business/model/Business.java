@@ -1,5 +1,6 @@
 package cc.coopersoft.archives.business.model;
 
+import cc.coopersoft.construct.data.CorpType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -33,6 +34,10 @@ public class Business {
 
     @Column(name = "DEFINE_NAME", nullable = false)
     private String defineName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DELIVER_TYPE", nullable = false, length = 16)
+    private CorpType corpType;
 
     @Column(name = "DELIVER", nullable = false)
     private String deliver;
@@ -197,5 +202,13 @@ public class Business {
 
     public void setSource(Source source) {
         this.source = source;
+    }
+
+    public CorpType getCorpType() {
+        return corpType;
+    }
+
+    public void setCorpType(CorpType corpType) {
+        this.corpType = corpType;
     }
 }

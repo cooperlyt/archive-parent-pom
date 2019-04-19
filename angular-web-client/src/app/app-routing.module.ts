@@ -6,6 +6,7 @@ import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component
 import { AuthGuard } from './auth.guard';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { BusinessCreateComponent } from './business-create/business-create.component';
+import { BusinessDefineResolver } from './resolve/business-define.resolve';
 import { BusinessCreateResolver } from './business-create/business-create.resolve';
 
 
@@ -23,7 +24,7 @@ const routes: Routes = [
       {
         path: 'business-create/:id',
         component: BusinessCreateComponent,
-        resolve: {business: BusinessCreateResolver}
+        resolve: {editor: BusinessCreateResolver}
       }
     ]
   },
