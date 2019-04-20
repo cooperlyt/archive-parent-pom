@@ -1,7 +1,9 @@
 package cc.coopersoft.business.model;
 
+import cc.coopersoft.comm.JsonRawSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -27,11 +29,12 @@ public class FieldGroup implements java.io.Serializable {
     @Column(name = "DISPLAY_ORDINAL", nullable = false)
     private int displayOrdinal;
 
-    @Column(name = "VALIDATIONS", length = 256)
-    private String validations;
-
     @Column(name = "VIEW_ROW", nullable = false)
     private int viewRow;
+
+    @JsonSerialize(using = JsonRawSerialize.class)
+    @Column(name = "_OPTION")
+    private String option;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
@@ -90,14 +93,6 @@ public class FieldGroup implements java.io.Serializable {
         this.displayOrdinal = displayOrdinal;
     }
 
-    public String getValidations() {
-        return validations;
-    }
-
-    public void setValidations(String validations) {
-        this.validations = validations;
-    }
-
     public Set<FieldDefine> getFieldDefines() {
         return fieldDefines;
     }
@@ -112,5 +107,13 @@ public class FieldGroup implements java.io.Serializable {
 
     public void setViewRow(int viewRow) {
         this.viewRow = viewRow;
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
     }
 }

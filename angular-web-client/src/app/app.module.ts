@@ -24,6 +24,7 @@ import { ResolveStart, ResolveEnd } from '@angular/router';
 import { FieldInputComponent } from './field-input/field-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CorpSelectComponent } from './corp-select/corp-select.component';
+import { PersonInputComponent } from './person-input/person-input.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { CorpSelectComponent } from './corp-select/corp-select.component';
     NavbarComponent,
     BusinessCreateComponent,
     FieldInputComponent,
-    CorpSelectComponent
+    CorpSelectComponent,
+    PersonInputComponent
   ],
   imports: [
     BrowserModule,
