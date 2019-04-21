@@ -149,31 +149,25 @@ INSERT INTO FIELD_GROUP(GROUP_ID, NAME, TYPE, EDITOR_ORDINAL, DISPLAY_ORDINAL, D
 VALUES ('I2-1','测试字符','SIMPLE',1,1,'I2',0);
 
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION)
-VALUES ('I2-1',0,'{"style": "col-lg-4 col-md-12","required":true,"search":true,"label":"测试字符串","type":"textbox"}');
+VALUES ('I2-1',0,'{"style": "col-lg-4 col-md-12","nullable":true,"search":true,"minLength":3, "maxLength":5 ,"label":"测试字符串","controlType":"textbox","editPattern":"[3-8]{1}[0-9]{3}"}');
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION)
-VALUES ('I2-1',1,'{"style": "col-lg-4 col-md-12","required":false,"search":false,"label":"测试金额","type":"textbox"}');
+VALUES ('I2-1',1,'{"style": "col-lg-4 col-md-12","nullable":false,"search":false,"label":"测试金额","controlType":"textbox","type":"number","min":10, "max":100 ,"autocomplete":"off"}');
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL,_OPTION)
-VALUES ('I2-1',2,'{"style": "col-lg-4 col-md-12","required":true,"search":true,"label":"测试选择","type":"dropdown","option":[{"label":"第一个","key":"第一个"},{"label":"第二个","key":"第二个"}]}');
+VALUES ('I2-1',2,'{"style": "col-lg-4 col-md-12","nullable":false,"search":true,"label":"测试选择","controlType":"dropdown","option":[{"label":"第一个","key":"第一个"},{"label":"第二个","key":"第二个"}]}');
 
 
-INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW)
-VALUES('I2-3','测试单位','CONSTRUCT_CORP',2,2,'I2',1);
+INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW,_OPTION)
+VALUES('I2-3','测试单位','CONSTRUCT_CORP',2,2,'I2',1,'{"nullable":false}');
 
-INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL)
-VALUES ('I2-3',0);
-INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL)
-VALUES ('I2-3',1);
-INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL)
-VALUES ('I2-3',2);
 
 INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW)
 VALUES('I2-4','测试日期','SIMPLE',3,3,'I2',2);
 
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION)
-VALUES ('I2-4',0,'{"style": "col-lg-4 col-md-12","required":true,"search":false,"label":"测试日期","type":"datepicker"}');
+VALUES ('I2-4',0,'{"style": "col-lg-4 col-md-12","nullable":false,"search":false,"label":"测试日期","controlType":"datepicker"}');
 
 INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW,_OPTION)
-VALUES('I2-5','测试多行输入','TEXT_AREA',4,4,'I2',4,'{"search":false,"required":true,"rows":4}');
+VALUES('I2-5','测试多行输入','TEXT_AREA',4,4,'I2',4,'{"search":false,"nullable":true,"rows":4}');
 
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL)
 VALUES ('I2-5',0);

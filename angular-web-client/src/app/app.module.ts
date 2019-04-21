@@ -25,6 +25,7 @@ import { FieldInputComponent } from './field-input/field-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CorpSelectComponent } from './corp-select/corp-select.component';
 import { PersonInputComponent } from './person-input/person-input.component';
+import { VaildMessageComponent } from './vaild-message/vaild-message.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { PersonInputComponent } from './person-input/person-input.component';
     BusinessCreateComponent,
     FieldInputComponent,
     CorpSelectComponent,
-    PersonInputComponent
+    PersonInputComponent,
+    VaildMessageComponent
   ],
   imports: [
     BrowserModule,
