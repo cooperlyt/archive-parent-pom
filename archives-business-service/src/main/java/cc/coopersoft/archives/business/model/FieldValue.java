@@ -1,7 +1,9 @@
 package cc.coopersoft.archives.business.model;
 
+import cc.coopersoft.comm.JsonRawDeserializer;
 import cc.coopersoft.comm.JsonRawSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
@@ -28,6 +30,7 @@ public class FieldValue {
     private String label;
 
     @JsonSerialize(using = JsonRawSerialize.class)
+    @JsonDeserialize(using = JsonRawDeserializer.class)
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "_OPTION")
     private String option;
