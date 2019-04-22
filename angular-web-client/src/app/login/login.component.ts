@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from '../auth/authentication.service';
 import {Router} from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';

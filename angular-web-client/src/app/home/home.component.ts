@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../authentication.service';
-import { BusinessService } from '../services/business.service';
+import { AuthenticationService } from '../auth/authentication.service';
+import { BusinessService } from '../business/services/business.service';
 
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';

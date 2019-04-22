@@ -14,21 +14,21 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 
-import { AuthInterceptor } from "./interceptors/auth.interceptor";
+import { AuthInterceptor } from "./auth/interceptors/auth.interceptor";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HomeLayoutComponent } from './layouts/home-layout/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout/login-layout.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { BusinessCreateComponent } from './business-create/business-create.component';
+import { BusinessCreateComponent } from './business/business-create/business-create.component';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { ResolveStart, ResolveEnd } from '@angular/router';
-import { FieldInputComponent } from './field-input/field-input.component';
+import { FieldInputComponent } from './business/comm/field-input/field-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { CorpSelectComponent } from './corp-select/corp-select.component';
-import { PersonInputComponent } from './person-input/person-input.component';
-import { VaildMessageComponent } from './vaild-message/vaild-message.component';
-import { DateTimePickerComponent } from './date-time-picker/date-time-picker.component';
+import { CorpSelectComponent } from './business/corp-select/corp-select.component';
+import { PersonInputComponent } from './business/comm/person-input/person-input.component';
+import { VaildMessageComponent } from './comm/vaild-message/vaild-message.component';
+import { DateTimePickerComponent } from './comm/date-time-picker/date-time-picker.component';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 fontLibrary.add(
