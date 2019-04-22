@@ -4,6 +4,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library as fontLibrary } from '@fortawesome/fontawesome-svg-core';
+import { faCalendar,  faClock } from '@fortawesome/free-regular-svg-icons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +28,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CorpSelectComponent } from './corp-select/corp-select.component';
 import { PersonInputComponent } from './person-input/person-input.component';
 import { VaildMessageComponent } from './vaild-message/vaild-message.component';
+import { DateTimePickerComponent } from './date-time-picker/date-time-picker.component';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
+fontLibrary.add(
+  faCalendar,
+  faClock,
+  faCamera
+);
 
 @NgModule({
   declarations: [
@@ -40,7 +49,8 @@ import { VaildMessageComponent } from './vaild-message/vaild-message.component';
     FieldInputComponent,
     CorpSelectComponent,
     PersonInputComponent,
-    VaildMessageComponent
+    VaildMessageComponent,
+    DateTimePickerComponent
   ],
   imports: [
     BrowserModule,

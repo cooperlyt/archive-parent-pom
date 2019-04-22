@@ -153,7 +153,7 @@ VALUES ('I2-1',0,'{"style": "col-lg-4 col-md-12","nullable":true,"search":true,"
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION)
 VALUES ('I2-1',1,'{"style": "col-lg-4 col-md-12","nullable":false,"search":false,"label":"测试金额","controlType":"textbox","type":"number","min":10, "max":100 ,"autocomplete":"off"}');
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL,_OPTION)
-VALUES ('I2-1',2,'{"style": "col-lg-4 col-md-12","nullable":false,"search":true,"label":"测试选择","controlType":"dropdown","option":[{"label":"第一个","key":"第一个"},{"label":"第二个","key":"第二个"}]}');
+VALUES ('I2-1',2,'{"style": "col-lg-4 col-md-12","nullable":false,"search":true,"label":"测试选择","controlType":"dropdown","option":["第一个","第二个"]}');
 
 
 INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW,_OPTION)
