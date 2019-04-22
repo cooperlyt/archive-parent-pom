@@ -1,8 +1,10 @@
 package cc.coopersoft.business.model;
 
+import cc.coopersoft.comm.JsonRawDeserializer;
 import cc.coopersoft.comm.JsonRawSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
@@ -32,6 +34,7 @@ public class FieldGroup implements java.io.Serializable {
     @Column(name = "VIEW_ROW", nullable = false)
     private int viewRow;
 
+    @JsonDeserialize(using = JsonRawDeserializer.class)
     @JsonSerialize(using = JsonRawSerialize.class)
     @Column(name = "_OPTION")
     private String option;

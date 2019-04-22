@@ -1,6 +1,10 @@
 package cc.coopersoft.business.model;
 
+import cc.coopersoft.comm.JsonRawDeserializer;
+import cc.coopersoft.comm.JsonRawSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,6 +29,7 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
     private int defineVersion;
     private String defaultRoom;
     private String defaultRack;
+    private String summary;
 
     private BusinessCategory businessCategory;
 
@@ -209,6 +214,17 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
 
     public void setFields(Set<FieldGroup> fields) {
         this.fields = fields;
+    }
+
+    @JsonDeserialize(using = JsonRawDeserializer.class)
+    @JsonSerialize(using = JsonRawSerialize.class)
+    @Column(name = "SUMMARY")
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     @Override

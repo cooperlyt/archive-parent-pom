@@ -61,6 +61,7 @@ export class AuthenticationService {
   }
  
   refreshToken(): Observable<any>{
+    console.log("refresh token");
     let params = new URLSearchParams();
     params.append('refresh_token',localStorage.getItem('refresh_token'));
     params.append('grant_type','refresh_token');

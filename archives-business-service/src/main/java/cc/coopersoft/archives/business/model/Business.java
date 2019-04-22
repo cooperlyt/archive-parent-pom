@@ -1,7 +1,11 @@
 package cc.coopersoft.archives.business.model;
 
+import cc.coopersoft.comm.JsonRawDeserializer;
+import cc.coopersoft.comm.JsonRawSerialize;
 import cc.coopersoft.construct.data.CorpType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -62,12 +66,17 @@ public class Business {
     @Column(name = "_VERSION")
     private int version;
 
+    @JsonDeserialize(using = JsonRawDeserializer.class)
+    @JsonSerialize(using = JsonRawSerialize.class)
     @Column(name = "SUMMARY")
     private String summary;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "_SOURCE" , nullable = false, length = 8)
     private Source source;
+
+    @Column(name = "SEQ", nullable = false)
+    private int seq;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -174,6 +183,14 @@ public class Business {
 
     public Volume getVolume() {
         return volume;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 
     public void setVolume(Volume volume) {

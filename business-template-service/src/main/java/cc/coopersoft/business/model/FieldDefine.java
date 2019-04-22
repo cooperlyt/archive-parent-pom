@@ -1,7 +1,9 @@
 package cc.coopersoft.business.model;
 
+import cc.coopersoft.comm.JsonRawDeserializer;
 import cc.coopersoft.comm.JsonRawSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
@@ -18,6 +20,7 @@ public class FieldDefine {
     @Column(name = "_ORDINAL", nullable = false)
     private int ordinal;
 
+    @JsonDeserialize(using = JsonRawDeserializer.class)
     @JsonSerialize(using = JsonRawSerialize.class)
     @Column(name = "_OPTION")
     private String option;

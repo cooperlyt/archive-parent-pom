@@ -88,6 +88,8 @@ export class AuthInterceptor implements HttpInterceptor {
             'unableToRefreshToken'
           );
 
+          console.log(" http fail in 401");
+
           if (isFromRefreshTokenEndpoint) {
             console.log(" refresh fail ! go to login")
             localStorage.clear();
@@ -108,6 +110,7 @@ export class AuthInterceptor implements HttpInterceptor {
           }
 
           return this.inflightAuthRequest.pipe(
+
             switchMap((newToken: string) => {
               // unset inflight request
               this.inflightAuthRequest = null;

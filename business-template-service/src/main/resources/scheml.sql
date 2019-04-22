@@ -166,6 +166,9 @@ VALUES('I2-4','测试日期','SIMPLE',3,3,'I2',2);
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION)
 VALUES ('I2-4',0,'{"style": "col-lg-4 col-md-12","nullable":false,"search":false,"label":"测试日期","controlType":"datepicker"}');
 
+INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION)
+VALUES ('I2-4',1,'{"style": "col-lg-4 col-md-12","nullable":false,"search":false,"label":"测试时间","istime":true,"controlType":"datepicker"}');
+
 INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW,_OPTION)
 VALUES('I2-5','测试多行输入','TEXT_AREA',4,4,'I2',4,'{"search":false,"nullable":true,"rows":4}');
 
