@@ -33,7 +33,7 @@ public class BusinessController {
             );
         }
 
-        return result.getId();
+        return "{\"id\":\"" + result.getId() + "\"}";
     }
 
     @RequestMapping(value = "/status",method = RequestMethod.GET)

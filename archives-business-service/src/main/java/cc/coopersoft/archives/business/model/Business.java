@@ -39,6 +39,9 @@ public class Business {
     @Column(name = "DEFINE_NAME", nullable = false)
     private String defineName;
 
+    @Column(name = "DEFINE_VER", nullable = false)
+    private int defineVersion;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "DELIVER_TYPE", nullable = false, length = 16)
     private CorpType corpType;
@@ -227,5 +230,13 @@ public class Business {
 
     public void setCorpType(CorpType corpType) {
         this.corpType = corpType;
+    }
+
+    public int getDefineVersion() {
+        return defineVersion;
+    }
+
+    public void setDefineVersion(int defineVersion) {
+        this.defineVersion = defineVersion;
     }
 }

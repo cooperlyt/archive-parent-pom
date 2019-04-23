@@ -26,13 +26,13 @@ public class BusinessField {
     @Column(name = "TYPE", nullable = false, length = 32)
     private String type;
 
-    @Column(name = "ORDINAL")
+    @Column(name = "_ORDINAL")
     private int ordinal;
 
     @JsonSerialize(using = JsonRawSerialize.class)
     @JsonDeserialize(using = JsonRawDeserializer.class)
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "DISPLAY_OPTION")
+    @Column(name = "_OPTION")
     private String option;
 
     @Column(name = "_ROW", nullable = false)

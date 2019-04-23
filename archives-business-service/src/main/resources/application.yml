@@ -9,7 +9,7 @@ logging:
 #    root: DEBUG
     com.netflix: WARN
     org.springframework.web: WARN
-    com.coopersoft: DEBUG
+    cc.coopersoft: DEBUG
 
 
 eureka:

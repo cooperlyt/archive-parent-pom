@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2019-04-11 10:29:39</creation_date>
-			<updated_date>2019-04-22 21:34:59</updated_date>
+			<updated_date>2019-04-23 04:07:56</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -549,7 +549,7 @@
 		</word>
 		<word>
 			<id>25</id>
-			<length>null</length>
+			<length>512</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -560,7 +560,7 @@
 			<description></description>
 			<logical_name>SUMMARY</logical_name>
 			<physical_name>SUMMARY</physical_name>
-			<type>text</type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>26</id>
@@ -2390,7 +2390,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>text</type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>

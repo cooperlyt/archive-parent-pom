@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "VOL_CONETXT")
 public class VolumeContext {
 
     public enum FileType{

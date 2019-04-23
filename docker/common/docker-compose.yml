@@ -131,9 +131,9 @@ services:
 
 
 
-#  webclient:
-#    image: coopersoft/archive-web-client:archives
-#    ports:
-#      - "80:80"
-#    environment:
-#      ZUUL_PORT: 5555
+  webclient:
+    image: coopersoft/seaweedfs-media-service:archives
+    ports:
+      - "6666:6666"
+#      volumes:
+#        - "/Users/cooper/Documents/weedfs/data:/data"
