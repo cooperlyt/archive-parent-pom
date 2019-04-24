@@ -20,12 +20,18 @@ RUN apk add --no-cache --virtual build-dependencies --update wget curl ca-certif
     apk del build-dependencies && \
     rm -rf /tmp/*
 
+EXPOSE 9333
+
+EXPOSE 9080
+
 # Docker Build Arguments
+ARG RESTY_HTTP_VERSION="0.13"
 ARG RESTY_VERSION="1.11.2.3"
 ARG RESTY_OPENSSL_VERSION="1.0.2k"
 ARG RESTY_PCRE_VERSION="8.39"
 ARG RESTY_J="1"
 ARG RESTY_CONFIG_OPTIONS="\
+    --with-http_stub_status_module \
     --with-http_addition_module \
     --with-pcre-jit \
     "
@@ -70,7 +76,13 @@ RUN \
     && make -j${RESTY_J} \
     && make -j${RESTY_J} install \
     && cd /tmp \
+    && curl -fSL https://github.com/ledgetech/lua-resty-http/archive/v${RESTY_HTTP_VERSION}.tar.gz -o lua-resty-http.tar.gz \
+    && tar xzf lua-resty-http.tar.gz \
+    && cp lua-resty-http-${RESTY_HTTP_VERSION}/lib/resty/*.lua "/usr/local/openresty/lualib/resty/" \
+    && cd /tmp \
     && rm -rf \
+        lua-resty-http.tar.gz \
+        lua-resty-http-${RESTY_HTTP_VERSION} \
         openssl-${RESTY_OPENSSL_VERSION} \
         openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
         openresty-${RESTY_VERSION}.tar.gz openresty-${RESTY_VERSION} \
@@ -87,6 +99,10 @@ RUN opm get bungle/lua-resty-session && opm get pintsized/lua-resty-http
 RUN mkdir -p /var/www/media-server
 
 RUN mkdir -p /data/filerdb
+
+RUN mkdir -p /var/www/weedfs
+
+RUN chmod 777 /var/www/weedfs
 
 ADD resty /var/www/media-server/resty/
 

@@ -1,6 +1,8 @@
 package cc.coopersoft.archives.room.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,26 +13,28 @@ public class Cell {
 
     @Id
     @Column(name = "CELL_ID", nullable = false, unique = true, length = 24)
-    String id;
+    private String id;
 
     @Column(name = "NAME", nullable = false, length = 8)
-    String name;
+    private String name;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CABINET_ID", nullable = false)
-    Cabinet cabinet;
+    private Cabinet cabinet;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true , mappedBy = "cell")
-    Set<Box> boxes = new HashSet<>(0);
+    private Set<Box> boxes = new HashSet<>(0);
 
     @Column(name = "_SIZE")
-    Integer size;
+    private Integer size;
 
     @Column(name = "_FULL", nullable = false)
-    boolean full;
+    private boolean full;
 
     @Column(name = "SEQ",nullable = false)
-    int seq;
+    private int seq;
 
     public String getId() {
         return id;

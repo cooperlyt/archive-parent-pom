@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../auth/authentication.service';
-import { BusinessService } from '../business/services/business.service';
 
-import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -14,16 +12,15 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 export class HomeComponent implements OnInit {
 
   faUser = faUser;
-  faBook = faBook;
+
 
   user: any;
-  defines: any;
 
-  constructor(private _service: AuthenticationService, private _businessSvr: BusinessService) { }
+  constructor(private _service: AuthenticationService) { }
 
   ngOnInit() {
       this._service.getUserInfo().subscribe(data => this.user = data);
-      this._businessSvr.listDefineSummary().subscribe(data => this.defines = data);
+      
   }
 
 

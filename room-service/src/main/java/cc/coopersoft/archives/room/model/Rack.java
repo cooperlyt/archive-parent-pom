@@ -1,5 +1,7 @@
 package cc.coopersoft.archives.room.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,18 +12,20 @@ public class Rack {
 
     @Id
     @Column(name = "RACK_ID", unique = true, nullable = false, length = 8)
-    String id;
+    private String id;
 
 
     @Column(name = "NAME", nullable = false, length = 4)
-    String name;
+    private String name;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ROOM_ID", nullable = false)
-    Room room;
+    private Room room;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "rack")
-    Set<Cabinet> cabinets = new HashSet<>(0);
+    private Set<Cabinet> cabinets = new HashSet<>(0);
 
     public String getId() {
         return id;

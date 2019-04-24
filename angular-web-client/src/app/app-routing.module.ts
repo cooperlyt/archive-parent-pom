@@ -8,6 +8,8 @@ import { LoginLayoutComponent } from './layouts/login-layout/login-layout.compon
 import { BusinessCreateComponent } from './business/business-create/business-create.component';
 import { BusinessDefineResolver } from './business/comm/resolve/business-define.resolve';
 import { BusinessCreateResolver } from './business/business-create/business-create.resolve';
+import { FileUploadComponent } from './business/file-upload/file-upload.component';
+import { BusinessResolver } from './business/resolver/business.resolver';
 
 
 
@@ -25,6 +27,11 @@ const routes: Routes = [
         path: 'business-create/:id',
         component: BusinessCreateComponent,
         resolve: {editor: BusinessCreateResolver}
+      },
+      {
+        path: 'business-file/:id',
+        component: FileUploadComponent,
+        resolve: {business: BusinessResolver}
       }
     ]
   },

@@ -1,5 +1,7 @@
 package cc.coopersoft.archives.room.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,29 +10,30 @@ public class Box {
 
     @Id
     @Column(name = "BOX_ID", unique = true, nullable = false, length = 32)
-    String id;
+    private String id;
 
     @Column(name = "_NUMBER", unique = true, nullable = false, length = 32)
-    String number;
+    private String number;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CELL_ID", nullable = false)
-    Cell cell;
+    private Cell cell;
 
     @Column(name = "_FULL", nullable = false)
-    boolean full;
+    private boolean full;
 
     @Column(name = "EMPTY", nullable = false)
-    boolean empty;
+    private boolean empty;
 
     @Column(name = "_SIZE", nullable = false)
-    int size;
+    private int size;
 
     @Column(name = "SEQ", nullable = false)
-    int seq;
+    private int seq;
 
     @Column(name = "DESCRIPTION",  length = 256)
-    String description;
+    private String description;
 
     public String getId() {
         return id;

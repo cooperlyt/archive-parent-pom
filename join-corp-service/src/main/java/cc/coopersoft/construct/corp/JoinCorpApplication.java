@@ -8,9 +8,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringCloudApplication
 @EnableEurekaClient
 @EnableResourceServer
-public class Application {
+public class JoinCorpApplication {
 
     public static void main(String[] args){
-            SpringApplication.run(Application.class,args);
+            SpringApplication.run(JoinCorpApplication.class,args);
     }
 }

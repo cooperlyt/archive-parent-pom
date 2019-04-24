@@ -2,6 +2,7 @@
 
 
 echo "********************************************************"
-echo "Starting Media Service";  /usr/bin/weed
+echo "Starting media Service";
 echo "********************************************************"
-sh -c 'openresty -p /var/www/archive-web/resty && /usr/bin/weed server -master.port=9333 -volume.port=9080 -dir="/data" -volume.publicUrl="localhost:9080" && tail -f /var/www/archive-web/resty/logs/error.log'
+nohup /usr/bin/weed server -master.port=9333 -volume.port=9080 -dir="/data" -volume.publicUrl="localhost:9080" >>/var/www/media-server/resty/logs/error.log 2>&1 &
+sh -c 'openresty -p /var/www/media-server/resty && tail -f /var/www/media-server/resty/logs/error.log'

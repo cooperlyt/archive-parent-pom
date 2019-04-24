@@ -1,5 +1,7 @@
 package cc.coopersoft.archives.room.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +20,7 @@ public class Room {
     @Column(name = "DESCRIPTION",  length = 256)
     String description;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "room")
     Set<Rack> racks = new HashSet<>(0);
 

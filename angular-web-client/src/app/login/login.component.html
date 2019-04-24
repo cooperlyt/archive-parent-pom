@@ -27,7 +27,11 @@
                             密码
                         </label>
                         <input type="password" [(ngModel)]="loginData.password" class="form-control form-control input-block" tabindex="2">
-                        <button (click)="login()" type="submit" tabindex="3"  class="btn btn-success btn-block">登录</button>
+                        <button (click)="login()" type="submit" tabindex="3" [disabled]="loadding" class="btn btn-success btn-block">
+                          <span *ngIf="loadding" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          <span *ngIf="loadding">正在登录...</span>
+                          <span *ngIf="!loadding">登录</span>
+                        </button>
                 </div>
         </div>
     </main>

@@ -19,4 +19,34 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-        defaultZone: http://discovery:8761/eureka/
+        defaultZone: http://localhost:8761/eureka/
+
+
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888
+  profiles:
+    active: "default"
+  jpa:
+    database: "MYSQL"
+    show-sql: "true"
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.MySQL5Dialect"
+    hibernate:
+      naming:
+        physical-strategy: "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl"
+  datasource:
+    test-while-idle: "true"
+    validationQuery: "SELECT 1"
+    url: "jdbc:mysql://localhost:3306/archives?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false"
+    username: "root"
+    password: "{cipher}4788dfe1ccbe6485934aec2ffeddb06163ea3d616df5fd75be96aadd4df1da91"
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+
+signing:
+  key: "345345fsdfsf5345"
+
+
+

@@ -7,6 +7,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library as fontLibrary } from '@fortawesome/fontawesome-svg-core';
 import { faCalendar,  faClock } from '@fortawesome/free-regular-svg-icons';
 
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -30,6 +37,9 @@ import { PersonInputComponent } from './business/comm/person-input/person-input.
 import { VaildMessageComponent } from './comm/vaild-message/vaild-message.component';
 import { DateTimePickerComponent } from './comm/date-time-picker/date-time-picker.component';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { ServerErrorInterceptor } from './comm/interceptors/server-error.interceptor';
+import { FileUploadComponent } from './business/file-upload/file-upload.component';
+import { BusinessCreateListComponent } from './business/business-create-list/business-create-list.component';
 
 fontLibrary.add(
   faCalendar,
@@ -50,7 +60,11 @@ fontLibrary.add(
     CorpSelectComponent,
     PersonInputComponent,
     VaildMessageComponent,
-    DateTimePickerComponent
+    DateTimePickerComponent,
+    FileUploadComponent,
+    FileSelectDirective,
+    FileDropDirective,
+    BusinessCreateListComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +75,9 @@ fontLibrary.add(
     HttpClientModule,
     NgbModule,
     FontAwesomeModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     NgProgressModule.withConfig(
       {
         spinner: false
@@ -75,6 +92,7 @@ fontLibrary.add(
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true},
     JwtHelperService
     ],
   bootstrap: [AppComponent]

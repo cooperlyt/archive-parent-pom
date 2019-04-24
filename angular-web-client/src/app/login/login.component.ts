@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
 
   fail = false;
 
+  loadding: boolean = false;
+
   constructor(private elementRef: ElementRef, private _service: AuthenticationService,private _router:Router) { }
 
   ngOnInit() {
@@ -37,10 +39,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    
+    this.loadding = true;
     this._service.obtainAccessToken(this.loginData).pipe(
         catchError(err => {
           this.fail = true;
+          this.loadding = false;
           return EMPTY;
         })
     ).subscribe(_=>this._router.navigate(['']));
