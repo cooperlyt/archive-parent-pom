@@ -7,22 +7,14 @@ ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.
     SUPERCRONIC=supercronic-linux-amd64 \
     SUPERCRONIC_SHA1SUM=be43e64c45acd6ec4fce5831e03759c89676a0ea
 
-# Install SeaweedFS and Supercronic ( for cron job mode )
-# Tried to use curl only (curl -o /tmp/linux_amd64.tar.gz ...), however it turned out that the following tar command failed with "gzip: stdin: not in gzip format"
-RUN apk add --no-cache --virtual build-dependencies --update wget curl ca-certificates && \
-    wget -P /tmp https://github.com/$(curl -s -L https://github.com/chrislusf/seaweedfs/releases/latest | egrep -o 'chrislusf/seaweedfs/releases/download/.*/linux_amd64.tar.gz') && \
-    tar -C /usr/bin/ -xzvf /tmp/linux_amd64.tar.gz && \
-    curl -fsSLO "$SUPERCRONIC_URL" && \
-    echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - && \
-    chmod +x "$SUPERCRONIC" && \
-    mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" && \
-    ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic && \
-    apk del build-dependencies && \
-    rm -rf /tmp/*
 
-EXPOSE 9333
+#0.77 is ok
+ENV WEEDFS_VERSION='1.32'
 
-EXPOSE 9080
+
+ENV PKGNAME=graphicsmagick
+ENV PKGVER=1.3.31
+ENV PKGSOURCE=https://jaist.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/$PKGVER/GraphicsMagick-$PKGVER.tar.gz
 
 # Docker Build Arguments
 ARG RESTY_HTTP_VERSION="0.13"
@@ -36,17 +28,12 @@ ARG RESTY_CONFIG_OPTIONS="\
     --with-pcre-jit \
     "
 
+
 # These are not intended to be user-specified
 ARG _RESTY_CONFIG_DEPS="--with-openssl=/tmp/openssl-${RESTY_OPENSSL_VERSION} --with-pcre=/tmp/pcre-${RESTY_PCRE_VERSION}"
 
-
-# 1) Install apk dependencies
-# 2) Download and untar OpenSSL, PCRE, and OpenResty
-# 3) Build OpenResty
-# 4) Cleanup
-
 RUN \
-    apk add --no-cache --virtual .build-deps \
+    apk add --no-cache  --virtual build-dependencies --update \
         build-base \
         gd-dev \
         geoip-dev \
@@ -56,14 +43,43 @@ RUN \
         perl-dev \
         readline-dev \
         zlib-dev \
+        g++ \
+        gcc \
+        libjpeg-turbo-dev \
+        libxml2 \
+        jasper-libs \
+        giflib-dev tiff-dev \
+        freetype-dev \
+        libgcc libstdc++ \
+        lzip \
+        wget \
+        ca-certificates \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        libtool \
     && apk add --no-cache \
         gd \
         geoip \
         libgcc \
         libxslt \
         zlib \
-        curl \
         perl \
+        libgomp \
+        libltdl \
+        libpng \
+        libjpeg \
+        tiff \
+        curl \
+        libwebp-tools \
+        freetype \
+        libjpeg-turbo  && \
+    wget -P /tmp https://github.com/$(curl -s -L https://github.com/chrislusf/seaweedfs/releases/${WEEDFS_VERSION} | egrep -o 'chrislusf/seaweedfs/releases/download/.*/linux_amd64.tar.gz') && \
+    tar -C /usr/bin/ -xzvf /tmp/linux_amd64.tar.gz && \
+    curl -fsSLO "$SUPERCRONIC_URL" && \
+    echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - && \
+    chmod +x "$SUPERCRONIC" && \
+    mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" && \
+    ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic \
     && cd /tmp \
     && curl -fSL https://www.openssl.org/source/openssl-${RESTY_OPENSSL_VERSION}.tar.gz -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
     && tar xzf openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
@@ -76,20 +92,35 @@ RUN \
     && make -j${RESTY_J} \
     && make -j${RESTY_J} install \
     && cd /tmp \
-    && curl -fSL https://github.com/ledgetech/lua-resty-http/archive/v${RESTY_HTTP_VERSION}.tar.gz -o lua-resty-http.tar.gz \
-    && tar xzf lua-resty-http.tar.gz \
-    && cp lua-resty-http-${RESTY_HTTP_VERSION}/lib/resty/*.lua "/usr/local/openresty/lualib/resty/" \
-    && cd /tmp \
-    && rm -rf \
-        lua-resty-http.tar.gz \
-        lua-resty-http-${RESTY_HTTP_VERSION} \
-        openssl-${RESTY_OPENSSL_VERSION} \
-        openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
-        openresty-${RESTY_VERSION}.tar.gz openresty-${RESTY_VERSION} \
-        pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION} \
-    && apk del .build-deps \
+    && wget $PKGSOURCE && \
+    tar xzf GraphicsMagick-$PKGVER.tar.gz && \
+    cd GraphicsMagick-$PKGVER && \
+    ./configure \
+      --build=$CBUILD \
+      --host=$CHOST \
+      --prefix=/usr \
+      --sysconfdir=/etc \
+      --mandir=/usr/share/man \
+      --infodir=/usr/share/info \
+      --localstatedir=/var \
+      --enable-shared \
+      --disable-static \
+      --with-modules \
+      --with-threads \
+      --with-webp=yes \
+      --with-tiff=yes \
+      --with-jpeg=yes \
+      --with-jp2=yes \
+      --with-gs-font-dir=/usr/share/fonts/Type1 \
+      --with-quantum-depth=16 && \
+    make && \
+    make install && \
+    apk del build-dependencies && \
+    rm -rf /tmp/* \
     && ln -sf /dev/stdout /usr/local/openresty/nginx/logs/access.log \
     && ln -sf /dev/stderr /usr/local/openresty/nginx/logs/error.log
+
+
 
 # Add additional binaries into PATH for convenience
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin/:/usr/local/openresty/nginx/sbin/:/usr/local/openresty/bin/

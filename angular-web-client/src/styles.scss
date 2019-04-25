@@ -15,6 +15,7 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 @import '~ngx-toastr/toastr-bs4-alert';
+@import "../node_modules/octicons/build/build.css";
 
 summary {
     outline: none;            // 1、去掉点击时的外边框
@@ -58,6 +59,10 @@ dl.form-group{
 
 .f5 {
     font-size: 14px!important;
+}
+
+.text-white {
+    color: #fff!important;
 }
 
 .flex-items-center {
@@ -179,6 +184,180 @@ dd {
     font-size: 14px;
 }
 
+.pagehead {
+    border-bottom: 1px solid #e1e4e8;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    padding-top: 24px;
+    position: relative;
+}
+
+.repohead.experiment-repo-nav {
+    background-color: #fafbfc;
+    padding-bottom: 0;
+}
+
+.repohead .repohead-details-container {
+    margin-bottom: 20px;
+}
+
+.pagehead .pagehead-actions {
+    float: right;
+    margin: 0;
+    position: relative;
+    z-index: 31;
+}
+
+.pagehead .pagehead-actions>button{
+    margin: 0 10px 0 0;
+}
+
+.pagehead-actions>li {
+    color: #24292e;
+    float: left;
+    font-size: 11px;
+    list-style-type: none;
+    margin: 0 10px 0 0;
+}
+
+.repohead h1 {
+    color: #586069;
+    float: left;
+    font-size: 18px;
+    line-height: 26px;
+    max-width: 635px;
+    padding-left: 18px;
+    position: relative;
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.pagehead .path-divider {
+    margin: 0 .25em;
+}
+
+.repohead h1 .octicon {
+    color: #959da5;
+    left: 0;
+    margin-top: 5px;
+    position: absolute;
+    top: 0;
+}
+
+.social-count {
+    background-color: #fff;
+    border: 1px solid rgba(27,31,35,.2);
+    border-bottom-right-radius: 3px;
+    border-left: 0;
+    border-top-right-radius: 3px;
+    color: #24292e;
+    float: left;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 3px 10px;
+    vertical-align: middle;
+}
+
+.btn.btn-git.selected, .btn.btn-git:active, [open]>.btn.btn-git {
+    background-color: #e9ecef;
+    background-image: none;
+    border-color: rgba(27,31,35,.35);
+    box-shadow: inset 0 0.15em 0.3em rgba(27,31,35,.15);
+}
+
+.btn.btn-git.hover, .btn.btn-git:hover {
+    background-color: #e6ebf1;
+    background-image: linear-gradient(-180deg,#f0f3f6,#e6ebf1 90%);
+    background-position: -.5em;
+    border-color: rgba(27,31,35,.35);
+}
+.btn.btn-git.focus, .btn.btn-git:focus {
+    box-shadow: 0 0 0 0.2em rgba(3,102,214,.3);
+}
+.btn.btn-git.selected, .btn.btn-git:active {
+    background-image: none;
+}
+.btn.btn-git:focus {
+    outline: 0;
+}
+.btn.btn-git:hover {
+    background-repeat: repeat-x;
+    text-decoration: none;
+}
+
+.btn.btn-git.btn-sm {
+    font-size: 12px;
+    line-height: 20px;
+    padding: 3px 10px;
+}
+
+.btn-git.btn-with-count {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    float: left;
+}
+
+.btn.btn-git {
+    background-color: #eff3f6;
+    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+    color: #24292e;
+}
+
+.btn-git{
+    -moz-appearance: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-appearance: none;
+    -webkit-user-select: none;
+    appearance: none;
+    background-position: -1px -1px;
+    background-repeat: repeat-x;
+    background-size: 110% 110%;
+    border: 1px solid rgba(27,31,35,.2);
+    border-radius: .25em;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 12px;
+    position: relative;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.btn.btn-git.btn-success.selected, .btn.btn-git.btn-success:active, [open]>.btn.btn-git.btn-success {
+    background-color: #279f43;
+    background-image: none;
+    border-color: rgba(27,31,35,.5);
+    box-shadow: inset 0 0.15em 0.3em rgba(27,31,35,.15);
+}
+
+.btn.btn-git.btn-success.hover, .btn.btn-git.btn-success:hover {
+    background-color: #269f42;
+    background-image: linear-gradient(-180deg,#2fcb53,#269f42 90%);
+    background-position: -.5em;
+    border-color: rgba(27,31,35,.5);
+}
+.btn.btn-git.btn-success.focus, .btn.btn-git.btn-success:focus {
+    box-shadow: 0 0 0 0.2em rgba(52,208,88,.4);
+}
+
+
+.btn-git.btn-success {
+    background-color: #28a745;
+    background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
+    color: #fff;
+}
+// custome 
+
+span.disabled{
+    opacity: 0.65;
+}
+
 .alert p{
     margin-bottom: 0;
 }
@@ -206,9 +385,6 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
     border-left-width: 1px;
 }
 
-
-// custome 
-
 .wait-item{
     display: -webkit-box;
     display: -ms-flexbox;
@@ -219,19 +395,4 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
     background-color: #e9ecef;
     border-radius: .25rem;
     margin: 10px 0;
-}
-
-.my-drop-zone[_ngcontent-fod-1] {
-    border: dotted 3px lightgray;
-}
-
-.well {
-    min-height: 20px;
-    padding: 19px;
-    margin-bottom: 20px;
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 }

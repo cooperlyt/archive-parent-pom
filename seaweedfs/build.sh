@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t coopersoft/seaweedfs-media-service:archives .
+docker build -t coopersoft/seaweedfs-media-service:1.32 .

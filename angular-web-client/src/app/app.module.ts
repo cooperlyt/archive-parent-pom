@@ -40,6 +40,7 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { ServerErrorInterceptor } from './comm/interceptors/server-error.interceptor';
 import { FileUploadComponent } from './business/file-upload/file-upload.component';
 import { BusinessCreateListComponent } from './business/business-create-list/business-create-list.component';
+import { ThumbnailDirective } from './comm/thumbnail.directive';
 
 fontLibrary.add(
   faCalendar,
@@ -64,8 +65,10 @@ fontLibrary.add(
     FileUploadComponent,
     FileSelectDirective,
     FileDropDirective,
-    BusinessCreateListComponent
+    BusinessCreateListComponent,
+    ThumbnailDirective,
   ],
+  entryComponents: [],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,6 +1,7 @@
 package cc.coopersoft.archives.business.controllers;
 
 import cc.coopersoft.archives.business.model.Business;
+import cc.coopersoft.archives.business.model.VolumeContext;
 import cc.coopersoft.archives.business.services.BusinessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,15 @@ public class BusinessController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found! ");
         }
         return business;
+    }
+
+    @RequestMapping(value="/business/context/{businessId}",method =RequestMethod.PUT)
+    public String putVolumeContext(@PathVariable("businessId")String businessId, @RequestBody VolumeContext context){
+        VolumeContext result =  businessService.putVolumeContext(businessId,context);
+        if (result == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
+        }
+        return "{\"id\":\"" + result.getId() + "\"}";
     }
 
     @RequestMapping(value = "/status",method = RequestMethod.GET)

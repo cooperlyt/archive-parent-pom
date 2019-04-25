@@ -1,5 +1,11 @@
 version: '2'
 services:
+  mediaservice:
+    image: coopersoft/seaweedfs-media-service:1.32
+    ports:
+      - "6699:6699"
+#      volumes:
+#        - "/Users/cooper/Documents/weedfs/data:/data"
 #  roomservice:
 #      image: coopersoft/archive-room-service:archives
 #      ports:
@@ -16,21 +22,22 @@ services:
 #        AUTHSERVER_URI:   "http://authenticationservice:8901/auth/user"
 #        ENCRYPT_KEY:       "IMSYMMETRIC"
 
-  businesstemplateservice:
-        image: coopersoft/business-template-service:archives
-        ports:
-          - "8086:8086"
-        environment:
-          PROFILE: "default"
-          SERVER_PORT: "8086"
-          DATABASE_PORT:     3306
-          CONFIGSERVER_PORT: 8888
-          EUREKASERVER_PORT: 8761
-          AUTHSERVER_PORT:   8091
-          CONFIGSERVER_URI: "http://localhost:8888"
-          EUREKASERVER_URI: "http://localhost:8761/eureka/"
-          AUTHSERVER_URI:   "http://localhost:8901/auth/user"
-          ENCRYPT_KEY:       "IMSYMMETRIC"
+# 1.25
+#  businesstemplateservice:
+#        image: coopersoft/business-template-service:archives
+#        ports:
+#          - "8086:8086"
+#        environment:
+#          PROFILE: "default"
+#          SERVER_PORT: "8086"
+#          DATABASE_PORT:     3306
+#          CONFIGSERVER_PORT: 8888
+#          EUREKASERVER_PORT: 8761
+#          AUTHSERVER_PORT:   8091
+#          CONFIGSERVER_URI: "http://localhost:8888"
+#          EUREKASERVER_URI: "http://localhost:8761/eureka/"
+#          AUTHSERVER_URI:   "http://localhost:8901/auth/user"
+#          ENCRYPT_KEY:       "IMSYMMETRIC"
 
 #  archivesbusinessservice:
 #      image: coopersoft/archive-business-service:archives

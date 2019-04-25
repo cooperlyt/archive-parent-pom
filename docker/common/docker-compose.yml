@@ -45,12 +45,12 @@ services:
 #        docker run --name mariadb_test -e MYSQL_ROOT_PASSWORD=my-secret=pw -d
 #        docker run -d --name mariadb_volume -P -v /data/Db/mariadb:/var/lib/mysql mariadb
 
-  mediaservice:
-    image: coopersoft/seaweedfs-media-service:archives
-    ports:
-      - "6699:6699"
-#      volumes:
-#        - "/Users/cooper/Documents/weedfs/data:/data"
+#  mediaservice:
+#    image: coopersoft/seaweedfs-media-service:archives
+#    ports:
+#      - "6699:6699"
+##      volumes:
+##        - "/Users/cooper/Documents/weedfs/data:/data"
 
   authenticationservice:
       image: coopersoft/archive-authentication-service:archives

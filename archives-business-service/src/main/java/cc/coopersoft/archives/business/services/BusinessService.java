@@ -3,7 +3,9 @@ package cc.coopersoft.archives.business.services;
 import cc.coopersoft.archives.business.model.Business;
 import cc.coopersoft.archives.business.model.BusinessField;
 import cc.coopersoft.archives.business.model.FieldValue;
+import cc.coopersoft.archives.business.model.VolumeContext;
 import cc.coopersoft.archives.business.repository.BusinessRepo;
+import cc.coopersoft.archives.business.repository.VolumeContextRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class BusinessService {
 
     @Autowired
     private BusinessRepo businessRepo;
+
+    @Autowired
+    private VolumeContextRepo volumeContextRepo;
 
 
     public Business getBusiness(String id){
@@ -47,5 +52,15 @@ public class BusinessService {
         }
 
         return businessRepo.save(business);
+    }
+
+    public VolumeContext putVolumeContext(String businessId, VolumeContext context){
+        Business business = businessRepo.findBusinessById(businessId);
+        if (business == null){
+            return null;
+        }
+        context.setBusiness(business);
+        return volumeContextRepo.save(context);
+
     }
 }
