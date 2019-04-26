@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class BusinessService {
@@ -19,6 +20,38 @@ public class BusinessService {
 
     @Autowired
     private VolumeContextRepo volumeContextRepo;
+
+    public void deleteVolumeContext(String contextId){
+        volumeContextRepo.deleteById(contextId);
+    }
+
+    public int clearVolumeContext(String businessId){
+        int result = 0;
+        Business business = getBusiness(businessId);
+        if (business != null){
+            result = business.getContexts().size();
+            business.getContexts().clear();
+            businessRepo.save(business);
+        }
+        return result;
+    }
+
+    public int updateAllVolumeContext(List<VolumeContext> contexts, String businessId){
+        int result = 0;
+        Business business = getBusiness(businessId);
+        if (business !=null ){
+            for(VolumeContext context: contexts){
+                context.setBusiness(business);
+            }
+            result = business.getContexts().size();
+            business.getContexts().clear();
+            business.getContexts().addAll(contexts);
+
+            businessRepo.save(business);
+        }
+        return result;
+
+    }
 
 
     public Business getBusiness(String id){

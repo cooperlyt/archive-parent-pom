@@ -8,29 +8,20 @@ import javax.persistence.*;
 @Table(name = "VOL_CONETXT")
 public class VolumeContext {
 
-    public enum FileType{
-        PNG,
-        BMP,
-        JPEG,
-        PDF
-    }
 
     @Id
     @Column(name = "CONTEXT_ID", nullable = false, unique = true)
     private String id;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "TYPE",length = 8, nullable = false)
-    private FileType type;
+    private String type;
 
     @Column(name = "ORDINAL", nullable = false)
     private int ordinal;
 
-    @Column(name = "PAGE_BEGIN", nullable = false)
-    private int pageBegin;
+    @Column(name = "PAGE_COUNT", nullable = false)
+    private int pageCount;
 
-    @Column(name = "PAGE_END", nullable = false)
-    private int pageEnd;
 
     @Column(name = "NAME", nullable = false, length = 32)
     private String name;
@@ -48,14 +39,6 @@ public class VolumeContext {
         this.id = id;
     }
 
-    public FileType getType() {
-        return type;
-    }
-
-    public void setType(FileType type) {
-        this.type = type;
-    }
-
     public int getOrdinal() {
         return ordinal;
     }
@@ -64,28 +47,28 @@ public class VolumeContext {
         this.ordinal = ordinal;
     }
 
-    public int getPageBegin() {
-        return pageBegin;
-    }
-
-    public void setPageBegin(int pageBegin) {
-        this.pageBegin = pageBegin;
-    }
-
-    public int getPageEnd() {
-        return pageEnd;
-    }
-
-    public void setPageEnd(int pageEnd) {
-        this.pageEnd = pageEnd;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
 
     public Business getBusiness() {

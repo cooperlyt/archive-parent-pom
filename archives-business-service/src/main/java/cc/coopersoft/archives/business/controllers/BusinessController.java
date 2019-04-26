@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "v1")
 public class BusinessController {
@@ -50,6 +52,24 @@ public class BusinessController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
         }
         return "{\"id\":\"" + result.getId() + "\"}";
+    }
+
+    @RequestMapping(value="/business/content/all/{businessId}",method = RequestMethod.PUT)
+    public String putAllVolumeContext(@PathVariable("businessId")String businessId, @RequestBody List<VolumeContext> contexts){
+        int result = businessService.updateAllVolumeContext(contexts,businessId);
+        return "{\"count\":\"" + result + "\"}";
+    }
+
+    @RequestMapping(value = "/business/content/delete/{contextId}",method = RequestMethod.DELETE)
+    public String delVolumeContext(@PathVariable("contextId")String contextId){
+        businessService.deleteVolumeContext(contextId);
+        return "{\"id\":\"" + contextId + "\"}";
+    }
+
+    @RequestMapping(value = "/business/content/clear/{businessId}",method = RequestMethod.DELETE)
+    public String clearVolumeContext(@PathVariable("businessId")String businessId){
+        int count = businessService.clearVolumeContext(businessId);
+        return "{\"count\":\"" + count + "\"}";
     }
 
     @RequestMapping(value = "/status",method = RequestMethod.GET)

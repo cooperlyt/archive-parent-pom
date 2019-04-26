@@ -36,16 +36,25 @@ import { CorpSelectComponent } from './business/corp-select/corp-select.componen
 import { PersonInputComponent } from './business/comm/person-input/person-input.component';
 import { VaildMessageComponent } from './comm/vaild-message/vaild-message.component';
 import { DateTimePickerComponent } from './comm/date-time-picker/date-time-picker.component';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faCamera,faAngleUp,faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { ServerErrorInterceptor } from './comm/interceptors/server-error.interceptor';
 import { FileUploadComponent } from './business/file-upload/file-upload.component';
 import { BusinessCreateListComponent } from './business/business-create-list/business-create-list.component';
 import { ThumbnailDirective } from './comm/thumbnail.directive';
+import { DragulaModule } from 'ng2-dragula';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 fontLibrary.add(
+  fas,
+  far,
   faCalendar,
   faClock,
-  faCamera
+  faCamera,
+  faAngleUp,
+  faAngleDown 
 );
 
 @NgModule({
@@ -81,6 +90,15 @@ fontLibrary.add(
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    DragulaModule.forRoot(),
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.circleSwish,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+      backdropBorderRadius: '3px',
+      primaryColour: '#ffffff', 
+      secondaryColour: '#ffffff', 
+      tertiaryColour: '#ffffff'
+    }),
     NgProgressModule.withConfig(
       {
         spinner: false
