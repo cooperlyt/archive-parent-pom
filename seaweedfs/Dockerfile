@@ -9,7 +9,7 @@ ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.
 
 
 #0.77 is ok
-ENV WEEDFS_VERSION='1.32'
+ENV WEEDFS_VERSION='0.90'
 
 
 ENV PKGNAME=graphicsmagick
