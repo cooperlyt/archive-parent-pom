@@ -125,7 +125,7 @@ RUN \
 # Add additional binaries into PATH for convenience
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin/:/usr/local/openresty/nginx/sbin/:/usr/local/openresty/bin/
 
-RUN opm get bungle/lua-resty-session && opm get pintsized/lua-resty-http
+RUN opm get bungle/lua-resty-session && opm get pintsized/lua-resty-http && opm get detailyang/lua-resty-cors
 
 RUN mkdir -p /var/www/media-server
 

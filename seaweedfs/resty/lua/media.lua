@@ -40,6 +40,7 @@ function req_orig_file(file_url)
             else
                 ngx.say(res.body)
                 ngx.flush(true)
+                ngx.log(ngx.DEBUG,'req orig file return 200')
 		        exit_with_code(200)
                 return
             end
@@ -201,13 +202,27 @@ function process_audio(file_volumn,file_id,file_size,file_url)
     end
 end
 
+local cors = require('resty.cors');
 
+cors.allow_host('*')
+cors.allow_method('GET')
+cors.allow_method('OPTIONS')
+cors.allow_header('Origin')
+cors.allow_header('X-Requested-With')
+cors.allow_header('Content-Type')
+cors.allow_header('Accept')
+cors.allow_header('Authorization')
+cors.max_age(7200)
+cors.allow_credentials(true)
+cors.run()
 
 local file_volumn = ngx.var.arg_volumn
 local file_id = ngx.var.arg_id
 local file_url = ngx.var.weed_img_root_url .. file_volumn .. "," .. file_id
 local process_type = ngx.var.arg_type or "na";
 local file_size = ngx.var.arg_size or "na";
+
+ngx.log(ngx.DEBUG,process_type);
 
 if ngx.var.arg_size == nil or ngx.var.arg_volumn == nil or ngx.var.arg_id == nil then
     return exit_with_code(400)
