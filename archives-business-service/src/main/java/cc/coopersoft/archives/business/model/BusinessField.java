@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,7 +51,8 @@ public class BusinessField {
     @JsonProperty(value = "fieldDefines")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "field", orphanRemoval = true)
-    private Set<FieldValue> values = new HashSet<>(0);
+    @OrderBy("ordinal asc ")
+    private List<FieldValue> values = new ArrayList<>(0);
 
     public String getId() {
         return id;
@@ -115,11 +118,11 @@ public class BusinessField {
         this.business = business;
     }
 
-    public Set<FieldValue> getValues() {
+    public List<FieldValue> getValues() {
         return values;
     }
 
-    public void setValues(Set<FieldValue> values) {
+    public void setValues(List<FieldValue> values) {
         this.values = values;
     }
 }

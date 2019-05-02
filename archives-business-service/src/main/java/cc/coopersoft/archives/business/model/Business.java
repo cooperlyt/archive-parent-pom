@@ -3,24 +3,26 @@ package cc.coopersoft.archives.business.model;
 import cc.coopersoft.comm.JsonRawDeserializer;
 import cc.coopersoft.comm.JsonRawSerialize;
 import cc.coopersoft.construct.data.CorpType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "RECORD_BUSINESS")
 public class Business {
 
     public enum Status{
-        PREPARE,
-        CREATED,
-        COMPLETE,
-        ABORT
+        PREPARE, //准备
+        REJECT,  //驳回
+        CREATED, //建立
+        COMPLETE, //完成
+        RECORDED, //归档
+        ABORT     //中止 失效
     }
 
     public enum Source{
@@ -81,17 +83,25 @@ public class Business {
     @Column(name = "SEQ", nullable = false)
     private int seq;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Volume volume;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<BusinessField> fields = new HashSet<>(0);
+    @Column(name = "CHANGE_TIME", nullable = false)
+    private Date changeTime;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<VolumeContext> contexts = new HashSet<>(0);
+    @OrderBy("ordinal asc")
+    private List<BusinessField> fields = new ArrayList<>(0);
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy(" ordinal asc ")
+    private List<VolumeContext> contexts = new ArrayList<>(0);
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("operationTime desc ")
+    private List<Operation> operations = new ArrayList<>(0);
 
     public Business() {
     }
@@ -184,36 +194,12 @@ public class Business {
         this.summary = summary;
     }
 
-    public Volume getVolume() {
-        return volume;
-    }
-
     public int getSeq() {
         return seq;
     }
 
     public void setSeq(int seq) {
         this.seq = seq;
-    }
-
-    public void setVolume(Volume volume) {
-        this.volume = volume;
-    }
-
-    public Set<BusinessField> getFields() {
-        return fields;
-    }
-
-    public void setFields(Set<BusinessField> fields) {
-        this.fields = fields;
-    }
-
-    public Set<VolumeContext> getContexts() {
-        return contexts;
-    }
-
-    public void setContexts(Set<VolumeContext> contexts) {
-        this.contexts = contexts;
     }
 
     public Source getSource() {
@@ -238,5 +224,37 @@ public class Business {
 
     public void setDefineVersion(int defineVersion) {
         this.defineVersion = defineVersion;
+    }
+
+    public Date getChangeTime() {
+        return changeTime;
+    }
+
+    public void setChangeTime(Date changeTime) {
+        this.changeTime = changeTime;
+    }
+
+    public List<BusinessField> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<BusinessField> fields) {
+        this.fields = fields;
+    }
+
+    public List<VolumeContext> getContexts() {
+        return contexts;
+    }
+
+    public void setContexts(List<VolumeContext> contexts) {
+        this.contexts = contexts;
+    }
+
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
     }
 }

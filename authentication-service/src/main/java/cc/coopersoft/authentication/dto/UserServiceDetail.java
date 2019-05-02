@@ -1,5 +1,6 @@
 package cc.coopersoft.authentication.dto;
 
+import cc.coopersoft.authentication.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +15,10 @@ public class UserServiceDetail implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
+    }
+
+    public User getUser(String username) {
         return userRepository.findByUsername(username);
     }
 

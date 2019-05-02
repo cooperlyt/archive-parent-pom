@@ -46,11 +46,12 @@ services:
 #        docker run -d --name mariadb_volume -P -v /data/Db/mariadb:/var/lib/mysql mariadb
 
 #  mediaservice:
-#    image: coopersoft/seaweedfs-media-service:archives
+#    image: coopersoft/seaweedfs-media-service:stable1
 #    ports:
 #      - "6699:6699"
-##      volumes:
-##        - "/Users/cooper/Documents/weedfs/data:/data"
+#   volumes:
+#     - "/Users/cooper/Documents/weedfs/data:/data"
+
 
   authenticationservice:
       image: coopersoft/archive-authentication-service:archives

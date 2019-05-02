@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,16 +36,24 @@ import { CorpSelectComponent } from './business/corp-select/corp-select.componen
 import { PersonInputComponent } from './business/comm/person-input/person-input.component';
 import { VaildMessageComponent } from './comm/vaild-message/vaild-message.component';
 import { DateTimePickerComponent } from './comm/date-time-picker/date-time-picker.component';
-import { faCamera,faAngleUp,faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faCamera,faAngleUp,faAngleDown, faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { ServerErrorInterceptor } from './comm/interceptors/server-error.interceptor';
 import { FileUploadComponent } from './business/file-upload/file-upload.component';
 import { BusinessCreateListComponent } from './business/business-create-list/business-create-list.component';
 import { ThumbnailDirective } from './comm/thumbnail.directive';
 import { DragulaModule } from 'ng2-dragula';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+import { ImageViewerModule } from '@hallysonh/ngx-imageviewer';
 
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { BusinessViewComponent } from './business/business-view/business-view.component';
+import { FileGalleryComponent } from './business/file-gallery/file-gallery.component';
+import { NgxGalleryModule } from 'ngx-gallery';
+import { DetailsComponent } from './business/details/details.component';
+import { OperationsComponent } from './business/operations/operations.component';
+import { EditComponent } from './business/edit/edit.component';
+
 
 fontLibrary.add(
   fas,
@@ -54,7 +62,8 @@ fontLibrary.add(
   faClock,
   faCamera,
   faAngleUp,
-  faAngleDown 
+  faAngleDown,
+  faArrowCircleRight
 );
 
 @NgModule({
@@ -76,6 +85,11 @@ fontLibrary.add(
     FileDropDirective,
     BusinessCreateListComponent,
     ThumbnailDirective,
+    BusinessViewComponent,
+    FileGalleryComponent,
+    DetailsComponent,
+    OperationsComponent,
+    EditComponent
   ],
   entryComponents: [],
   imports: [
@@ -89,6 +103,8 @@ fontLibrary.add(
     FontAwesomeModule,
     CommonModule,
     BrowserAnimationsModule,
+    ImageViewerModule,
+    NgxGalleryModule,
     ToastrModule.forRoot(),
     DragulaModule.forRoot(),
     NgxLoadingModule.forRoot({
@@ -97,7 +113,8 @@ fontLibrary.add(
       backdropBorderRadius: '3px',
       primaryColour: '#ffffff', 
       secondaryColour: '#ffffff', 
-      tertiaryColour: '#ffffff'
+      tertiaryColour: '#ffffff',
+      fullScreenBackdrop: true
     }),
     NgProgressModule.withConfig(
       {
@@ -111,7 +128,7 @@ fontLibrary.add(
       }
     )
   ],
-  providers: [
+  providers: [Title,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true},
     JwtHelperService

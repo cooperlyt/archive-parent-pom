@@ -134,6 +134,9 @@ ON DELETE RESTRICT
 
 insert into role(authority, name) VALUES ('USER','普通用户');
 insert into role(authority,name) VALUES('ADMIN','管理员');
+insert into role(authority, name) VALUES ('CORP','从业机构');
+
+
 
 -- pasword: dgsoft
 insert into _user(username,password,name,enabled) VALUES ('root','$2a$10$CmODDYEHEYJYWDsxu9ZzfumnUhiFFViGwq9Fmx12tBjmB/TSzGmBu','开发商管理员', true);
@@ -143,3 +146,4 @@ insert into user_role(authority,username) VALUES ('USER','root');
 insert into user_role(authority,username) VALUES ('ADMIN','root');
 
 insert into user_role(authority,username) VALUES ('USER','test');
+

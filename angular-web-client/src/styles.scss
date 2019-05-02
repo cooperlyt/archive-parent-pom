@@ -17,6 +17,20 @@
 @import '~ngx-toastr/toastr-bs4-alert';
 @import "../node_modules/octicons/build/build.css";
 
+@import '~material-design-icons/iconfont/material-icons.css';
+
+@import '../node_modules/font-awesome/css/font-awesome.css';
+
+
+body {
+    background-color: #fff;
+    color: #24292e;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,Arial,"PingFang SC","Hiragino Sans GB",STHeiti,"Microsoft YaHei","WenQuanYi Micro Hei",sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
 summary {
     outline: none;            // 1、去掉点击时的外边框
     user-select: none;    // 2、不能点击选中
@@ -65,6 +79,10 @@ dl.form-group{
     color: #fff!important;
 }
 
+.flex-auto {
+    flex: 1 1 auto!important;
+}
+
 .flex-items-center {
     align-items: center!important;
 }
@@ -80,6 +98,9 @@ dl.form-group{
     display: inline-block!important;
 }
 
+.bg-gray {
+    background-color: #f6f8fa!important;
+}
 .width-full {
     width: 100%!important;
 }
@@ -164,6 +185,57 @@ dd {
     white-space: nowrap;
 }
 
+@media (min-width: 1200px){
+    .bd-sidebar {
+       -webkit-box-flex: 0;
+        -ms-flex: 0 1 320px;
+        flex: 0 1 320px;
+    }
+}
+
+@media (min-width: 768px){
+    .bd-sidebar {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 56px;
+        z-index: 1000;
+        height: calc(100vh - 4rem);
+    }
+}
+
+@media (min-width: 768px){
+    .bd-sidebar {
+        border-right: 1px solid rgba(0,0,0,.1);
+    }
+    
+}
+
+a.branch-name {
+    color: #0366d6;
+}
+
+.branch-name {
+    background-color: #eaf5ff;
+    border-radius: 3px;
+    color: rgba(27,31,35,.6);
+    display: inline-block;
+    font: 12px SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+    padding: 2px 6px;
+}
+
+.bd-sidebar {
+    -webkit-box-ordinal-group: 1;
+    -ms-flex-order: 0;
+    order: 0;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.Box {
+    background-color: #fff;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+}
+
 .Subhead {
     border-bottom: 1px solid #e1e4e8;
     display: flex;
@@ -243,6 +315,69 @@ dd {
     margin-top: 5px;
     position: absolute;
     top: 0;
+}
+
+.reponav {
+    margin-top: -5px;
+    position: relative;
+    top: 1px;
+}
+
+.reponav:before {
+    content: "";
+    display: table;
+}
+
+.reponav:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.reponav-item {
+    border: 1px solid transparent;
+    border-radius: 3px 3px 0 0;
+    border-top: 3px solid transparent;
+    color: #586069;
+    float: left;
+    padding: 7px 15px 8px;
+    white-space: nowrap;
+}
+
+.reponav-item.selected {
+    background-color: #fff;
+    border-color: #e36209 #e1e4e8 transparent;
+    color: #24292e;
+}
+
+.reponav-item .ng-fa-icon {
+    color: rgba(27,31,35,.3);
+    margin: 0 4px;
+}
+
+
+.reponav-item.selected>.ng-fa-icon {
+    color: inherit;
+}
+
+.reponav-item .Counter {
+    color: #444d56;
+}
+
+.reponav-item:focus, .reponav-item:hover {
+    color: #24292e;
+    text-decoration: none;
+}
+
+.Counter {
+    background-color: rgba(27,31,35,.08);
+    border-radius: 20px;
+    color: #586069;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 2px 5px;
 }
 
 .social-count {
@@ -352,7 +487,47 @@ dd {
     background-image: linear-gradient(-180deg,#34d058,#28a745 90%);
     color: #fff;
 }
+
+.details-grid{
+    background-color: rgba(86, 61, 124, 0.2);
+    margin: 0 -14px 1px -15px;
+    padding: 0 1px 1px 0;
+    min-width: 200px;
+}
 // custome 
+.details-grid .row{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+}
+
+.details-grid .row>[class^=col-] {
+    padding: 0;
+    margin-top: 1px;
+}
+
+.details-grid .row>[class^=col-] label{
+    width: 130px;
+    padding: 10px;
+    border-right: 1px solid rgba(86, 61, 124, 0.2);
+    border-left: 1px solid rgba(86, 61, 124, 0.2);
+    float: left;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: #fafbfc;
+}
+
+.details-grid .row>[class^=col-] .content{
+    padding: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: #fff;
+    height: 100%;
+}
 
 span.disabled{
     opacity: 0.65;
@@ -395,4 +570,10 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
     background-color: #e9ecef;
     border-radius: .25rem;
     margin: 10px 0;
+}
+
+
+.full-screen-modal .modal-content {
+    width: 100%;
+    height: 100vh;
 }

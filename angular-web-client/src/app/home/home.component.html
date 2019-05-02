@@ -1,27 +1,102 @@
-<div class="container-fluid">
-    <div class="row justify-content-md-center">
-        <div class="col-md-3 px-3 px-md-4 px-lg-4">
-            <div class="border-bottom py-3 mt-3 mb-4">
-                <details class="width-full UnderlineNav-actions details-reset select-menu account-switcher d-inline-block details-overlay">
-                    <summary class="no-underline btn-link text-gray-dark text-bold select-menu-button width-full">
-                            <div class="select-menu-button-gravatar">
-                                <fa-icon [icon]="faUser" size="lg"></fa-icon>
+<div class="container-fluid p-0">
+    <div class="d-flex flex-wrap bg-gray" >
+            
+        <aside class="team-left-column col-12 col-md-4 col-lg-3 bg-white border-right border-bottom hide-md hide-sm p-0 bd-sidebar">
+            <div class="dashboard-sidebar top-0 px-3 px-md-4 px-lg-4 overflow-auto is-placeholder ">
+                <div class="border-bottom py-3 mt-3 mb-4">
+                    <details class="width-full UnderlineNav-actions details-reset select-menu account-switcher d-inline-block details-overlay">
+                        <summary class="no-underline btn-link text-gray-dark text-bold select-menu-button width-full">
+                                <div class="select-menu-button-gravatar">
+                                    <fa-icon [icon]="faUser" size="lg"></fa-icon>
+                                </div>
+                                <span class="css-truncate css-truncate-target">{{user.name}}</span>
+                        </summary>
+                    </details>
+                </div>
+                <div class="mb-3 Details">
+                    <app-business-create-list></app-business-create-list>
+                </div>
+            </div>
+        </aside>
+
+        
+        <main class="col-12 col-md-8 col-lg-6 p-responsive mt-3 border-bottom d-flex flex-auto">
+            <div class="mx-auto d-flex flex-auto flex-column">
+                <main class="flex-auto">
+                    <div class="dashboard">
+                        <div class="news">
+
+
+                            <div *ngFor="let item of topBusiness" class="push">
+                                <div class="body">
+                                    <div class="Details js-details-container js-news-feed-event-group border-bottom ">
+                                        <div class="d-flex flex-items-baseline py-3">
+                                            <div class="mr-3">
+                                                <a class="d-inline-block">
+                                                    <img class="avatar logo">
+                                                </a>
+                                            </div>
+
+                                            <div class="d-flex flex-column width-full">
+                                                <div class="d-flex flex-justify-between flex-items-baseline">
+                                                    <div>
+                                                        <a class="link-gray-dark no-underline text-bold wb-break-all d-inline-block">{{item.deliver}}</a>
+                                                        <span class="text-gray-dark no-underline">
+                                                            {{item.defineName}}
+                                                            <a class="link-gray-dark no-underline text-bold wb-break-all d-inline-block" 
+                                                            routerLink="/business-view/{{item.id}}/files">
+                                                                    {{item.id}}
+                                                            </a>
+                                                            <span class="f6 text-gray-light no-wrap ml-1">
+                                                                    {{item.receiveDate | date: 'yyyy-MM-dd'}}
+                                                            </span>
+                                                        </span>
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="dashboard-rollup-item Box p-3 mt-2">
+                                                        <span class="branch-name">{{businessStatus[item.status]}} </span>
+                                            
+                                                        <div class="commits pusher-is-only-committer">
+                                                            <ul class="pt-1">
+                                                                    <li *ngFor="let operation of item.operations" class="d-flex flex-items-baseline m-0">
+                                                                        <span title="23504653">
+                                                                            <a class="d-inline-block">{{operationType[operation.type]}}</a>
+                                                                        </span>
+                                                                        <code><a class="mr-1">{{operation.employeeName}} </a></code>
+                                                                        <div class="dashboard-break-word lh-condensed">
+                                                                            <blockquote>
+                                                                            
+                                                                            {{operation.explain}}
+                                                                            </blockquote>
+                                                                            <span>
+                                                                                {{operation.operationTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                                                                            </span>
+                                                                        </div>
+                                                                    </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <span class="css-truncate css-truncate-target">{{user.user_name}}</span>
-                    </summary>
-                </details>
+
+
+                        </div>
+                    </div>
+                </main>            
             </div>
-            <div class="mb-3 Details">
-                <app-business-create-list></app-business-create-list>
-            </div>
 
-        </div>
-        <div class="col-md-6">
+        </main>
 
-        </div>
+        <aside class="team-left-column col-12 col-md-3 col-lg-3 pr-5 mt-5 hide-lg hide-md hide-sm border-bottom">
 
-        <div class="col-md-3">
-
-        </div>
+        </aside>
     </div>
+
+    
 </div>

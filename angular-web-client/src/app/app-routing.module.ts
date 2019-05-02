@@ -10,6 +10,13 @@ import { BusinessDefineResolver } from './business/comm/resolve/business-define.
 import { BusinessCreateResolver } from './business/business-create/business-create.resolve';
 import { FileUploadComponent } from './business/file-upload/file-upload.component';
 import { BusinessResolver } from './business/resolver/business.resolver';
+import { BusinessViewComponent } from './business/business-view/business-view.component';
+import { FileGalleryComponent } from './business/file-gallery/file-gallery.component';
+import { VolumeContentResolver } from './business/resolver/volume-content.resolver';
+import { DetailsComponent } from './business/details/details.component';
+import { BusinessFieldResolver } from './business/resolver/business-field.resolver';
+import { OperationsComponent } from './business/operations/operations.component';
+import { OperationResolver } from './business/resolver/operation.resolver';
 
 
 
@@ -31,7 +38,30 @@ const routes: Routes = [
       {
         path: 'business-file/:id',
         component: FileUploadComponent,
-        resolve: {business: BusinessResolver}
+        resolve: {business: BusinessResolver, content: VolumeContentResolver}
+      },
+      {
+        path: 'business-view/:id',
+        component: BusinessViewComponent,
+        resolve: {business: BusinessResolver},
+        children:[
+          {
+            path: 'files',
+            component: FileGalleryComponent,
+            resolve: {content: VolumeContentResolver}
+          },
+          {
+            path: 'details',
+            component: DetailsComponent,
+            resolve: {business: BusinessResolver, fields: BusinessFieldResolver}
+          },
+          {
+            path: 'operations',
+            component: OperationsComponent,
+            resolve:{operations: OperationResolver}
+          }
+
+        ]
       }
     ]
   },

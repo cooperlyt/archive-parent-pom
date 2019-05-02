@@ -1,25 +1,42 @@
 package cc.coopersoft.archives.business.services;
 
-import cc.coopersoft.archives.business.model.Business;
-import cc.coopersoft.archives.business.model.BusinessField;
-import cc.coopersoft.archives.business.model.FieldValue;
-import cc.coopersoft.archives.business.model.VolumeContext;
+import cc.coopersoft.archives.business.model.*;
 import cc.coopersoft.archives.business.repository.BusinessRepo;
+import cc.coopersoft.archives.business.repository.FieldRepo;
+import cc.coopersoft.archives.business.repository.OperationRepo;
 import cc.coopersoft.archives.business.repository.VolumeContextRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 
 @Service
 public class BusinessService {
+
+    private static final Logger logger = LoggerFactory.getLogger(BusinessService.class);
 
     @Autowired
     private BusinessRepo businessRepo;
 
     @Autowired
     private VolumeContextRepo volumeContextRepo;
+
+    @Autowired
+    private FieldRepo fieldRepo;
+
+    @Autowired
+    private OperationRepo operationRepo;
+
+    public List<Operation> getOperationList(String businessId){
+        return operationRepo.queryAllByBusinessIdOrderByOperationTimeDesc(businessId);
+    }
 
     public void deleteVolumeContext(String contextId){
         volumeContextRepo.deleteById(contextId);
@@ -50,15 +67,39 @@ public class BusinessService {
             businessRepo.save(business);
         }
         return result;
-
     }
 
+    public List<VolumeContext> listContent(String businessId){
+       return volumeContextRepo.queryAllByBusinessIdOrderByOrdinal(businessId);
+    }
+
+    public List<BusinessField> getFields(String id){
+        return fieldRepo.queryAllByBusinessIdOrderByRow(id);
+    }
 
     public Business getBusiness(String id){
         return businessRepo.findBusinessById(id);
     }
 
-    public Business saveBusiness(Business business){
+    public List<BusinessOperation> listTopBusiness(){
+        List<Business> businesses = businessRepo.queryTop10ByStatusInOrderByChangeTimeDesc(
+                EnumSet.of(Business.Status.REJECT,
+                        Business.Status.COMPLETE,
+                        Business.Status.CREATED,
+                        Business.Status.RECORDED,
+                        Business.Status.ABORT));
+        List<BusinessOperation> result = new ArrayList<>(businesses.size());
+        for(Business business: businesses){
+            result.add(new BusinessOperation(business.getId(),business.getDefineName(), business.getDeliverId(), business.getDeliver(),business.getReceiveDate(),business.getStatus(),business.getOperations()));
+        }
+        return result;
+    }
+
+    public Business saveBusiness(Business business,String userName){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Operation.Type type;
         if ((business.getId() == null) || (business.getId().trim().equals("")) ){
             Integer seq = businessRepo.maxSeq();
             if (seq == null){
@@ -68,7 +109,16 @@ public class BusinessService {
             business.setSeq(seq);
             business.setId(business.getDefineId() + "." + seq);
             business.setVersion(1);
+            type = Operation.Type.CREATE;
+        }else {
+            type = Operation.Type.EDITOR;
         }
+
+        business.setChangeTime(new Date());
+
+        Operation operation = new Operation(type,authentication.getPrincipal().toString(),userName,new Date(),business);
+        business.getOperations().add(operation);
+
         if (business.getReceiveDate() == null){
             business.setReceiveDate(new Date());
         }
@@ -83,6 +133,8 @@ public class BusinessService {
                 }
             }
         }
+
+
 
         return businessRepo.save(business);
     }

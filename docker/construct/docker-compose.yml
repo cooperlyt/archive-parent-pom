@@ -1,7 +1,7 @@
 version: '2'
 services:
   mediaservice:
-    image: coopersoft/seaweedfs-media-service:0.90
+    image: coopersoft/seaweedfs-media-service:stable2
     ports:
       - "6699:6699"
 #      volumes:

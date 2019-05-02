@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../auth/authentication.service';
 
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { BusinessService } from '../business/services/business.service';
+import { BusinessStatus, OperationType } from '../business/enumData';
 
 
 @Component({
@@ -16,11 +18,17 @@ export class HomeComponent implements OnInit {
 
   user: any;
 
-  constructor(private _service: AuthenticationService) { }
+  topBusiness: any;
+
+  businessStatus = BusinessStatus;
+  operationType = OperationType;
+
+  constructor(private _service: AuthenticationService,private _businessService: BusinessService) { }
 
   ngOnInit() {
+    
       this._service.getUserInfo().subscribe(data => this.user = data);
-      
+      this._businessService.getTopBusiness().subscribe(data => this.topBusiness = data);
   }
 
 

@@ -15,7 +15,7 @@ public class FieldValue {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "VALUE_ID",unique = true, nullable = false)
-    private String id;
+    private Long id;
 
     @Column(name = "_PATTERN", length = 32)
     private String pattern;
@@ -40,12 +40,11 @@ public class FieldValue {
     @JoinColumn(name = "FIELD_ID", nullable = false)
     private BusinessField field;
 
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
