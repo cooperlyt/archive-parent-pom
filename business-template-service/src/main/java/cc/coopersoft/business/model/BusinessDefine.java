@@ -1,5 +1,6 @@
 package cc.coopersoft.business.model;
 
+import cc.coopersoft.archives.data.SecrecyLevel;
 import cc.coopersoft.comm.JsonRawDeserializer;
 import cc.coopersoft.comm.JsonRawSerialize;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -27,9 +28,12 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
     private int priority;
     private boolean enable;
     private int defineVersion;
+    private String summary;
     private String defaultRoom;
     private String defaultRack;
-    private String summary;
+    private Integer defaultSecrecyLen;
+    private SecrecyLevel defaultSecrecyLevel;
+
 
     private BusinessCategory businessCategory;
 
@@ -216,8 +220,6 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
         this.fields = fields;
     }
 
-    @JsonDeserialize(using = JsonRawDeserializer.class)
-    @JsonSerialize(using = JsonRawSerialize.class)
     @Column(name = "SUMMARY")
     public String getSummary() {
         return summary;
@@ -225,6 +227,25 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    @Column(name = "DEFAULT_SECRECY_LEN")
+    public Integer getDefaultSecrecyLen() {
+        return defaultSecrecyLen;
+    }
+
+    public void setDefaultSecrecyLen(Integer defaultSecrecyLen) {
+        this.defaultSecrecyLen = defaultSecrecyLen;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "DEFAULT_SECRECY_LEVEL")
+    public SecrecyLevel getDefaultSecrecyLevel() {
+        return defaultSecrecyLevel;
+    }
+
+    public void setDefaultSecrecyLevel(SecrecyLevel defaultSecrecyLevel) {
+        this.defaultSecrecyLevel = defaultSecrecyLevel;
     }
 
     @Override

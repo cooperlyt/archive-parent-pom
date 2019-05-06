@@ -14,7 +14,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class BusinessService {
@@ -195,6 +202,55 @@ public class BusinessService {
             }
         }
 
+
+        if (business.getSummaryTemplate() != null){
+            Pattern p = Pattern.compile("\\{([^\\.\\{\\}]*)\\.([^\\.\\{\\}]+)\\}");
+            logger.debug("summary reg :" + "\\{([^\\.\\{\\}]*)\\.([^\\.\\{\\}]+)\\}");
+            Matcher matcher = p.matcher(business.getSummaryTemplate());
+            StringBuffer summary = new StringBuffer();
+            while (matcher.find()){
+                String value = " ";
+                String path = matcher.group(1);
+                logger.debug("summary find path:" + path);
+                if ((path == null) || "".equals(path.trim())){
+                    Class clazz = business.getClass();
+                    try {
+                        PropertyDescriptor pd = new PropertyDescriptor(matcher.group(2), clazz);
+                        Method getMethod = pd.getReadMethod();
+                        if (pd != null) {
+                            Object o = getMethod.invoke(business);
+                            value = o.toString();
+                            logger.debug("put field value:" + value);
+                        }else{
+                            logger.warn("summary field not found:" + matcher.group(2));
+                        }
+                    } catch (IllegalAccessException e) {
+                        logger.warn("summary field  read error:" + matcher.group(2) ,e);
+                    } catch (IntrospectionException e) {
+                        logger.warn("summary field  read error:" + matcher.group(2) ,e);
+                    } catch (InvocationTargetException e) {
+                        logger.warn("summary field  read error:" + matcher.group(2) ,e);
+                    }
+                }else{
+                    for(BusinessField field: business.getFields()){
+                        if (matcher.group(1).equals(field.getDefine())){
+                            for(FieldValue fv: field.getValues()){
+                                if (Integer.valueOf(matcher.group(2)).intValue() == fv.getOrdinal() ){
+                                    value = fv.getValue();
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+                }
+                matcher.appendReplacement(summary, value);
+            }
+            matcher.appendTail(summary);
+            logger.debug("business summary:" + summary.toString());
+            business.setSummary(summary.toString());
+        }
 
 
         return businessRepo.save(business);

@@ -17,6 +17,12 @@ public class Cabinet {
     @Column(name = "NAME", nullable = false, length = 8)
     private String name;
 
+    @Column(name = "SEQ", nullable = false)
+    private int seq;
+
+    @Column(name = "PERCENTAGE" , nullable = false)
+    private int percentage;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "RACK_ID", nullable = false)
@@ -25,9 +31,6 @@ public class Cabinet {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true, mappedBy = "cabinet")
     private Set<Cell> cells = new HashSet<>(0);
-
-    @Column(name = "SEQ", nullable = false)
-    private int seq;
 
     public String getId() {
         return id;
@@ -67,5 +70,13 @@ public class Cabinet {
 
     public void setSeq(int seq) {
         this.seq = seq;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
     }
 }

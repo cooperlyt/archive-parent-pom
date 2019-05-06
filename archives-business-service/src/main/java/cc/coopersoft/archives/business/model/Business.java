@@ -1,19 +1,15 @@
 package cc.coopersoft.archives.business.model;
 
-import cc.coopersoft.comm.JsonRawDeserializer;
-import cc.coopersoft.comm.JsonRawSerialize;
 import cc.coopersoft.construct.data.CorpType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "RECORD_BUSINESS")
+@NamedEntityGraph(name = "Business.volume", attributeNodes = @NamedAttributeNode("volume"))
 public class Business {
 
     public enum Status{
@@ -71,8 +67,6 @@ public class Business {
     @Column(name = "_VERSION")
     private int version;
 
-    @JsonDeserialize(using = JsonRawDeserializer.class)
-    @JsonSerialize(using = JsonRawSerialize.class)
     @Column(name = "SUMMARY")
     private String summary;
 
@@ -87,6 +81,12 @@ public class Business {
     @Column(name = "CHANGE_TIME", nullable = false)
     private Date changeTime;
 
+    @Column(name = "SUMMARY_TEMPLATE")
+    private String summaryTemplate;
+
+
+    @OneToOne(fetch = FetchType.LAZY , mappedBy = "business" )
+    private Volume volume;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL)
@@ -256,5 +256,21 @@ public class Business {
 
     public void setOperations(List<Operation> operations) {
         this.operations = operations;
+    }
+
+    public String getSummaryTemplate() {
+        return summaryTemplate;
+    }
+
+    public void setSummaryTemplate(String summaryTemplate) {
+        this.summaryTemplate = summaryTemplate;
+    }
+
+    public Volume getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Volume volume) {
+        this.volume = volume;
     }
 }

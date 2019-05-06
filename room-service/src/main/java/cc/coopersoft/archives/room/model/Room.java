@@ -20,6 +20,9 @@ public class Room {
     @Column(name = "DESCRIPTION",  length = 256)
     String description;
 
+    @Column(name = "PERCENTAGE" , nullable = false)
+    private int percentage;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "room")
     Set<Rack> racks = new HashSet<>(0);
@@ -54,5 +57,13 @@ public class Room {
 
     public void setRacks(Set<Rack> racks) {
         this.racks = racks;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
     }
 }

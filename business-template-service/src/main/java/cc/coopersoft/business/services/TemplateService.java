@@ -2,6 +2,7 @@ package cc.coopersoft.business.services;
 
 import cc.coopersoft.business.model.BusinessDefine;
 import cc.coopersoft.business.model.BusinessDefineSummary;
+import cc.coopersoft.business.model.DefaultRecord;
 import cc.coopersoft.business.repository.BusinessDefineRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -34,6 +35,10 @@ public class TemplateService {
 
     public BusinessDefine getDefine(String id){
         return businessDefineRep.getBusinessDefineById(id);
+    }
+
+    public DefaultRecord getDefaultRecord(String id){
+        return businessDefineRep.getDefaultRecord(id);
     }
 
 }

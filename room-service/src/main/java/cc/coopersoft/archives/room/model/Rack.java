@@ -18,6 +18,9 @@ public class Rack {
     @Column(name = "NAME", nullable = false, length = 4)
     private String name;
 
+    @Column(name = "PERCENTAGE" , nullable = false)
+    private int percentage;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ROOM_ID", nullable = false)
@@ -57,5 +60,13 @@ public class Rack {
 
     public void setCabinets(Set<Cabinet> cabinets) {
         this.cabinets = cabinets;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
     }
 }

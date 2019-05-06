@@ -16,7 +16,9 @@ export class BusinessDefine{
     defineVersion: number;
     defaultRoom: string;
     defaultRack: string;
-    summary:any;
+    summary:string;
+    defaultSecrecyLen:number;
+    defaultSecrecyLevel:string;
 
     fields: FieldGroup[];
     businessCategory: BusinessCategory;

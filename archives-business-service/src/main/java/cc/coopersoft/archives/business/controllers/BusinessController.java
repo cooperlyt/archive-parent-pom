@@ -29,7 +29,7 @@ public class BusinessController {
     @Autowired
     private JWTUtils JWTUtils;
 
-    @RequestMapping(value = {"/search"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/business/search"}, method = RequestMethod.GET)
     public Page<Business> search(@RequestParam("page") Optional<Integer> page,
                                  @RequestParam("key")Optional<String> key,
                                  @RequestParam("define")Optional<String> define,
@@ -45,12 +45,12 @@ public class BusinessController {
         return businessService.getOperationList(businessId);
     }
 
-    @RequestMapping(value = "/used-define", method = RequestMethod.GET)
+    @RequestMapping(value = "/business/used-define", method = RequestMethod.GET)
     public List<UsedDefine> usedDefines(){
         return businessService.listUsedDefined();
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    @RequestMapping(value = "/business/new", method = RequestMethod.POST)
     public String createBusiness(@RequestBody Business business, HttpServletRequest request){
         logger.debug("------------ PUT NEW BUSINESS -------------------");
 
@@ -65,7 +65,7 @@ public class BusinessController {
         return "{\"id\":\"" + result.getId() + "\"}";
     }
 
-    @RequestMapping(value = "/list/top", method = RequestMethod.GET)
+    @RequestMapping(value = "/business/list/top", method = RequestMethod.GET)
     public List<BusinessOperation> listBusinessTop(){
         return businessService.listTopBusiness();
     }

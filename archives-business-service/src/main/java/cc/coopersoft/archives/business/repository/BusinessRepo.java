@@ -2,6 +2,7 @@ package cc.coopersoft.archives.business.repository;
 
 import cc.coopersoft.archives.business.model.Business;
 import cc.coopersoft.archives.business.model.UsedDefine;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -12,9 +13,10 @@ import java.util.List;
 @Repository
 public interface BusinessRepo extends CrudRepository<Business,String> {
 
+    @EntityGraph(value = "Business.volume",type = EntityGraph.EntityGraphType.FETCH)
     Business findBusinessById(String id);
 
-
+    @EntityGraph(value = "Business.volume",type = EntityGraph.EntityGraphType.FETCH)
     List<Business> queryTop10ByStatusInOrderByChangeTimeDesc(Collection<Business.Status> statuses);
 
     @Query("SELECT max(b.seq) from Business b")

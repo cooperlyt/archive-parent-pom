@@ -105,6 +105,12 @@
         <dependency>
             <groupId>cc.coopersoft</groupId>
             <artifactId>comm-cloud</artifactId>
+            <version>0.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cc.coopersoft</groupId>
+            <artifactId>comm-construct</artifactId>
             <version>0.0.3</version>
         </dependency>
     </dependencies>

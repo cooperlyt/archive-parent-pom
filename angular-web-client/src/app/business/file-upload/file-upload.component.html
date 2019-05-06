@@ -126,19 +126,22 @@
     </div>
     <div class="container">
         <ul class="pagehead-actions">
-          <li><button class="btn btn-git btn-sm btn-with-count" (click)="uploader.uploadAll()" 
-            [disabled]="!waitUpdateCount" >全部上传</button>
-            <span class="social-count {{waitUpdateCount ? '' : 'disabled'}} ">{{ waitUpdateCount }}</span></li>
+
           <li><button class="btn btn-git btn-sm btn-with-count"
               (click)="uploader.cancelAll()" [disabled]="!cancelCount">全部取消</button>
             <span class="social-count {{cancelCount ? '' : 'disabled'}}">{{ cancelCount }}</span>
           </li>
           <li><button class="btn btn-git btn-sm btn-with-count"
             (click)="deleteAllConfirme(clearContext)" [disabled]="!formBind.length">全部删除</button>
-            <span class="social-count {{formBind.length ? '' : 'disabled'}}">{{ formBind.length }}</span></li>
+            <span class="social-count {{formBind.length ? '' : 'disabled'}}">{{ formBind.length }}</span>
+          </li>
+          <li><button class="btn btn-git btn-sm btn-with-count" (click)="uploader.uploadAll()" 
+            [disabled]="!waitUpdateCount" >全部上传</button>
+            <span class="social-count {{waitUpdateCount ? '' : 'disabled'}} ">{{ waitUpdateCount }}</span>
+          </li>
       </ul>
 
-      <p>业务描述...</p>
+      <p>{{business.summary}}</p>
     </div>
   </div>
 

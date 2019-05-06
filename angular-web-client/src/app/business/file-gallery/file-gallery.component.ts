@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize } from 'ngx-gallery';
+import { Business } from '../model/business.model';
 
 
 export class FileContext implements NgxGalleryImage{
@@ -66,6 +67,7 @@ export class FileGalleryComponent implements OnInit {
   galleryImages: FileContext[] = [];
 
   imageSrc:string;
+  business: Business;
 
   constructor(private _route: ActivatedRoute) { }
 
@@ -90,9 +92,10 @@ export class FileGalleryComponent implements OnInit {
 
   ngOnInit() {
 
-    this._route.data.subscribe((data: {content: VolumeContext[]}) => {
+    this._route.data.subscribe((data: {content: VolumeContext[], business: Business}) => {
+      this.business = data.business;
       data.content.forEach(data => {
-
+        
         this.galleryImages.push(new FileContext(data.type,data.id,data.name));
       })
 

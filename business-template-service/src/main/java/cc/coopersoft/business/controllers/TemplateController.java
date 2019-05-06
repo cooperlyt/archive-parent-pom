@@ -2,6 +2,7 @@ package cc.coopersoft.business.controllers;
 
 import cc.coopersoft.business.model.BusinessDefine;
 import cc.coopersoft.business.model.BusinessDefineSummary;
+import cc.coopersoft.business.model.DefaultRecord;
 import cc.coopersoft.business.services.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,5 +35,16 @@ public class TemplateController {
             );
         }
         return templateService.getDefine(id);
+    }
+
+    @RequestMapping(value = "/record/{id}", method = RequestMethod.GET)
+    public DefaultRecord getDefaultRecord(@PathVariable("id") String id){
+        DefaultRecord result = templateService.getDefaultRecord(id);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
     }
 }

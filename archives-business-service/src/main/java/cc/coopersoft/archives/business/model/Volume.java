@@ -1,5 +1,6 @@
 package cc.coopersoft.archives.business.model;
 
+import cc.coopersoft.archives.data.SecrecyLevel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -8,12 +9,6 @@ import java.util.Date;
 @Entity
 @Table(name = "VOLUME")
 public class Volume {
-
-    public enum SecrecyLevel{
-        TOP,
-        CLASS,
-        UNKONW
-    }
 
     @Id
     @Column(name = "VOLUME_ID" , unique = true, nullable = false)
@@ -29,15 +24,15 @@ public class Volume {
     @Column(name = "SECRECY_LEVEL", length = 8 , nullable = false)
     private SecrecyLevel secrecyLevel;
 
-    @Column(name = "ORDINAL")
-    private int ordinal;
-
     @Column(name = "RECORD_TIME",nullable = false)
     private Date recordTime;
 
+    @Column(name = "SECRECY_LEN")
+    private Integer secrecyLen;
+
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "BUSINESS_ID", nullable = false)
+    @JoinColumn(name = "BUSINESS_ID", nullable = false )
     private Business business;
 
     public String getId() {
@@ -72,14 +67,6 @@ public class Volume {
         this.secrecyLevel = secrecyLevel;
     }
 
-    public int getOrdinal() {
-        return ordinal;
-    }
-
-    public void setOrdinal(int ordinal) {
-        this.ordinal = ordinal;
-    }
-
     public Date getRecordTime() {
         return recordTime;
     }
@@ -94,5 +81,13 @@ public class Volume {
 
     public void setBusiness(Business business) {
         this.business = business;
+    }
+
+    public Integer getSecrecyLen() {
+        return secrecyLen;
+    }
+
+    public void setSecrecyLen(Integer secrecyLen) {
+        this.secrecyLen = secrecyLen;
     }
 }

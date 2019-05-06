@@ -164,6 +164,8 @@ export class FileUploadComponent implements OnInit , AfterViewInit{
     private fb: FormBuilder,
     private businessServer: BusinessService,
     private dragulaService: DragulaService) {
+      dragulaService.destroy('SPILL');
+
       dragulaService.createGroup("SPILL", {
         removeOnSpill: false
       });

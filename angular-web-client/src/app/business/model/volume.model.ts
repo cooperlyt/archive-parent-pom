@@ -3,6 +3,6 @@ export class Volume{
     boxId:string;
     pageCount:number;
     secrecyLevel:string;
-    ordinal:number;
-    recordTime:Date = new Date();
+    secrecyLen:number;
+    recordTime:Date;
 }

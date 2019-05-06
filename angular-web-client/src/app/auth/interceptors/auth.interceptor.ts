@@ -56,7 +56,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.inflightAuthRequest.pipe(
       switchMap((newToken: string) => {
         // unset request inflight
-        console.log(" http auth switchMap: ", newToken);
+    
 
         this.inflightAuthRequest = null;
 

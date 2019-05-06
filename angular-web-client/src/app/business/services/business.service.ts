@@ -23,7 +23,7 @@ export class BusinessService {
   constructor(private _http: HttpClient) { }
 
   listUsedDefine():Observable<any>{
-    return this._http.get(`${environment.apiUrl}/business/v1/used-define`);
+    return this._http.get(`${environment.apiUrl}/business/v1/business/used-define`);
   }
 
   search(page: number, key: string | null , define?:string):Observable<any>{
@@ -35,7 +35,7 @@ export class BusinessService {
       params = params.append("define", define);
     }
     console.log("search business params:", JSON.stringify(params));
-    return this._http.get<any>(`${environment.apiUrl}/business/v1/search`,{params: params});
+    return this._http.get<any>(`${environment.apiUrl}/business/v1/business/search`,{params: params});
   }
 
   listOperation(id:string):Observable<Operation[]>{
@@ -93,12 +93,12 @@ export class BusinessService {
   }
 
   getTopBusiness():Observable<any>{
-    return this._http.get<any>(`${environment.apiUrl}/business/v1/list/top`);
+    return this._http.get<any>(`${environment.apiUrl}/business/v1/business/list/top`);
   }
 
   createBusiness(business: Business):Observable<string>{
     genBusinessSearchKey(business);
-    return this._http.post<any>(`${environment.apiUrl}/business/v1/new`,business).pipe(map(data => data.id));
+    return this._http.post<any>(`${environment.apiUrl}/business/v1/business/new`,business).pipe(map(data => data.id));
   }
 
   putVolumeContext(context: VolumeContext,businessId: string):Observable<string>{
@@ -259,7 +259,8 @@ export class BusinessService {
           source: new FormControl(business.source),
           version: new FormControl(business.version),
           corpType: new FormControl(business.corpType,Validators.required),
-          seq: new FormControl(business.seq)
+          seq: new FormControl(business.seq),
+          summaryTemplate: new FormControl(business.summaryTemplate)
           //fields:  new FormArray([])
         });
       })
@@ -278,7 +279,7 @@ export class BusinessService {
           deliverId: new FormControl(null,Validators.required),
           receiveDate: new FormControl(new Date(),Validators.required),
           memo: new FormControl(null),
-          summary: new FormControl(define.summary),
+          summaryTemplate: new FormControl(define.summary),
           status: new FormControl('CREATED'),
           source: new FormControl("INPUT"),
           version: new FormControl(0),

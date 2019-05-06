@@ -13,13 +13,14 @@ export class Business{
     memo:string;
     key:string;
     status:string;
-    summary:any;
+    summary:string;
+    summaryTemplate: string;
     source:string;
     version:number;
     defineVersion:number;
     seq:number;
 
-    volume:Volume[];
+    volume:Volume;
     contexts:VolumeContext[];
     fields:ValueGroup[];
 

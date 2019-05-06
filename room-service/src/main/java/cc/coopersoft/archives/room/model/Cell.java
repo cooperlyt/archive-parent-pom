@@ -30,9 +30,6 @@ public class Cell {
     @Column(name = "_SIZE")
     private Integer size;
 
-    @Column(name = "_FULL", nullable = false)
-    private boolean full;
-
     @Column(name = "SEQ",nullable = false)
     private int seq;
 
@@ -83,14 +80,6 @@ public class Cell {
 
     public void setSize(Integer size) {
         this.size = size;
-    }
-
-    public boolean isFull() {
-        return full;
-    }
-
-    public void setFull(boolean full) {
-        this.full = full;
     }
 
     public int getSeq() {
