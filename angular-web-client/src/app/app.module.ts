@@ -36,7 +36,7 @@ import { CorpSelectComponent } from './business/corp-select/corp-select.componen
 import { PersonInputComponent } from './business/comm/person-input/person-input.component';
 import { VaildMessageComponent } from './comm/vaild-message/vaild-message.component';
 import { DateTimePickerComponent } from './comm/date-time-picker/date-time-picker.component';
-import { faCamera,faAngleUp,faAngleDown, faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faAngleUp, faAngleDown, faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { ServerErrorInterceptor } from './comm/interceptors/server-error.interceptor';
 import { FileUploadComponent } from './business/file-upload/file-upload.component';
 import { BusinessCreateListComponent } from './business/business-create-list/business-create-list.component';
@@ -52,7 +52,12 @@ import { FileGalleryComponent } from './business/file-gallery/file-gallery.compo
 import { NgxGalleryModule } from 'ngx-gallery';
 import { DetailsComponent } from './business/details/details.component';
 import { OperationsComponent } from './business/operations/operations.component';
-import { EditComponent } from './business/edit/edit.component';
+import { BusinessEditComponent } from './business/business-edit/business-edit.component';
+import { BusinessSearchComponent } from './business/business-search/business-search.component';
+import { RoomComponent } from './archives/room/room.component';
+import { CabinetComponent } from './archives/cabinet/cabinet.component';
+import { CellComponent } from './archives/cell/cell.component';
+import { BoxComponent } from './archives/box/box.component';
 
 
 fontLibrary.add(
@@ -89,7 +94,12 @@ fontLibrary.add(
     FileGalleryComponent,
     DetailsComponent,
     OperationsComponent,
-    EditComponent
+    BusinessEditComponent,
+    BusinessSearchComponent,
+    RoomComponent,
+    CabinetComponent,
+    CellComponent,
+    BoxComponent
   ],
   entryComponents: [],
   imports: [

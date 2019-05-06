@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface CabinetRepository extends CrudRepository<Cabinet,String> {
 
-    @Query("select c from Cabinet c where c.rack.id = :rackId order by c.id")
+    @Query("select c from Cabinet c where c.rack.id = :rackId order by c.seq")
     List<Cabinet> listCabinetByRack(@Param("rackId")String rackId);
 }

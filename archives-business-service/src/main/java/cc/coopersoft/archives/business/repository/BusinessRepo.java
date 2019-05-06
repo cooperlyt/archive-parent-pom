@@ -1,6 +1,7 @@
 package cc.coopersoft.archives.business.repository;
 
 import cc.coopersoft.archives.business.model.Business;
+import cc.coopersoft.archives.business.model.UsedDefine;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,7 @@ public interface BusinessRepo extends CrudRepository<Business,String> {
     @Query("SELECT max(b.seq) from Business b")
     Integer maxSeq();
 
+    @Query("SELECT new cc.coopersoft.archives.business.model.UsedDefine(b.defineId,b.defineName, count(b) ) FROM Business b  group by b.defineId,b.defineName order by b.defineId")
+    List<UsedDefine> listUsedDefine();
 
 }

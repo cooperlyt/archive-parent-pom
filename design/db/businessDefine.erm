@@ -12,7 +12,7 @@
 	<category_index>0</category_index>
 	<zoom>1.0</zoom>
 	<x>-12</x>
-	<y>650</y>
+	<y>653</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2019-04-11 10:15:01</creation_date>
-			<updated_date>2019-04-23 04:07:57</updated_date>
+			<updated_date>2019-05-06 21:31:24</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -519,7 +519,7 @@
 		</word>
 		<word>
 			<id>23</id>
-			<length>512</length>
+			<length>1024</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>

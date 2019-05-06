@@ -17,11 +17,8 @@
     <version>2.1.4.RELEASE</version>
   </parent>
   <modules>
-    <module>confsvr</module>
-    <module>eurekasvr</module>
-    <module>zuulsvr</module>
+
     <module>room-service</module>
-    <module>authentication-service</module>
     <module>archives-business-service</module>
     <module>business-template-service</module>
     <module>join-corp-service</module>

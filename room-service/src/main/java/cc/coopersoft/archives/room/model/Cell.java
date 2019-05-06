@@ -36,6 +36,15 @@ public class Cell {
     @Column(name = "SEQ",nullable = false)
     private int seq;
 
+    @Column(name = "_ROW",nullable = false)
+    private int row;
+
+    @Column(name = "_COL",nullable = false)
+    private int col;
+
+    @Column(name = "PERCENTAGE", nullable = false)
+    private int percentage;
+
     public String getId() {
         return id;
     }
@@ -90,5 +99,29 @@ public class Cell {
 
     public void setSeq(int seq) {
         this.seq = seq;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public int getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(int percentage) {
+        this.percentage = percentage;
     }
 }

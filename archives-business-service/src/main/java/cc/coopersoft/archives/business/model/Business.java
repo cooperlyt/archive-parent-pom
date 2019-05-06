@@ -89,17 +89,17 @@ public class Business {
 
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL)
     @OrderBy("ordinal asc")
     private List<BusinessField> fields = new ArrayList<>(0);
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL)
     @OrderBy(" ordinal asc ")
     private List<VolumeContext> contexts = new ArrayList<>(0);
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL)
     @OrderBy("operationTime desc ")
     private List<Operation> operations = new ArrayList<>(0);
 

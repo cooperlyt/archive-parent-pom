@@ -1,21 +1,20 @@
 package cc.coopersoft.archives.business.services;
 
 import cc.coopersoft.archives.business.model.*;
-import cc.coopersoft.archives.business.repository.BusinessRepo;
-import cc.coopersoft.archives.business.repository.FieldRepo;
-import cc.coopersoft.archives.business.repository.OperationRepo;
-import cc.coopersoft.archives.business.repository.VolumeContextRepo;
+import cc.coopersoft.archives.business.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BusinessService {
@@ -34,8 +33,70 @@ public class BusinessService {
     @Autowired
     private OperationRepo operationRepo;
 
+    @Autowired
+    private VolumeRepo volumeRepo;
+
+    @Autowired
+    private BusinessSearchRepo businessSearchRepo;
+
+    public Page<Business> searchBusiness(Optional<String> key, Optional<Integer> page ,
+                                         Optional<String> define,
+                                         Optional<String> sort,
+                                         Optional<String> dir){
+
+        Sort sortable = new Sort((dir.isPresent() ? ("DESC".equals(dir.get()) ? Sort.Direction.DESC : Sort.Direction.ASC) : Sort.Direction.DESC)
+                , (sort.isPresent() ? sort.get() : "changeTime"));
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 ,20,sortable);
+        if (key.isPresent()) {
+            String searchKey = key.get();
+            if (define.isPresent()){
+                return businessSearchRepo.findAllByDefineIdAndIdOrDefineIdAndKeyContainingOrDefineIdAndDeliverContainingOrDefineIdAndDeliverId(define.get(),searchKey,define.get(), searchKey,define.get(), searchKey,define.get(), searchKey, pageable);
+            }else
+                return businessSearchRepo.findAllByIdOrKeyContainingOrDeliverContainingOrDeliverId(searchKey, searchKey, searchKey, searchKey, pageable);
+        }else{
+            if (define.isPresent()){
+                return businessSearchRepo.findAllByDefineId(define.get(),pageable);
+            }else
+                return businessSearchRepo.findAll(pageable);
+        }
+    }
+
+    public List<UsedDefine> listUsedDefined(){
+        return  businessRepo.listUsedDefine();
+    }
+
+
     public List<Operation> getOperationList(String businessId){
         return operationRepo.queryAllByBusinessIdOrderByOperationTimeDesc(businessId);
+    }
+
+    @Transactional
+    public String deleteBusiness(String id){
+        Business business = businessRepo.findBusinessById(id);
+        if (business != null) {
+            operationRepo.deleteAll(business.getOperations());
+            volumeContextRepo.deleteAll(business.getContexts());
+            for(BusinessField field: business.getFields()){
+                field.getValues().clear();
+                fieldRepo.save(field);
+            }
+            fieldRepo.deleteAll(business.getFields());
+            volumeRepo.deleteAllByBusinessId(id);
+            businessRepo.delete(business);
+            return business.getId();
+        }else{
+            return null;
+        }
+    }
+
+    public String abortBusiness(String id){
+        Business business = businessRepo.findBusinessById(id);
+        if (business != null){
+            business.setStatus(Business.Status.ABORT);
+            businessRepo.save(business);
+            return business.getId();
+        }
+        return null;
     }
 
     public void deleteVolumeContext(String contextId){

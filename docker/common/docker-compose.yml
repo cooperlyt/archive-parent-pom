@@ -1,11 +1,11 @@
 version: '2'
 services:
   eurekaserver:
-     image:   coopersoft/archive-eurekasvr:archives
+     image:   coopersoft/archive-eurekasvr:latest
      ports:
          - "8761:8761"
   configserver:
-      image: coopersoft/archive-confsvr:archives
+      image: coopersoft/archive-confsvr:latest
       ports:
          - "8888:8888"
       environment:
@@ -15,7 +15,7 @@ services:
       links:
         - eurekaserver:discovery
   zuulserver:
-      image: coopersoft/archive-zuulsvr:archives
+      image: coopersoft/archive-zuulsvr:latest
       ports:
         - "5555:5555"
       environment:
@@ -33,8 +33,8 @@ services:
 #      command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
       ports:
         - "3306:3306"
-#      volumes:
-#        - "/Users/cooper/Documents/mysql:/var/lib/mysql"
+      volumes:
+        - "/home/docker/data/db:/var/lib/mysql"
       environment:
         - MYSQL_ROOT_PASSWORD=p0stgr@s
         - MYSQL_DATABASE=archives
@@ -45,16 +45,16 @@ services:
 #        docker run --name mariadb_test -e MYSQL_ROOT_PASSWORD=my-secret=pw -d
 #        docker run -d --name mariadb_volume -P -v /data/Db/mariadb:/var/lib/mysql mariadb
 
-#  mediaservice:
-#    image: coopersoft/seaweedfs-media-service:stable1
-#    ports:
-#      - "6699:6699"
-#   volumes:
-#     - "/Users/cooper/Documents/weedfs/data:/data"
+  mediaservice:
+    image: coopersoft/seaweedfs-media-service:stable2
+    ports:
+      - "6699:6699"
+    volumes:
+      - "/home/docker/data/weedfs:/data"
 
 
   authenticationservice:
-      image: coopersoft/archive-authentication-service:archives
+      image: coopersoft/archive-authentication-service:latest
       ports:
         - "8901:8901"
       environment:

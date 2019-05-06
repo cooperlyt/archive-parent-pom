@@ -1,0 +1,55 @@
+
+<div class="details-grid">
+<div class="row">
+  <div class="col-sm-12 col-md-12 ">
+      <label>移交单位</label>
+      <div class="content">
+      [{{corpType[business.corpType]}}]{{business.deliver}}
+      </div>
+  </div>
+  <div class="col-sm-12 col-md-9">
+    <label>移交时间</label>
+    <div class="content">{{business.receiveDate | date: 'yyyy-MM-dd'}}</div>
+  </div>
+  <div class="col-sm-12 col-md-3">
+      <label>状态</label>
+      <div class="content">
+        {{businessStatus[business.status]}}
+      </div>
+  </div>
+</div>
+
+
+<div *ngFor="let row of fields">
+  <div *ngIf="row.type === 'SIMPLE'" class="row">
+    <div *ngFor="let item of row.fields" class="col-sm-12">
+
+      <label>
+        {{item.label}}
+      </label>
+      <div class="content">
+        {{item.value}}
+      </div>
+    </div>
+  </div>
+  <div *ngIf="row.type === 'CONSTRUCT_CORP'" class="row">
+    <div class="col-sm-12 col-md-12 ">
+        <label>{{row.singleValue.name}}</label>
+        <div class="content">
+        [{{corpType[row.singleValue.fieldDefines[0].value]}}]{{row.singleValue.fieldDefines[2].value}}
+        </div>
+    </div>
+  </div>
+  <div *ngIf="row.type === 'TEXT_AREA'" class="row">
+      <div class="col-sm-12 col-md-12 ">
+          <label>{{row.singleValue.name}}</label>
+          <div class="content">
+            {{row.singleValue.fieldDefines[0].value}}
+          </div>
+      </div>
+    </div>
+
+
+</div>
+
+</div>

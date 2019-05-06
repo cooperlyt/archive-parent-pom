@@ -27,7 +27,7 @@ public class Cabinet {
     private Set<Cell> cells = new HashSet<>(0);
 
     @Column(name = "SEQ", nullable = false)
-    int seq;
+    private int seq;
 
     public String getId() {
         return id;

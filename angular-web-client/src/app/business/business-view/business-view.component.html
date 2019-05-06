@@ -1,0 +1,82 @@
+
+<ng-template #delcontent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">删除确认！</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>确定要删除业务 {{business.defineName}} <strong>{{business.id}}</strong>！删除后将不可恢复，如果真的要删除业务请在下方输入业务编号</p>
+    <input ngbAutofocus type="text" class="form-control" [(ngModel)]="inputBusinessId">
+    <button type="button" [disabled]="!isInputBusinessId" class="btn btn-git btn-danger btn-block" (click)="deleteBusiness()">我确定要删除此业务</button>
+  </div>
+
+</ng-template>
+
+<div class="component-body">
+  <ngx-loading [show]="loadding" ></ngx-loading>
+    <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav fix-head">
+        <div class="repohead-details-container clearfix container">
+          <ul class="pagehead-actions">
+            <li><button class="btn btn-git btn-sm btn-success" >归档</button></li>
+            <li><button class="btn btn-git btn-sm btn-danger" (click)="openModal(delcontent)"> 删除</button></li>
+            <li><button class="btn btn-git btn-sm " > 拒收</button></li>
+
+            <li><div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-git btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                  编辑
+                </button>
+                <div ngbDropdownMenu class="dropdown-menu">
+                  <a ngbDropdownItem class="dropdown-item" routerLink="/business-edit/{{business.id}}" >修改档案信息</a>
+                  <a ngbDropdownItem class="dropdown-item" routerLink="/business-file/{{business.id}}">修改电子档案</a>
+    
+                </div>
+              </div></li>
+          </ul>
+          <h1 class="public ">
+    
+              <span [innerHTML]="repoIcon"></span>
+              <span class="author" itemprop="author">{{business.defineName}}</span><!--
+            --><span class="path-divider">/</span><!--
+            --><strong itemprop="name">{{business.id}}</strong>
+              
+            
+          </h1>
+        </div>
+
+        <nav class="reponav container">
+          <span >
+            <a class="reponav-item" routerLink="files"  routerLinkActive='selected' >
+              <fa-icon [icon]="faFile"></fa-icon>
+              <span itemprop="name">数字档案</span>
+              <!-- <span class="Counter">{{fileCount}}</span> -->
+              <meta itemprop="position" content="1">
+            </a>  
+          </span>
+
+          <span >
+            <a class="reponav-item" routerLink="details" routerLinkActive='selected'>
+              <span [innerHTML]="fileMediaIcon"></span>
+              <span itemprop="name">档案信息</span>
+              
+              <meta itemprop="position" content="2">
+            </a>    
+          </span>
+            <span >
+              <a class="reponav-item" routerLink="operations" routerLinkActive='selected'>
+                <span [innerHTML]="fileMediaIcon"></span>
+                <span itemprop="name">操作记录</span>
+                
+                <meta itemprop="position" content="2">
+              </a>    
+            </span>
+        </nav>
+
+    </div>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>
+

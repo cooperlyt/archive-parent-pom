@@ -1,0 +1,11 @@
+
+<div *ngIf="errors">
+  <p *ngIf="errors.min">值不能小于 <strong>{{errors.min.min}}</strong>! </p>
+  <p *ngIf="errors.max">值不能大于 <strong>{{errors.max.max}}</strong>!</p>
+  <p *ngIf="errors.required">不允为空!</p>
+  <p *ngIf="errors.minlength">长度不能小于 <strong>{{errors.minlength.requiredLength}}</strong>!</p>
+  <p *ngIf="errors.maxlength">长度不能大于 <strong>{{errors.maxlength.requiredLength}}</strong>!</p>
+  <p *ngIf="errors.pattern">格式不正确!</p>
+  <p *ngIf="errors.ngbDate">日期格式不正确!</p>
+  <p *ngIf="errors.dateValid">格式不正确</p>
+</div>

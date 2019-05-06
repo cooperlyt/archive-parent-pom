@@ -1,0 +1,66 @@
+<div  [formGroup]="formGroup" [ngSwitch]="formGroup.value.type">
+  <div *ngSwitchCase="'SIMPLE'" formArrayName="fieldDefines" class="row">
+    <div *ngFor="let define of fields.controls; let j=index" class="col" [className]="define.value.option.style">
+
+      <dl  [formGroupName]="j" class="form-group">
+            <dt class="input-label">
+              <label *ngIf="define.value.label" [attr.for]="formGroup.value.define + '-' + define.value.id">{{define.value.label}}</label>
+            </dt>
+            <dd [ngSwitch]="define.value.option.controlType">
+              <input [type]="define.value.option.type" [maxLength]="define.value.option.maxLength" [autocomplete]="define.value.option.autocomplete"
+                [id]="formGroup.value.define + '-' + define.value.id" *ngSwitchCase="'textbox'" formControlName="value"
+                class="form-control" [required]="!(define.value.option && define.value.option.nullable)">
+
+              <ng-select [id]="formGroup.value.define + '-' + define.value.id" *ngSwitchCase="'dropdown'" notFoundText="没有符合条件的项"
+                      formControlName="value" [items]="define.value.option.option" ></ng-select>
+
+              <!-- <div *ngSwitchCase="'datepicker'" class="input-group">
+                <input [required]="!(define.option && define.option.nullable)" [id]="fieldGroup.id + '-' + define.id" autocomplete="off" class="form-control" placeholder="yyyy-mm-dd" formControlName="value" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                  <a class="btn btn-outline-secondary" (click)="d.toggle()" ><fa-icon [icon]="faCalendarAlt"></fa-icon></a> 
+                </div>
+              </div> -->
+              
+              <app-date-time-picker  *ngSwitchCase="'datepicker'" [inputDatetimeFormat]="(define.value.option && define.value.option.istime) ? 'yyyy-M-d H:mm:ss' : 'yyyy-M-d'" formControlName="value" name="activeEndDate"></app-date-time-picker>   
+
+            </dd>
+            <div class="alert alert-danger" [hidden]="formGroup.get('fieldDefines').at(j).valid || formGroup.get('fieldDefines').at(j).pristine">
+              <!-- <p *ngIf="(formGroup.get('fieldDefines').at(j).get('value').errors) && formGroup.get('fieldDefines').at(j).get('value').errors.required">
+                  required
+              </p> -->
+              <app-vaild-message [errors]="geterror(j)"></app-vaild-message>
+            </div>
+        </dl>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'CONSTRUCT_CORP'">
+    <dl class="form-group">
+        <dt class="input-label">
+            <label>{{formGroup.value.name}}</label>
+        </dt>
+        <dd>
+            <app-corp-select [form]="formGroup" formArray="fieldDefines"></app-corp-select>
+        </dd>
+    </dl>
+  </div>
+
+  <div *ngSwitchCase="'TEXT_AREA'">
+      <dl class="form-group" formArrayName="fieldDefines">
+          <dt class="input-label">
+              <label [attr.for]="formGroup.value.define">{{formGroup.value.name}}</label>
+          </dt>
+          <dd formGroupName="0">
+            <textarea [required]="!(formGroup.value.option && formGroup.value.option.nullable)" [rows]="(!!formGroup.value.option.rows) ? formGroup.value.option.rows : ''"
+              [id]="formGroup.value.define" formControlName="value" class="form-control"></textarea>
+          </dd>
+          <div class="alert alert-danger" [hidden]="formGroup.get('fieldDefines').at(0).valid || formGroup.get('fieldDefines').at(0).pristine">
+              <!-- <p *ngIf="(formGroup.get('fieldDefines').at(j).get('value').errors) && formGroup.get('fieldDefines').at(j).get('value').errors.required">
+                  required
+              </p> -->
+              <app-vaild-message [errors]="formGroup.get('fieldDefines').at(0).errors"></app-vaild-message>
+          </div>
+      </dl>   
+  </div>
+
+</div>

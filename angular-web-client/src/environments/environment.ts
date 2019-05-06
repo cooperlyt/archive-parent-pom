@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5555/api',
+  apiUrl: 'http://192.168.1.21:5555/api',
   clientId: 'archives',
   clientPassword: 'thisissecret',
-  fileUrl: "http://localhost:6699"
+  fileUrl: "http://192.168.1.21:6699"
 };
 
 /*
