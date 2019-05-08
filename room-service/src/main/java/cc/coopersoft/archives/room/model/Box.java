@@ -1,11 +1,13 @@
 package cc.coopersoft.archives.room.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "BOX")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Box {
 
     @Id

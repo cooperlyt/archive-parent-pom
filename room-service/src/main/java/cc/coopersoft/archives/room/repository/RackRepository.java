@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface RackRepository extends CrudRepository<Rack,String> {
 
-    @Query("select r from Rack r where r.room.id = :roomId order by r.id")
+    @Query("select r from Rack r where r.room.id = :roomId order by r.seq")
     List<Rack> listRackByRoom(@Param("roomId") String roomId);
 }

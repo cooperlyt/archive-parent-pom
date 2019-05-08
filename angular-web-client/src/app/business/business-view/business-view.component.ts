@@ -36,6 +36,14 @@ export class BusinessViewComponent implements OnInit {
   inputBusinessId:string;
   loadding :boolean = false;
 
+  get canComplete():boolean{
+    return (this.business.status === 'CREATED') || (this.business.status === 'RUNNING')
+  }
+
+  get canRecord():boolean{
+    return this.business.status === 'COMPLETE'
+  }
+
   get isInputBusinessId():boolean{
     return this.inputBusinessId === this.business.id;
   }

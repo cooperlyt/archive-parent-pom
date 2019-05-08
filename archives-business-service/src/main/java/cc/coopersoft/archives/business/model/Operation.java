@@ -13,27 +13,22 @@ public class Operation {
         COMMIT,
         CREATE,
         EDITOR,
+        RECORD,
+        ARCHIVE,
         ABORT
     }
 
     public Operation() {
     }
 
-    public Operation(Type type, String employeeId, String employeeName, String explain, Date operationTime, Business business) {
-        this.type = type;
-        this.employeeId = employeeId;
-        this.employeeName = employeeName;
-        this.explain = explain;
-        this.operationTime = operationTime;
-        this.business = business;
-    }
 
-    public Operation(Type type, String employeeId, String employeeName, Date operationTime, Business business) {
+    public Operation(Type type, String employeeId, String employeeName, Business business,String explain) {
         this.type = type;
         this.employeeId = employeeId;
         this.employeeName = employeeName;
-        this.operationTime = operationTime;
+        this.operationTime = new Date();
         this.business = business;
+        this.explain = explain;
     }
 
     @Id

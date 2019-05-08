@@ -3,6 +3,7 @@
 export const BusinessStatus = {
     PREPARE : '准备',
     REJECT : '驳回',
+    RUNNING: '运行中',
     CREATED : '建立',
     COMPLETE : '完成',
     RECORDED : '归档',
@@ -22,4 +23,11 @@ export const CORP_TYPE = {
     PROSPECTING:'勘察单位',
     DESIGN:'设计单位',
     SUPERVISION:'监理单位'
-  }
+}
+
+export const SecrecyLevel = {
+    TopSecret: '绝密',
+    Classified: '机密',
+    Secret: '秘密',
+    None: '公开'
+}

@@ -6,9 +6,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RoomLocationService {
@@ -29,7 +27,7 @@ public class RoomLocationService {
     private BoxRepository boxRepository;
 
     public List<Room> getAllRoom(){
-        return Lists.newArrayList(roomRepository.findAll());
+        return roomRepository.findAllByOrderBySeq();
     }
 
     public List<Rack> getRacks(String roomId){
@@ -39,6 +37,8 @@ public class RoomLocationService {
     public List<Cabinet> getCabinets(String rackId){
         return cabinetRepository.listCabinetByRack(rackId);
     }
+
+
 
     public List<List<Cell>> getCells(String cabinetId){
         List<Cell> cells = cellRepository.listCellByCabinet(cabinetId);
@@ -55,7 +55,7 @@ public class RoomLocationService {
         return result;
     }
 
-    public List<Box> getBoxs(String cellId){
+    public List<Box> getBoxes(String cellId){
         return boxRepository.listBoxByCell(cellId);
     }
 
@@ -67,14 +67,107 @@ public class RoomLocationService {
        return null;
     }
 
-//    public Box createBox(String cellId){
-//        Long maxSeq = boxRepository.maxSeq(cellId);
-//        if (maxSeq == null){
-//            maxSeq = 0l;
-//        }
-//        maxSeq++;
-//
-//
-//    }
+    public RoomPath getRoomPathByRack(String rackId){
+        RackPath rackPath = getRackPath(rackId);
+        RoomPath result = new RoomPath(rackPath.getRack().getRoom());
+        result.setRackPath(rackPath);
+        result.setRacks(result.getRoom().getRacks());
+        return result;
+    }
+
+    public RoomPath getRoomPath(String roomId){
+        Optional<Room> room = roomRepository.findById(roomId);
+        if (!room.isPresent()){
+            return null;
+        }
+        RoomPath result = new RoomPath(room.get());
+        result.setRacks(result.getRoom().getRacks());
+        for(Rack rack: result.getRacks()){
+            if (rack.getPercentage() < 100){
+                result.setRackPath(getRackPath(rack.getId()));
+                break;
+            }
+        }
+        return result;
+    }
+
+    public RackPath getRackPath(String rackId){
+        Optional<Rack> rack = rackRepository.findById(rackId);
+        if (!rack.isPresent()){
+            return null;
+        }
+        RackPath result = new RackPath(rack.get());
+
+        result.setCabinets(result.getRack().getCabinets());
+
+        for(Cabinet cabinet: result.getCabinets()){
+            if (cabinet.getPercentage() < 100){
+                result.setCabinetPath(getCabinetPath(cabinet.getId()));
+                break;
+            }
+        }
+        return result;
+    }
+
+    public CabinetPath getCabinetPath(String cabinetId){
+        Optional<Cabinet> cabinet = cabinetRepository.findById(cabinetId);
+        if (!cabinet.isPresent()){
+            return null;
+        }
+        CabinetPath result = new CabinetPath(cabinet.get());
+        result.setCells(getCells(result.getCabinet().getId()));
+        List<Cell> cells = new ArrayList<>();
+        for(List<Cell> cs : result.getCells()){
+            for(Cell c : cs){
+                cells.add(c);
+            }
+        }
+        Collections.sort(cells);
+        Cell before = null;
+        Cell curr = null;
+        for(Cell c : cells){
+            before = curr;
+            curr = c;
+            if (c.getPercentage() < 100){
+                if (c.getPercentage() > 0){
+                    before = null;
+                }
+                break;
+            }
+        }
+
+        if (before != null){
+            List<Box> boxes = before.getBoxes();
+            for(Box box: boxes){
+                if (!box.isFull()){
+                    result.setCellPath(getCellPath(before.getId()));
+                    break;
+                }
+            }
+        }
+
+        if ((result.getCellPath() == null) && (curr != null)){
+            result.setCellPath(getCellPath(curr.getId()));
+        }
+
+        return result;
+    }
+
+    public CellPath getCellPath(String cellId){
+        Optional<Cell> cell = cellRepository.findById(cellId);
+        if (!cell.isPresent()){
+            return null;
+        }
+
+        CellPath result = new CellPath(cell.get());
+        for(Box b: result.getCell().getBoxes()){
+            if (!b.isFull()){
+                result.setBox(b);
+                break;
+            }
+        }
+        return result;
+    }
+
 
 }

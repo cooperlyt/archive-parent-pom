@@ -15,6 +15,7 @@ public class Business {
     public enum Status{
         PREPARE, //准备
         REJECT,  //驳回
+        RUNNING, //运行中
         CREATED, //建立
         COMPLETE, //完成
         RECORDED, //归档

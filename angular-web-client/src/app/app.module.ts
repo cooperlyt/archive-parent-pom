@@ -59,6 +59,8 @@ import { CabinetComponent } from './archives/cabinet/cabinet.component';
 import { CellComponent } from './archives/cell/cell.component';
 import { BoxComponent } from './archives/box/box.component';
 import { RecordComponent } from './business/record/record.component';
+import { CompleteComponent } from './business/complete/complete.component';
+import { OcticonDirective } from './comm/octicon.directive';
 
 
 fontLibrary.add(
@@ -101,7 +103,9 @@ fontLibrary.add(
     CabinetComponent,
     CellComponent,
     BoxComponent,
-    RecordComponent
+    RecordComponent,
+    CompleteComponent,
+    OcticonDirective
   ],
   entryComponents: [],
   imports: [

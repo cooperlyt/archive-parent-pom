@@ -33,6 +33,7 @@ import { BoxComponent } from './archives/box/box.component';
 import { BoxsResolver } from './archives/resolver/boxs.resolver';
 import { CellResolver } from './archives/resolver/cell.resolver';
 import { RecordComponent } from './business/record/record.component';
+import { CompleteComponent } from './business/complete/complete.component';
 
 
 
@@ -47,8 +48,13 @@ const routes: Routes = [
         component: HomeComponent   // {3}
       },
       {
-        path: 'record/:id',
+        path: 'business-record/:id',
         component: RecordComponent,
+        resolve: {business: BusinessResolver, rooms: RoomsResolver}
+      },
+      {
+        path: 'business-complete/:id',
+        component: CompleteComponent,
         resolve: {business: BusinessResolver}
       },
       {
@@ -69,7 +75,7 @@ const routes: Routes = [
                   {
                     path: ':id',
                     component: BoxComponent,
-                    resolve:{boxs: BoxsResolver, cell: CellResolver}
+                    resolve:{cell: CellResolver}
                   }
                 ]
               }

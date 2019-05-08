@@ -5,10 +5,12 @@ import cc.coopersoft.archives.business.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -24,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@PreAuthorize("hasRole('USER')")
 public class BusinessService {
 
     private static final Logger logger = LoggerFactory.getLogger(BusinessService.class);
@@ -45,6 +47,63 @@ public class BusinessService {
 
     @Autowired
     private BusinessSearchRepo businessSearchRepo;
+
+    @Transient
+    public String putArchive(String volumeId, String boxId, String explain, String userName){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Volume> volume = volumeRepo.findById(volumeId);
+        if (!volume.isPresent()) {
+            return null;
+        }
+        if ((volume.get().getBoxId() != null) && !"".equals(volume.get().getBoxId())){
+            return null;
+        }
+        volume.get().setBoxId(boxId);
+        Business business = volume.get().getBusiness();
+        business.setChangeTime(new Date());
+        Operation operation = new Operation(Operation.Type.ARCHIVE,authentication.getPrincipal().toString(),userName,business,explain);
+        business.getOperations().add(operation);
+        business.setStatus(Business.Status.RECORDED);
+
+        return volumeRepo.save(volume.get()).getBusiness().getId();
+    }
+
+    @Transient
+    public Volume saveVolume(String businessId, Volume volume, String userName){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Business business = businessRepo.findBusinessById(businessId);
+        if (business == null){
+            return null;
+        }
+        Operation.Type type;
+        if (business.getVolume() != null){
+            volumeRepo.delete(business.getVolume());
+            type = Operation.Type.EDITOR;
+        }else{
+            type = Operation.Type.RECORD;
+            volume.setId(business.getDefineId() + '.' + volume.getId());
+            if (!volume.isOld()){
+               volume.setRecordTime(new Date());
+            }
+        }
+        if (!Business.Status.RECORDED.equals(business.getStatus())){
+            business.setStatus(Business.Status.COMPLETE);
+        }
+
+        int pageCount = 0;
+        for(VolumeContext context: business.getContexts()){
+            pageCount += context.getPageCount();
+        }
+        volume.setPageCount(pageCount);
+
+        business.setVolume(volume);
+        volume.setBusiness(business);
+
+        business.setChangeTime(new Date());
+        Operation operation = new Operation(type,authentication.getPrincipal().toString(),userName,business,volume.getMemo());
+        business.getOperations().add(operation);
+        return volumeRepo.save(volume);
+    }
 
     public Page<Business> searchBusiness(Optional<String> key, Optional<Integer> page ,
                                          Optional<String> define,
@@ -163,6 +222,7 @@ public class BusinessService {
         return result;
     }
 
+    @Transient
     public Business saveBusiness(Business business,String userName){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -178,14 +238,10 @@ public class BusinessService {
             business.setId(business.getDefineId() + "." + seq);
             business.setVersion(1);
             type = Operation.Type.CREATE;
+
         }else {
             type = Operation.Type.EDITOR;
         }
-
-        business.setChangeTime(new Date());
-
-        Operation operation = new Operation(type,authentication.getPrincipal().toString(),userName,new Date(),business);
-        business.getOperations().add(operation);
 
         if (business.getReceiveDate() == null){
             business.setReceiveDate(new Date());
@@ -251,6 +307,14 @@ public class BusinessService {
             logger.debug("business summary:" + summary.toString());
             business.setSummary(summary.toString());
         }
+
+        business.setChangeTime(new Date());
+
+        Operation operation = new Operation(type,authentication.getPrincipal().toString(),userName,business,
+                ((business.getMemo() == null) || "".equals(business.getMemo().trim())) ? business.getSummary() : business.getMemo() );
+        business.getOperations().add(operation);
+
+
 
 
         return businessRepo.save(business);

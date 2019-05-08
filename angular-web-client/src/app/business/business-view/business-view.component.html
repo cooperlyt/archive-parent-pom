@@ -19,7 +19,10 @@
     <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav fix-head">
         <div class="repohead-details-container clearfix container">
           <ul class="pagehead-actions">
-            <li><button class="btn btn-git btn-sm btn-success" >归档</button></li>
+            <li *ngIf="canComplete"><button class="btn btn-git btn-sm btn-success" routerLink="/business-complete/{{business.id}}">归档建卷</button></li>
+            <li *ngIf="canRecord"><button class="btn btn-git btn-sm btn-success" routerLink="/business-record/{{business.id}}">装盒上架</button></li>
+            <li><button class="btn btn-git btn-sm" > 卷内目录</button></li>
+
             <li><button class="btn btn-git btn-sm btn-danger" (click)="openModal(delcontent)"> 删除</button></li>
             <li><button class="btn btn-git btn-sm " > 拒收</button></li>
 

@@ -2,14 +2,18 @@ package cc.coopersoft.archives.room.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "CELL")
-public class Cell {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Cell implements Comparable<Cell>{
 
     @Id
     @Column(name = "CELL_ID", nullable = false, unique = true, length = 24)
@@ -23,9 +27,10 @@ public class Cell {
     @JoinColumn(name = "CABINET_ID", nullable = false)
     private Cabinet cabinet;
 
-    @JsonIgnore
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true , mappedBy = "cell")
-    private Set<Box> boxes = new HashSet<>(0);
+    @OrderBy("seq asc")
+    private List<Box> boxes = new ArrayList<>(0);
 
     @Column(name = "_SIZE")
     private Integer size;
@@ -66,11 +71,11 @@ public class Cell {
         this.cabinet = cabinet;
     }
 
-    public Set<Box> getBoxes() {
+    public List<Box> getBoxes() {
         return boxes;
     }
 
-    public void setBoxes(Set<Box> boxes) {
+    public void setBoxes(List<Box> boxes) {
         this.boxes = boxes;
     }
 
@@ -112,5 +117,26 @@ public class Cell {
 
     public void setPercentage(int percentage) {
         this.percentage = percentage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cell cell = (Cell) o;
+
+        return id.equals(cell.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public int compareTo(Cell o) {
+        return Integer.valueOf(getSeq()).compareTo(o.getSeq());
     }
 }

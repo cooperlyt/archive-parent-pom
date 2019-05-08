@@ -50,6 +50,11 @@ h3 {
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0;
     margin-top: 0;
+    line-height: 1.5;
+}
+
+label {
+    font-weight: 600;
 }
 
 .f6 {
@@ -162,13 +167,6 @@ dl.form-group{
     background-color: #24292e !important;
 }
 
-.note {
-    color: #586069;
-    font-size: 12px;
-    margin: 4px 0 2px;
-    min-height: 17px;
-}
-
 dd {
     margin-left: 0;
 }
@@ -199,6 +197,89 @@ dd {
     line-height: 0;
     overflow: hidden;
     width: 20px;
+}
+
+.select-menu-modal {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid rgba(27,31,35,.15);
+    border-radius: 3px;
+    box-shadow: 0 3px 12px rgba(27,31,35,.15);
+    color: #586069;
+    font-size: 12px;
+    margin-bottom: 20px;
+    margin-top: 4px;
+    overflow: hidden;
+    position: relative;
+    width: 300px;
+
+    padding: 0;
+}
+
+.select-menu-list {
+    max-height: 400px;
+    overflow: auto;
+    position: relative;
+}
+
+.select-menu-list .dropdown-item {
+    background-color: #fff;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    text-align: left;
+}
+
+.select-menu-list .dropdown-item {
+    border-bottom: 1px solid #eaecef;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    padding: 8px 8px 8px 30px;
+}
+
+.select-menu-list .dropdown-item.navigation-focus, 
+.select-menu-list .dropdown-item.navigation-focus 
+.description-inline, 
+.select-menu-list .dropdown-item.navigation-focus.select-menu-action, 
+.select-menu-list .dropdown-item.navigation-focus.selected, 
+.select-menu-list .dropdown-item:focus, 
+.select-menu-list .dropdown-item:focus .description-inline, 
+.select-menu-list .dropdown-item:focus.select-menu-action, 
+.select-menu-list .dropdown-item:focus.selected, 
+.select-menu-list .dropdown-item:hover, 
+.select-menu-list .dropdown-item:hover .description-inline, 
+.select-menu-list .dropdown-item:hover.select-menu-action, 
+.select-menu-list .dropdown-item:hover.selected, 
+.select-menu-list .dropdown-item[aria-checked=true]:focus, 
+.select-menu-list .dropdown-item[aria-checked=true]:hover, 
+.select-menu-list .dropdown-item[aria-selected=true] 
+.description-inline, 
+.select-menu-list .dropdown-item[aria-selected=true].select-menu-action, 
+.select-menu-list .dropdown-item[aria-selected=true]:focus, 
+.select-menu-list .dropdown-item[aria-selected=true]:hover {
+    background-color: #0366d6;
+    color: #fff;
+}
+
+.select-menu-list .dropdown-item:focus {
+    outline: none;
+}
+.select-menu-list .dropdown-item:hover {
+    text-decoration: none;
+}
+
+.select-menu-modal .dropdown-divider, .select-menu-modal .dropdown-header {
+    background: #f6f8fa;
+    border-bottom: 1px solid #e1e4e8;
+    line-height: 16px;
+    padding: 8px 10px;
+}
+
+.select-menu-item-icon {
+    float: left;
+    margin-left: -20px;
 }
 
 .css-truncate.css-truncate-target, .css-truncate .css-truncate-target {
@@ -437,6 +518,12 @@ a.branch-name {
     line-height: 20px;
     padding: 3px 10px;
     vertical-align: middle;
+}
+
+.btn i {
+    font-style: normal;
+    font-weight: 500;
+    opacity: .75;
 }
 
 .btn.btn-git.selected, .btn.btn-git:active, [open]>.btn.btn-git {
@@ -682,6 +769,32 @@ a.branch-name {
     border-top-left-radius: 2px;
 }
 
+.note {
+    color: #586069;
+    font-size: 12px;
+    margin: 4px 0 2px;
+    min-height: 17px;
+}
+
+.form-checkbox {
+    margin: 15px 0;
+    padding-left: 20px;
+    vertical-align: middle;
+}
+
+.form-checkbox .note {
+    color: #586069;
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.form-checkbox input[type=checkbox], .form-checkbox input[type=radio] {
+    float: left;
+    margin: 5px 0 0 -50px;
+    vertical-align: middle;
+}
 
 // custome 
 .details-grid .row{
@@ -734,7 +847,32 @@ span.disabled{
 .ng-valid[required], .ng-valid.required,  .required .ng-valid .ng-select-container{
     border-left: 5px solid #42A948; /* green */
 }
+
+.input-inner-check .ng-valid[required], 
+.input-group input.ng-valid[required],
+.input-inner-check .ng-valid.required,  
+.input-group input.ng-valid.required,
+.input-inner-check .required .ng-valid .ng-select-container
+.input-group input.required .ng-valid .ng-select-container
+{
+    border-left: 1px solid #ced4da;;
+    padding-right: 30px;
+    background-size: 16px 16px;   
+    background-image: url(./assets/images/success@2x.png); 
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+}
+
   
+.input-inner-check .ng-touched.ng-invalid:not(form).form-control ,
+.input-group input.ng-touched.ng-invalid:not(form).form-control{
+    border-left: 1px solid #ced4da;;
+    padding-right: 30px;
+    background-size: 16px 16px;
+    background-image: url(./assets/images/error@2x.png);
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+}
 .ng-touched.ng-invalid:not(form).form-control{
     border-left: 5px solid #a94442; /* red */
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px #fde6e8;

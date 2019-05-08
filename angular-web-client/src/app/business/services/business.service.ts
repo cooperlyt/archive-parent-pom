@@ -14,6 +14,8 @@ import { genBusinessSearchKey } from '../custom-component';
 import { VolumeContext } from '../model/volume-context.model';
 import { ValueGroup } from '../model/value-group.model';
 import { Operation } from '../model/operation.model';
+import { DefaultRecord } from '../model/default-record.model';
+import { Volume } from '../model/volume.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,16 @@ import { Operation } from '../model/operation.model';
 export class BusinessService {
 
   constructor(private _http: HttpClient) { }
+
+  saveVolume(businessId:string , volume: Volume):Observable<string>{
+    return this._http.post<any>(`${environment.apiUrl}/business/v1/business/volume/${businessId}`,volume).pipe(
+      map(data => data.id)
+    );
+  }
+
+  getDefaultRecord(id:string):Observable<DefaultRecord>{
+    return this._http.get<DefaultRecord>(`${environment.apiUrl}/template/v1/record/${id}`);
+  }
 
   listUsedDefine():Observable<any>{
     return this._http.get(`${environment.apiUrl}/business/v1/business/used-define`);

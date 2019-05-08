@@ -13,4 +13,6 @@ public interface CellRepository extends CrudRepository<Cell,String> {
 
     @Query("select c from Cell c where c.cabinet.id = :cabinetId order by c.row , c.col")
     List<Cell> listCellByCabinet(@Param("cabinetId") String cabinetId);
+
+
 }

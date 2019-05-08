@@ -100,7 +100,25 @@ public class BusinessController {
         return "{\"id\":\"" + id + "\"}";
     }
 
+    @RequestMapping(value = "/business/volume/{id}", method = RequestMethod.POST)
+    public String saveVolume(@PathVariable("id")String businessId, @RequestBody Volume volume,
+                             HttpServletRequest request){
+        Volume result = businessService.saveVolume(businessId,volume,JWTUtils.getUserName(request));
+        if (result == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
+        }
+        return "{\"id\":\"" + result.getBusiness().getId() + "\"}";
+    }
 
+    @RequestMapping(value = "/business/archive/{volumeId}", method = RequestMethod.PUT)
+    public String archive(@PathVariable("volumeId")String volumeId, @RequestBody OperationAction operationAction,
+                          HttpServletRequest request){
+        String id = businessService.putArchive(volumeId,operationAction.getId(),operationAction.getExplain(),JWTUtils.getUserName(request));
+        if (id == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
+        }
+        return "{\"id\":\"" + id + "\"}";
+    }
 
 
     @RequestMapping(value = "/business/context/{businessId}", method = RequestMethod.GET)

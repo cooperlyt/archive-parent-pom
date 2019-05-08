@@ -22,14 +22,10 @@
               </div> -->
               
               <app-date-time-picker  *ngSwitchCase="'datepicker'" [inputDatetimeFormat]="(define.value.option && define.value.option.istime) ? 'yyyy-M-d H:mm:ss' : 'yyyy-M-d'" formControlName="value" name="activeEndDate"></app-date-time-picker>   
-
+              <app-vaild-message [control]="formGroup.get('fieldDefines').at(j).get('value')"></app-vaild-message>
             </dd>
-            <div class="alert alert-danger" [hidden]="formGroup.get('fieldDefines').at(j).valid || formGroup.get('fieldDefines').at(j).pristine">
-              <!-- <p *ngIf="(formGroup.get('fieldDefines').at(j).get('value').errors) && formGroup.get('fieldDefines').at(j).get('value').errors.required">
-                  required
-              </p> -->
-              <app-vaild-message [errors]="geterror(j)"></app-vaild-message>
-            </div>
+     
+            
         </dl>
     </div>
   </div>
@@ -53,13 +49,8 @@
           <dd formGroupName="0">
             <textarea [required]="!(formGroup.value.option && formGroup.value.option.nullable)" [rows]="(!!formGroup.value.option.rows) ? formGroup.value.option.rows : ''"
               [id]="formGroup.value.define" formControlName="value" class="form-control"></textarea>
+            <app-vaild-message [control]="formGroup.get('fieldDefines').at(0).get('value')"></app-vaild-message>
           </dd>
-          <div class="alert alert-danger" [hidden]="formGroup.get('fieldDefines').at(0).valid || formGroup.get('fieldDefines').at(0).pristine">
-              <!-- <p *ngIf="(formGroup.get('fieldDefines').at(j).get('value').errors) && formGroup.get('fieldDefines').at(j).get('value').errors.required">
-                  required
-              </p> -->
-              <app-vaild-message [errors]="formGroup.get('fieldDefines').at(0).errors"></app-vaild-message>
-          </div>
       </dl>   
   </div>
 

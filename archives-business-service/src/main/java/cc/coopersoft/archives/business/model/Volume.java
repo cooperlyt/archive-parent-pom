@@ -14,7 +14,7 @@ public class Volume {
     @Column(name = "VOLUME_ID" , unique = true, nullable = false)
     private String id;
 
-    @Column(name = "BOX_ID", nullable = false, unique = true)
+    @Column(name = "BOX_ID")
     private String boxId;
 
     @Column(name = "PAGE_COUNT")
@@ -30,8 +30,14 @@ public class Volume {
     @Column(name = "SECRECY_LEN")
     private Integer secrecyLen;
 
+    @Column(name = "OLD", nullable = false)
+    private boolean old;
+
+    @Column(name = "MEMO")
+    private String memo;
+
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false , cascade = CascadeType.ALL)
     @JoinColumn(name = "BUSINESS_ID", nullable = false )
     private Business business;
 
@@ -89,5 +95,21 @@ public class Volume {
 
     public void setSecrecyLen(Integer secrecyLen) {
         this.secrecyLen = secrecyLen;
+    }
+
+    public boolean isOld() {
+        return old;
+    }
+
+    public void setOld(boolean old) {
+        this.old = old;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }

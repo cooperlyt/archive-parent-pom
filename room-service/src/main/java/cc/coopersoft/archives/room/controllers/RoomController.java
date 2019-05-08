@@ -4,10 +4,7 @@ import cc.coopersoft.archives.room.model.*;
 import cc.coopersoft.archives.room.services.RoomLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -46,7 +43,7 @@ public class RoomController {
     @RequestMapping(value = "/list-box/{cell}", method = RequestMethod.GET)
     public List<Box> listBox(@PathVariable("cell")String cell){
 
-        return roomLocationService.getBoxs(cell);
+        return roomLocationService.getBoxes(cell);
     }
 
     @RequestMapping(value="/cell/{id}", method = RequestMethod.GET)
@@ -60,10 +57,65 @@ public class RoomController {
         return result;
     }
 
-//    @RequestMapping(value = "/editor/new/{cell}", method = RequestMethod.GET)
-//    public String createBox(@PathVariable String id){
-//
-//    }
+    @RequestMapping(value = "/path/room/{id}", method = RequestMethod.GET)
+    public RoomPath getRoomPath(@PathVariable("id")String id){
+        RoomPath result = roomLocationService.getRoomPath(id);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/path/room-rack/{id}", method = RequestMethod.GET)
+    public RoomPath getRoomPathByRack(@PathVariable("id") String id){
+        RoomPath result = roomLocationService.getRoomPathByRack(id);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/path/rack/{id}", method = RequestMethod.GET)
+    public RackPath getRackPath(@PathVariable("id")String id){
+        RackPath result = roomLocationService.getRackPath(id);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/path/cabinet/{id}", method = RequestMethod.GET)
+    public CabinetPath getCabinetPath(@PathVariable("id")String id){
+        CabinetPath result = roomLocationService.getCabinetPath(id);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/path/cell/{id}", method = RequestMethod.GET)
+    public CellPath getCellPath(@PathVariable("id")String id){
+        CellPath result = roomLocationService.getCellPath(id);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/editor/new/{cell}", method = RequestMethod.PUT)
+    public Box createBox(@PathVariable("cell") String id, @RequestBody Box box){
+        return null;
+    }
 
 
 }

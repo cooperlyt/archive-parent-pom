@@ -1,13 +1,17 @@
 package cc.coopersoft.archives.room.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "RACK")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Rack {
 
     @Id
@@ -21,6 +25,9 @@ public class Rack {
     @Column(name = "PERCENTAGE" , nullable = false)
     private int percentage;
 
+    @Column(name = "SEQ", nullable = false)
+    private int seq;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ROOM_ID", nullable = false)
@@ -28,7 +35,8 @@ public class Rack {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "rack")
-    private Set<Cabinet> cabinets = new HashSet<>(0);
+    @OrderBy("seq asc")
+    private List<Cabinet> cabinets = new ArrayList<>(0);
 
     public String getId() {
         return id;
@@ -54,11 +62,11 @@ public class Rack {
         this.room = room;
     }
 
-    public Set<Cabinet> getCabinets() {
+    public List<Cabinet> getCabinets() {
         return cabinets;
     }
 
-    public void setCabinets(Set<Cabinet> cabinets) {
+    public void setCabinets(List<Cabinet> cabinets) {
         this.cabinets = cabinets;
     }
 
@@ -68,5 +76,13 @@ public class Rack {
 
     public void setPercentage(int percentage) {
         this.percentage = percentage;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 }

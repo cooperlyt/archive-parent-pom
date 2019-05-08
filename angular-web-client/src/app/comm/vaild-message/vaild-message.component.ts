@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ValidationErrors, FormControl } from '@angular/forms';
+import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-vaild-message',
@@ -8,7 +9,21 @@ import { ValidationErrors, FormControl } from '@angular/forms';
 })
 export class VaildMessageComponent implements OnInit {
 
-  @Input() errors:any;
+  @Input() control:FormControl;
+  @Input() alert: boolean;
+  @Input() note: string;
+
+  get errors():ValidationErrors | null{
+    return this.control.errors;
+  }
+
+  get styleClass():string{
+    if (this.alert){
+      return 'alert alert-danger';
+    }else{
+      return 'note error-msg';
+    }
+  }
 
   constructor() { }
 
@@ -17,10 +32,3 @@ export class VaildMessageComponent implements OnInit {
 
 
 }
-
-// export function FormatString(str: string, ...val: string[]) {
-//   for (let index = 0; index < val.length; index++) {
-//     str = str.replace(`{${index}}`, val[index]);
-//   }
-//   return str;
-// }
