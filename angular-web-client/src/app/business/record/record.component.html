@@ -1,0 +1,181 @@
+<ng-template #content let-modal>
+  <div  class="modal-header">
+    <h4 *ngIf="!roomPath?.rackPath?.cabinetPath?.cellPath?.cell" class="modal-title" id="modal-basic-title">请选择格</h4>
+    <div *ngIf="roomPath?.rackPath?.cabinetPath?.cellPath?.cell" class="cell-box">
+      <ul>
+        <li  *ngFor="let box of roomPath.rackPath.cabinetPath.cellPath.cell.boxes" >
+          <span [style.width.px]="box.size * 41" 
+            class="box {{box.old ? 'old' : ''}} {{ !box.old && box.full ? 'full' : ''}} {{!box.old && box.empty ? 'empty' : ''}}" >
+            {{box.seq}}
+          </span>
+        </li>
+        <li  *ngFor="let i of roomPath.rackPath.cabinetPath.cellPath.cell.emptyBox" >
+          <span [style.width.px]="41">
+            {{i}}
+          </span>
+        </li>
+      </ul>
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div ngbAutofocus class="cabinet">
+          <div *ngFor="let row of roomPath.rackPath.cabinetPath.cells" class="row">
+            <div *ngFor="let cell of row" class="col cell">
+       
+              <a (click)="onCellChange(cell)" class="{{(cell.id === roomPath?.rackPath?.cabinetPath?.cellPath?.cell.id) ? 'selected' : ''}}">
+                <span class="content" >
+                  <span [style.width.%]="cell.percentage"></span>
+                </span>
+                <div class="cell-body">
+                    {{cell.name}}
+                </div>
+              </a>
+              
+            </div>
+          </div>
+      </div>
+  </div>
+</ng-template>
+  
+<ngx-loading [show]="saveing" ></ngx-loading>
+<div class="container">
+
+  <div class="Subhead">
+    <h2 class="Subhead-heading">
+        <span class="author" itemprop="author">装合上架</span>
+        <span class="path-divider">-</span>
+      <span class="author" itemprop="author">{{business.defineName}}</span>
+      <span class="path-divider">/</span>
+      {{business.id}}
+      <span class="path-divider">/</span>
+      <strong itemprop="name">{{business.volume.id}}</strong>
+        
+    </h2>
+    <p class="Subhead-description">
+      {{business.summary}}
+    </p>
+  </div>
+
+  <ul class="repo-templates">
+    <li>
+      <div ngbDropdown class="d-inline-block ">
+        <button class="btn btn-git btn-sm"  ngbDropdownToggle><i>档案室:</i><span *ngIf="!roomPath">未选择</span><span *ngIf="roomPath">{{roomPath.room.name}}</span></button>
+        <div ngbDropdownMenu aria-labelledby="档案室" class="select-menu-modal">
+          <h6 class="dropdown-header">档案室</h6>
+          <div class="select-menu-list">
+            <button *ngFor="let room of rooms" (click)="onRoomChange(room)" ngbDropdownItem >
+                <span  *ngIf="roomPath?.room?.id === room.id" class="select-menu-item-icon" [innerHTML]="checkIcon"></span>
+              {{room.id}} : <strong>{{room.name}} </strong>
+            </button>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li *ngIf="roomPath?.racks">
+      <div ngbDropdown class="right-path d-inline-block">
+        <button class="btn btn-git btn-sm"  ngbDropdownToggle><i>架:</i><span *ngIf="!roomPath?.rackPath?.rack?.id">未选择</span><span *ngIf="roomPath?.rackPath?.rack?.id">{{roomPath?.rackPath?.rack?.name}}</span></button>
+        <div ngbDropdownMenu aria-labelledby="架" class="select-menu-modal">
+          <h6 class="dropdown-header">架</h6>
+          <div class="select-menu-list">
+            <button *ngFor="let rack of roomPath.racks" (click)="onRackChange(rack)" ngbDropdownItem >
+                <span  *ngIf="roomPath?.rackPath?.rack?.id === rack.id" class="select-menu-item-icon" [innerHTML]="checkIcon"></span>
+              {{rack.id}} : <strong>{{rack.name}}</strong>
+            </button>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li *ngIf="roomPath?.rackPath?.cabinets">
+      <div ngbDropdown class="right-path d-inline-block">
+        <button class="btn btn-git btn-sm"  ngbDropdownToggle>
+          <i>柜:</i>
+          <span *ngIf="!roomPath?.rackPath?.cabinetPath?.cabinet?.id">未选择</span>
+          <span *ngIf="roomPath?.rackPath?.cabinetPath?.cabinet?.id">{{roomPath?.rackPath?.cabinetPath?.cabinet?.name}}</span>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="柜" class="select-menu-modal">
+            <h6 class="dropdown-header">柜</h6>
+            <div class="select-menu-list">
+              <button *ngFor="let cabinet of roomPath.rackPath.cabinets" (click)="onCabinetChange(cabinet)" ngbDropdownItem  >
+                  <span  *ngIf="roomPath.rackPath.cabinetPath.cabinet.id === cabinet.id" class="select-menu-item-icon" [innerHTML]="checkIcon"></span>
+                {{cabinet.id}} : <strong>{{cabinet.name}}</strong>
+              </button>
+            </div>            
+        </div>   
+      </div>
+    </li>
+
+    <li *ngIf="roomPath?.rackPath?.cabinetPath?.cells">
+      <div class="right-path d-inline-block">
+        <button class="btn btn-git btn-sm" (click)="openCellSelectModel(content)">
+          <i>格:</i>
+          <span *ngIf="!roomPath?.rackPath?.cabinetPath?.cellPath?.cell.id">未选择</span>
+          <span *ngIf="roomPath?.rackPath?.cabinetPath?.cellPath?.cell.id">{{roomPath?.rackPath?.cabinetPath?.cellPath?.cell.name}}</span>
+        </button>
+      </div>
+    </li>
+
+
+  </ul>
+
+  <hr/>
+
+  <div *ngIf="selectCell" class="cell-box">
+      <span class="form-inline" *ngIf="selectBox">
+          <input type="number" *ngIf="!selectBox.id"  [(ngModel)]="newSize" class="form-control" min="1" [max]="emptyCount" required>
+        </span>
+    <ul>
+      <li  *ngFor="let box of selectCell.boxes" [class.selected] = "selectBox?.id === box.id">
+        <a [style.width.px]="box.size * 41" (click)="onBoxChange(box)"
+          [class.old] = "box.old" [class.full] = "!box.old && box.full" [class.empty] = "!box.old && box.empty" class="box" >
+          {{box.seq}}
+        </a>
+      </li>
+      <li  *ngFor="let i of selectCell.emptyBox" >
+        <span [style.width.px]="41">
+          {{i}}
+        </span>
+      </li>
+    </ul>
+
+
+  </div>
+
+
+    <div *ngIf="selectBox">
+
+      <div class="form-checkbox form-group">
+          <label>
+              <input class="mt-2" aria-describedby="是否装满" type="checkbox" [(ngModel)]="isFull" >
+              盒是否装满
+          </label>
+          <span  class="float-left mt-1 mr-2" color="#959da5"  octicon="repo-push" width="24"></span>
+          <span class="note">
+              盒是已否装满！设置为已装满的盒装不再能放入卷。
+          </span>
+      </div>
+
+    </div>
+
+    <dl class="form-group ">
+        <dt class="input-label">
+            <label>上架说明</label>
+        </dt>
+        <dd >
+            <textarea rows="3" class="form-control" [(ngModel)]="explain" maxlength="256"></textarea>
+        </dd>
+    </dl>
+
+
+    <hr/>
+
+    <button type="submit" class="btn btn-success first-in-line bin-git" (click)="saveArichive()" [disabled]="!selectBox" >
+        <span *ngIf="saveing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span *ngIf="!saveing">装盒上架</span>
+        <span *ngIf="saveing">正在保存上架信息...</span>
+    </button>
+
+</div>

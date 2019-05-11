@@ -18,7 +18,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
             catchError(err =>{
-                if ((err.status >= 500) && (err.status < 600)){
+                if ((err.status > 500) && (err.status < 600)){
                     console.log("http error:",err);
                     this.toastr.error('不能连接到服务器，请稍后再试！', '服务错误!');
                     return EMPTY;

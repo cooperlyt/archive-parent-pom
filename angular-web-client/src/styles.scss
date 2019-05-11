@@ -22,6 +22,7 @@
 @import '../node_modules/font-awesome/css/font-awesome.css';
 
 
+
 body {
     background-color: #fff;
     color: #24292e;
@@ -30,6 +31,10 @@ body {
     line-height: 1.5;
 }
 
+a {
+    color: #0366d6;
+    text-decoration: none;
+}
 
 summary {
     outline: none;            // 1、去掉点击时的外边框
@@ -187,6 +192,61 @@ dd {
     width: 100%;
 }
 
+.form-checkbox {
+    margin: 15px 0;
+    padding-left: 20px;
+    vertical-align: middle;
+}
+
+.form-checkbox .note {
+    color: #586069;
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.form-checkbox input[type=checkbox], .form-checkbox input[type=radio] {
+    float: left;
+    margin: 5px 0 0 -50px;
+    vertical-align: middle;
+}
+
+.form-control.focus, .form-control:focus, .form-select.focus, .form-select:focus {
+    border-color: #2188ff;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,.075), 0 0 0 0.2em rgba(3,102,214,.3);
+    outline: none;
+}
+
+.form-group .form-control {
+    background-color: #fafbfc;
+    max-width: 100%;
+}
+
+.form-group .ng-select-container{
+    background-color: #fafbfc; 
+}
+
+
+.form-group .form-control:focus {
+    background-color: #fff;
+}
+
+.form-control, .form-select {
+    background-color: #fff;
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    border: 1px solid #d1d5da;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 2px rgba(27,31,35,.075);
+    color: #495057;
+
+    line-height: 20px;
+    min-height: 34px;
+    outline: none;
+    padding: 6px 8px;
+    vertical-align: middle;
+}
 
 .select-menu-button-gravatar {
     float: left;
@@ -289,31 +349,6 @@ dd {
     text-overflow: ellipsis;
     vertical-align: top;
     white-space: nowrap;
-}
-
-@media (min-width: 1200px){
-    .bd-sidebar {
-       -webkit-box-flex: 0;
-        -ms-flex: 0 1 320px;
-        flex: 0 1 320px;
-    }
-}
-
-@media (min-width: 768px){
-    .bd-sidebar {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 56px;
-        z-index: 1000;
-        height: calc(100vh - 4rem);
-    }
-}
-
-@media (min-width: 768px){
-    .bd-sidebar {
-        border-right: 1px solid rgba(0,0,0,.1);
-    }
-    
 }
 
 a.branch-name {
@@ -776,25 +811,7 @@ a.branch-name {
     min-height: 17px;
 }
 
-.form-checkbox {
-    margin: 15px 0;
-    padding-left: 20px;
-    vertical-align: middle;
-}
 
-.form-checkbox .note {
-    color: #586069;
-    display: block;
-    font-size: 12px;
-    font-weight: 400;
-    margin: 0;
-}
-
-.form-checkbox input[type=checkbox], .form-checkbox input[type=radio] {
-    float: left;
-    margin: 5px 0 0 -50px;
-    vertical-align: middle;
-}
 
 // custome 
 .details-grid .row{
@@ -907,4 +924,40 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
 
 .navbar .form-control{
     margin: 0 8px 0 0;
+}
+
+
+
+@media (min-width: 1200px){
+    .bd-sidebar {
+       -webkit-box-flex: 0;
+        -ms-flex: 0 1 320px;
+        flex: 0 1 320px;
+    }
+}
+
+@media (min-width: 768px){
+    .bd-sidebar {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 56px;
+        z-index: 1000;
+        height: calc(100vh - 56px);
+    }
+}
+
+@media (min-width: 768px){
+    .bd-sidebar {
+        border-right: 1px solid rgba(0,0,0,.1);
+    }
+    .form-control, .form-select {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+    .input-group-text{
+        font-size: 14px;
+    }
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface OperationRepo extends CrudRepository<Operation,Long> {
 
     List<Operation> queryAllByBusinessIdOrderByOperationTimeDesc(String businessId);
+
+    void deleteAllByBusinessId(String businessId);
 }

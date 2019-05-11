@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { UiSwitchModule } from 'angular2-ui-switch';
+import {NgxPrintModule} from 'ngx-print';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,6 +63,8 @@ import { BoxComponent } from './archives/box/box.component';
 import { RecordComponent } from './business/record/record.component';
 import { CompleteComponent } from './business/complete/complete.component';
 import { OcticonDirective } from './comm/octicon.directive';
+import { VolumeComponent } from './business/volume/volume.component';
+import { FunctionLayoutComponent } from './layouts/function-layout/function-layout.component';
 
 
 fontLibrary.add(
@@ -105,7 +109,9 @@ fontLibrary.add(
     BoxComponent,
     RecordComponent,
     CompleteComponent,
-    OcticonDirective
+    OcticonDirective,
+    VolumeComponent,
+    FunctionLayoutComponent
   ],
   entryComponents: [],
   imports: [
@@ -121,6 +127,8 @@ fontLibrary.add(
     BrowserAnimationsModule,
     ImageViewerModule,
     NgxGalleryModule,
+    UiSwitchModule,
+    NgxPrintModule,
     ToastrModule.forRoot(),
     DragulaModule.forRoot(),
     NgxLoadingModule.forRoot({

@@ -1,11 +1,13 @@
 package cc.coopersoft.archives.business.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "VOL_CONETXT")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class VolumeContext {
 
 
@@ -23,13 +25,13 @@ public class VolumeContext {
     private int pageCount;
 
 
-    @Column(name = "NAME", nullable = false, length = 32)
-    private String name;
+    @Column(name = "MD5")
+    private String md5;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "BUSINESS_ID", nullable = false)
-    private Business business;
+    @JoinColumn(name = "ITEM_ID", nullable = false)
+    private VolumeItem item;
 
     public String getId() {
         return id;
@@ -47,12 +49,12 @@ public class VolumeContext {
         this.ordinal = ordinal;
     }
 
-    public String getName() {
-        return name;
+    public String getMd5() {
+        return md5;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMd5(String md5) {
+        this.md5 = md5;
     }
 
     public String getType() {
@@ -71,11 +73,11 @@ public class VolumeContext {
         this.pageCount = pageCount;
     }
 
-    public Business getBusiness() {
-        return business;
+    public VolumeItem getItem() {
+        return item;
     }
 
-    public void setBusiness(Business business) {
-        this.business = business;
+    public void setItem(VolumeItem item) {
+        this.item = item;
     }
 }

@@ -13,4 +13,10 @@ public interface RackRepository extends CrudRepository<Rack,String> {
 
     @Query("select r from Rack r where r.room.id = :roomId order by r.seq")
     List<Rack> listRackByRoom(@Param("roomId") String roomId);
+
+    @Query("SELECT SUM(r.percentage) FROM Rack r where r.room.id = :roomId and r.id <> :rackId")
+    Integer sumPercentage(@Param("roomId")String roomId,@Param("rackId")String rackId);
+
+
+    int countByRoomIdAndIdNot(String roomId,String rackId);
 }

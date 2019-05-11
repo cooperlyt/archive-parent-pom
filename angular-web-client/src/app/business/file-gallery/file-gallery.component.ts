@@ -92,14 +92,14 @@ export class FileGalleryComponent implements OnInit {
 
   ngOnInit() {
 
-    this._route.data.subscribe((data: {content: VolumeContext[], business: Business}) => {
-      this.business = data.business;
-      data.content.forEach(data => {
+    // this._route.data.subscribe((data: {content: VolumeContext[], business: Business}) => {
+    //   this.business = data.business;
+    //   data.content.forEach(data => {
         
-        this.galleryImages.push(new FileContext(data.type,data.id,data.name));
-      })
+    //     this.galleryImages.push(new FileContext(data.type,data.id,data.name));
+    //   })
 
-    });
+    // });
 
     this.galleryOptions = [
       {

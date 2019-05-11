@@ -7,7 +7,7 @@
         </button>
       </div>
     <div #imagewrapper  class="modal-body imagewrapper">
-    <ngx-imageviewer *ngIf="selectItem" [width]="canvasDim.width" [height]="canvasDim.height" [src]="selectItem.previewSource"></ngx-imageviewer>
+    <ngx-imageviewer *ngIf="selectItem" [width]="766" [height]="600" [src]="selectItem.previewSource"></ngx-imageviewer>
 
     </div>
 </ng-template>
@@ -20,8 +20,7 @@
     </button>
   </div>
   <div class="modal-body">
-    确定要删除些 <strong *ngIf="selectItem.volume">{{selectItem.volume.name}}</strong>
-              <strong *ngIf="!selectItem.volume">{{selectItem.item.file.name}}</strong>？
+    确定要删除此文件！删除后不可恢复。
   </div>
 
   <div class="modal-footer">
@@ -55,105 +54,18 @@
   
   </ng-template>
 
-<ng-template #editContext let-modal>
-  <form [formGroup]="selectItem.control"> 
-    <div class="modal-header">
-      <h4 class="modal-title" >编辑</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      
-      <div class="form-group row" >
-        <div class="col-9">
-            <input  type="text" placeholder="名称"   class="form-control" formControlName="name">
-        </div>
-        <div class="col-3">
-            <input type="number" placeholder="页数"  class="form-control" formControlName="pageCount">
-        </div>
-  
-      </div>
-        
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger " (click)="modal.dismiss('cancel click')">取消</button>
-        <button class="btn btn-outline-secondary" type="submit" [disabled]="!selectItem.control.valid || saveing" (click)="saveItem(modal)">
-            <span *ngIf="saveing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span *ngIf="!saveing">保存</span>
-            <span *ngIf="saveing">正在保存业务...</span>
-        </button>
-    </div>
-  </form>
-</ng-template>
 
 
-<ng-template #content let-modal>
 
-  <div class="modal-body"
-    ng2FileDrop [ngClass]="{dropping: isDropZoneOver}" [uploader]="uploader">
-    <div class="file-drop-zone">
-      <h1>文件拖拽到些处添加到上传列表</h1>
-    </div>
-      
-  </div>
-</ng-template>
+  <div class="container file-list"  dragula="SPILL" [(dragulaModel)]="item.contexts">
 
-<input hidden #fileSelect type="file" name="photo" ng2FileSelect [uploader]="uploader" multiple />
-
-<div class="component-body" ng2FileDrop [ngClass]="{dropping: isDropZoneOver}" 
-  (fileOver)="openFileOverModal($event,content)" [uploader]="uploader">
-  <ngx-loading [show]="saveing" ></ngx-loading>
-  <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav fix-head">
-    <div class="repohead-details-container clearfix container">
-        <ul class="pagehead-actions">
-          <li><button class="btn btn-git btn-sm btn-success" (click)="fileSelect.click()"> 文件选择</button></li>
-          <li><button class="btn btn-git btn-sm " (click)="fileSelect.click()"> 卷内目录</button></li>
-          
-          <li><button routerLink="/business-view/{{business.id}}/files" class="btn btn-git btn-sm btn-with-count" [disabled]="waitUpdateCount"> 完成上传 </button>
-            <span class="social-count {{waitUpdateCount ? 'disabled' : ''}} ">{{ getPageCountTotal}}</span>
-          </li>
-        </ul>
-      <h1 class="public ">
-
-          <span [innerHTML]="repoIcon"></span>
-          <span class="author" itemprop="author">{{business.defineName}}</span><!--
-        --><span class="path-divider">/</span><!--
-        --><strong itemprop="name">{{business.id}}</strong>
-          
-        
-        </h1>
-    </div>
-    <div class="container">
-        <ul class="pagehead-actions">
-
-          <li><button class="btn btn-git btn-sm btn-with-count"
-              (click)="uploader.cancelAll()" [disabled]="!cancelCount">全部取消</button>
-            <span class="social-count {{cancelCount ? '' : 'disabled'}}">{{ cancelCount }}</span>
-          </li>
-          <li><button class="btn btn-git btn-sm btn-with-count"
-            (click)="deleteAllConfirme(clearContext)" [disabled]="!formBind.length">全部删除</button>
-            <span class="social-count {{formBind.length ? '' : 'disabled'}}">{{ formBind.length }}</span>
-          </li>
-          <li><button class="btn btn-git btn-sm btn-with-count" (click)="uploader.uploadAll()" 
-            [disabled]="!waitUpdateCount" >全部上传</button>
-            <span class="social-count {{waitUpdateCount ? '' : 'disabled'}} ">{{ waitUpdateCount }}</span>
-          </li>
-      </ul>
-
-      <p>{{business.summary}}</p>
-    </div>
-  </div>
-
-  <div class="container file-list"  dragula="SPILL" [(dragulaModel)]="formBind">
-
-    <div *ngFor="let bind of formBind; let i=index">
+    <div *ngFor="let bind of item.contexts; let i=index">
       <form [formGroup]="bind.control">
         <div id="{{'item-' + bind.index}}" class="row upload-item">
             <div class="col-12" >
-                <button class="  btn-hide" (click)="openActionModal(bind.index, deleteContext , 'preview')" > <span [innerHTML]="xIcon"></span></button>
+                <button class="  btn-hide" (click)="openActionModal(bind.index, deleteContext )" > <span octicon="x"></span></button>
               <div class="row">
-                <div class="col-2 pr-0" (click)="openActionModal(bind.index,imageViewContext)">
+                <div class="col-2 pr-0" (click)="openActionModal(bind.index,imageViewContext, 'preview')">
                   <div class="{{(bind.item && bind.isImage) ? 'thumbnail-wrapper' : 'icon-wrapper'}}">
                     <img *ngIf="bind.item && bind.isImage" maxSize="100" thumbnail [image]="bind.item?._file" [type]="bind.fileType"/>
                     <img *ngIf="!bind.item && bind.isImage" [src]="bind.imageThumb" />
@@ -164,33 +76,42 @@
                     <div class="details">
                         <div class=" title-area">
                           <div *ngIf="!bind.volume" class="row" >
-                            <div class="col-10 ">
+                            <div class="col-12 ">
                             
-                                <div class="input-group form-group">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">{{getPageByIndex(bind.index,true)}}</span>
-                                  </div>
-                                  <input  type="text" placeholder="名称"  class="form-control" formControlName="name">
+                              <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1">{{getPageByIndex(bind.index,true)}} </span>
                                 </div>
+                                <input type="number" placeholder="页数" class="form-control"  formControlName="pageCount">     
+                              </div>
                             </div>
-                            <div class="col-2">
-                              <input type="number" placeholder="页数" class="form-control"  formControlName="pageCount">      
+                          </div>
+                          <div *ngIf="bind.volume" class="row" >
+                            <div class="col-12 ">
+                            
+                              <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1">{{getPageByIndex(bind.index,true)}} </span>
+                                </div>
+                                <input type="number" placeholder="页数" class="form-control" (change)="onPageCountChange(bind)" formControlName="pageCount">     
+                              </div>
                             </div>
                           </div>
 
-                          <span *ngIf="bind.volume" class="action-link"><strong>{{bind.volume.name}}</strong> </span>
-
                         </div>
 
-                        <span *ngIf="bind.volume" class="description"> 第 {{getPageByIndex(bind.index)}} 页 </span>
-
-                        <span *ngIf="bind.item" class="description">{{ bind.item?.file?.name }} ({{ bind.item?.file?.size/1024/1024 | number:'.2' }} MB)</span>
+                        <span class="description">
+                          <strong> 第 {{getPageByIndex(bind.index)}} 页 </strong>
+                          <span *ngIf="bind.item" >
+                            {{ bind.item?.file?.name }} ({{ bind.item?.file?.size/1024/1024 | number:'.2' }} MB)
+                          </span>
+                        </span>
                         
 
                         <ngb-progressbar *ngIf="bind.item" class="upload-progressbar" height="4px" role="progressbar" [value]="bind.progress" type="info"></ngb-progressbar>
          
                         <div  class="controls">
-                            <a *ngIf="bind.volume" ngbAutofocus (click)="openActionModal(bind.index,editContext,'edit')" class="action-link">修改信息</a>
+                            <a *ngIf="bind.volume" target="_blank" [href]="bind.previewSource" class="action-link" download>下载到本地</a>
                             
                             <button *ngIf="!bind.volume" class="btn btn-sm btn-outline-primary" (click)="bind.item.upload()"
                               [disabled]="bind.isUploading || bind.isSuccess || !bind.control.valid">
@@ -211,6 +132,5 @@
       </form>
     </div>
   </div>
-</div>
 
 

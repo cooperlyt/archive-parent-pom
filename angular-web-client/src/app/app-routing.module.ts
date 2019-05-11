@@ -34,6 +34,10 @@ import { BoxsResolver } from './archives/resolver/boxs.resolver';
 import { CellResolver } from './archives/resolver/cell.resolver';
 import { RecordComponent } from './business/record/record.component';
 import { CompleteComponent } from './business/complete/complete.component';
+import { VolumeComponent } from './business/volume/volume.component';
+import { VolumesItemResolver } from './business/resolver/volumes-item.resolver';
+import { VolumeItemResolver } from './business/resolver/volume-item.resolver';
+import { FunctionLayoutComponent } from './layouts/function-layout/function-layout.component';
 
 
 
@@ -48,86 +52,99 @@ const routes: Routes = [
         component: HomeComponent   // {3}
       },
       {
-        path: 'business-record/:id',
-        component: RecordComponent,
-        resolve: {business: BusinessResolver, rooms: RoomsResolver}
-      },
-      {
-        path: 'business-complete/:id',
-        component: CompleteComponent,
-        resolve: {business: BusinessResolver}
-      },
-      {
-        path: 'rooms',
-        component: RoomComponent,
-        resolve: {rooms: RoomsResolver},
+        path: '',
+        component: FunctionLayoutComponent,
         children:[
           {
-            path: ':id',
-            component: CabinetComponent,
-            resolve: {racks: RacksResolver},
+            path: 'business-record/:id',
+            component: RecordComponent,
+            resolve: {business: BusinessResolver, rooms: RoomsResolver}
+          },
+          {
+            path: 'business-complete/:id',
+            component: CompleteComponent,
+            resolve: {business: BusinessResolver}
+          },
+          {
+            path: 'rooms',
+            component: RoomComponent,
+            resolve: {rooms: RoomsResolver},
             children:[
               {
                 path: ':id',
-                component: CellComponent,
-                resolve: {cells: CellsResolver},
+                component: CabinetComponent,
+                resolve: {racks: RacksResolver},
                 children:[
                   {
                     path: ':id',
-                    component: BoxComponent,
-                    resolve:{cell: CellResolver}
+                    component: CellComponent,
+                    resolve: {cells: CellsResolver},
+                    children:[
+                      {
+                        path: ':id',
+                        component: BoxComponent,
+                        resolve:{cell: CellResolver}
+                      }
+                    ]
                   }
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        path: 'business-create/:id',
-        component: BusinessCreateComponent,
-        resolve: {editor: BusinessCreateResolver}
-      },
-      {
-        path: 'business-file/:id',
-        component: FileUploadComponent,
-        resolve: {business: BusinessResolver, content: VolumeContentResolver}
-      },
-      {
-        path: 'business-search',
-        component: BusinessSearchComponent,
-        resolve: {page: BusinessSearchResolver, defines: UsedDefineResolver},
-        runGuardsAndResolvers: 'paramsOrQueryParamsChange'
-      },
-      {
-        path: 'business-edit/:id',
-        component: BusinessEditComponent,
-        resolve: {business: BusinessEditResolver, field: BusinessFieldEditorResolver}
-
-      },
-      {
-        path: 'business-view/:id',
-        component: BusinessViewComponent,
-        resolve: {business: BusinessResolver},
-        children:[
-          {
-            path: 'files',
-            component: FileGalleryComponent,
-            resolve: {content: VolumeContentResolver, business: BusinessResolver}
           },
           {
-            path: 'details',
-            component: DetailsComponent,
-            resolve: {business: BusinessResolver, fields: BusinessFieldResolver}
+            path: 'business-create/:id',
+            component: BusinessCreateComponent,
+            resolve: {editor: BusinessCreateResolver}
           },
           {
-            path: 'operations',
-            component: OperationsComponent,
-            resolve:{operations: OperationResolver}
+            path: 'business-volume/:id',
+            component: VolumeComponent,
+            resolve: {business: BusinessResolver, items: VolumesItemResolver},
+            children: [
+              {
+                path: ":id",
+                component: FileUploadComponent
+              }
+            ]
+          },
+          {
+            path: 'business-search',
+            component: BusinessSearchComponent,
+            resolve: {page: BusinessSearchResolver, defines: UsedDefineResolver},
+            runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+          },
+          {
+            path: 'business-edit/:id',
+            component: BusinessEditComponent,
+            resolve: {business: BusinessEditResolver, field: BusinessFieldEditorResolver}
+    
+          },
+          {
+            path: 'business-view/:id',
+            component: BusinessViewComponent,
+            resolve: {business: BusinessResolver},
+            children:[
+              {
+                path: 'files',
+                component: FileGalleryComponent,
+                resolve: { business: BusinessResolver}
+              },
+              {
+                path: 'details',
+                component: DetailsComponent,
+                resolve: {business: BusinessResolver, fields: BusinessFieldResolver}
+              },
+              {
+                path: 'operations',
+                component: OperationsComponent,
+                resolve:{operations: OperationResolver}
+              }
+    
+            ]
           }
-
         ]
       }
+
     ]
   },
   {

@@ -17,11 +17,6 @@ export class VolumeContentResolver implements Resolve<VolumeContext[]>{
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): VolumeContext[] | Observable<VolumeContext[]> | Promise<VolumeContext[]> {
         
         let id = route.params["id"];
-        if (! id){
-            const parentActivatedRoute = route.parent;
-
-            id = parentActivatedRoute.params["id"];
-        }
         return this._businessService.getVolumeContext(id);
     }
 

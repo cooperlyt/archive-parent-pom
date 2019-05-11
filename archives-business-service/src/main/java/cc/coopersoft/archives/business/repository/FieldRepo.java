@@ -10,4 +10,6 @@ import java.util.List;
 public interface FieldRepo extends CrudRepository<BusinessField,String> {
 
     List<BusinessField> queryAllByBusinessIdOrderByRow(String id);
+
+    void deleteAllByBusinessId(String businessId);
 }

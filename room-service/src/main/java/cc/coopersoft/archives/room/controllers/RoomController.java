@@ -113,9 +113,35 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/editor/new/{cell}", method = RequestMethod.PUT)
-    public Box createBox(@PathVariable("cell") String id, @RequestBody Box box){
-        return null;
+    public String createBox(@PathVariable("cell") String id, @RequestBody Box box){
+        Box result = roomLocationService.createBox(id,box);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return "{\"id\":\"" + result.getId() + "\"}";
     }
 
+    @RequestMapping(value = "/editor/full/{boxId}", method = RequestMethod.GET)
+    public String setBoxFull(@PathVariable("boxId") String boxId){
+        Box result = roomLocationService.setBoxFull(boxId,true);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return "{\"id\":\"" + result.getId() + "\"}";
+    }
 
+    @RequestMapping(value = "/editor/not-full/{boxId}", method = RequestMethod.GET)
+    public String setBoxNotFull(@PathVariable("boxId") String boxId){
+        Box result = roomLocationService.setBoxFull(boxId,false);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return "{\"id\":\"" + result.getId() + "\"}";
+    }
 }

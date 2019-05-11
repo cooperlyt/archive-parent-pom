@@ -1,0 +1,77 @@
+.cell-box {
+    display: inline-block;
+    list-style: none;
+    padding: 0;
+}
+.cell-box ul{
+    background: #d6dbdf;
+    color: white;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+
+    word-spacing: -0.5px;
+    border-radius: 3px;
+}
+
+
+.cell-box ul li{
+    display: inline-block;
+    vertical-align: middle;
+    word-spacing: normal;
+    border-left: 2px solid #e4e7ea;
+
+}
+
+
+.cell-box li:first-child {
+    border-left-width: 0 !important;
+}
+
+.cell-box li > span {
+    color: #d6dbdf !important;
+}
+
+.cell-box li > .box {
+    cursor: pointer; 
+}
+
+.cell-box li > .box, .cell-box li > span {
+    display: inline-block;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 14px;
+    line-height: 16px;
+    min-height: 41px;
+    min-width: 41px;
+    outline: none;
+    padding: 12px 10px;
+    text-align: center;
+    transition: .25s ease-out;
+    border-radius: 3px;
+}
+
+.cell-box li > .box {
+    background-color: #17a2b8!important; 
+    color: white;
+    border-color: #dee2e5;   
+}
+
+.cell-box li > .box.empty {
+    background-color: #007bff!important;
+    color: white;
+    border-color: #dee2e5;   
+}
+
+.cell-box li > .box.full {
+    background-color: #28a745!important;
+    color: white;
+    border-color: #dee2e5;   
+}
+
+.cell-box li > .box.old {
+    background-color: #6c757d!important;
+    color: white;
+    border-color: #dee2e5;   
+}

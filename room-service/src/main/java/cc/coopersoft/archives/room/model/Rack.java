@@ -29,7 +29,7 @@ public class Rack {
     private int seq;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "ROOM_ID", nullable = false)
     private Room room;
 

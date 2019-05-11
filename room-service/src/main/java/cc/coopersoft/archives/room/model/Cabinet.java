@@ -26,7 +26,7 @@ public class Cabinet {
     private int percentage;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "RACK_ID", nullable = false)
     private Rack rack;
 

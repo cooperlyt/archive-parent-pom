@@ -10,7 +10,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,6 +42,7 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
     private Set<TaskAction> taskActions = new HashSet<>(0);
     private Set<CreateRole> createRoles = new HashSet<>(0);
     private Set<FieldGroup> fields = new HashSet<>(0);
+    private List<VolumeItemDefine> itemDefines = new ArrayList<>(0);
 
 
     @Id
@@ -246,6 +249,16 @@ public class BusinessDefine implements Comparable<BusinessDefine>, java.io.Seria
 
     public void setDefaultSecrecyLevel(SecrecyLevel defaultSecrecyLevel) {
         this.defaultSecrecyLevel = defaultSecrecyLevel;
+    }
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "businessDefine", orphanRemoval = true)
+    public List<VolumeItemDefine> getItemDefines() {
+        return itemDefines;
+    }
+
+    public void setItemDefines(List<VolumeItemDefine> itemDefines) {
+        this.itemDefines = itemDefines;
     }
 
     @Override

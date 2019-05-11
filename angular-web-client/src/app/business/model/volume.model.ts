@@ -5,4 +5,5 @@ export class Volume{
     secrecyLevel:string;
     secrecyLen:number;
     recordTime:Date;
+    old:boolean;
 }

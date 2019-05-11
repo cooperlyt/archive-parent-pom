@@ -15,7 +15,7 @@ public class Box {
     private String id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "CELL_ID", nullable = false)
     private Cell cell;
 
@@ -113,5 +113,21 @@ public class Box {
 
     public void setOld(boolean old) {
         this.old = old;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Box box = (Box) o;
+
+        return id.equals(box.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

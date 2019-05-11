@@ -84,21 +84,39 @@ public class BusinessController {
 
     @RequestMapping(value = "/business/{id}", method = RequestMethod.DELETE)
     public String deleteBusiness(@PathVariable("id")String businessId){
-        String id = businessService.deleteBusiness(businessId);
-        if (id == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
-        }
-        return "{\"id\":\"" + id + "\"}";
+        businessService.deleteBusiness(businessId);
+
+        return "{\"id\":\"ok\"}";
     }
 
-    @RequestMapping(value = "/business/abort/{id}", method = RequestMethod.DELETE)
-    public String abortBusiness(@PathVariable("id")String businessId){
-        String id = businessService.abortBusiness(businessId);
-        if (id == null){
+//    @RequestMapping(value = "/business/abort/{id}", method = RequestMethod.DELETE)
+//    public String abortBusiness(@PathVariable("id")String businessId){
+//        String id = businessService.abortBusiness(businessId);
+//        if (id == null){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
+//        }
+//        return "{\"id\":\"" + id + "\"}";
+//    }
+
+    @RequestMapping(value = "/business/volume/items/{businessId}", method = RequestMethod.GET)
+    public List<VolumeItem> listVolumeItem(@PathVariable("businessId")String businessId){
+        return businessService.listVolumeItem(businessId);
+    }
+
+    @RequestMapping(value = "/business/volume/item/{itemId}", method = RequestMethod.GET)
+    public VolumeItem getVolumeItem(@PathVariable("itemId")int itemId){
+        VolumeItem result = businessService.getVolumeItem(itemId);
+        if (result == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
         }
-        return "{\"id\":\"" + id + "\"}";
+        return result;
     }
+
+    @RequestMapping(value = "/business/volume/item/{businessId}", method = RequestMethod.PUT)
+    public VolumeItem saveVolumeItem(@PathVariable("businessId") String businessId, @RequestBody VolumeItem item){
+        return businessService.saveVolumeItem(businessId,item);
+    }
+
 
     @RequestMapping(value = "/business/volume/{id}", method = RequestMethod.POST)
     public String saveVolume(@PathVariable("id")String businessId, @RequestBody Volume volume,
@@ -121,9 +139,16 @@ public class BusinessController {
     }
 
 
-    @RequestMapping(value = "/business/context/{businessId}", method = RequestMethod.GET)
-    public List<VolumeContext> getVolumeContents(@PathVariable("businessId")String businessId){
-        return businessService.listContent(businessId);
+    @RequestMapping(value = "/business/context/{itemId}", method = RequestMethod.GET)
+    public List<VolumeContext> getVolumeContents(@PathVariable("itemId")int itemId){
+        return businessService.listContent(itemId);
+    }
+
+
+    @RequestMapping(value = "/business/context/delete-item/{itemId}",method = RequestMethod.DELETE)
+    public String deleteVolumeItem(@PathVariable("itemId")int itemId){
+        businessService.deleteVolumeItem(itemId);
+        return "{\"id\":" + itemId + "}";
     }
 
     @RequestMapping(value = "/business/field/{businessId}", method = RequestMethod.GET)
@@ -131,19 +156,22 @@ public class BusinessController {
         return businessService.getFields(businessId);
     }
 
-    @RequestMapping(value="/business/context/{businessId}",method =RequestMethod.PUT)
-    public String putVolumeContext(@PathVariable("businessId")String businessId, @RequestBody VolumeContext context){
-        VolumeContext result =  businessService.putVolumeContext(businessId,context);
+    @RequestMapping(value="/business/context/{itemId}",method =RequestMethod.PUT)
+    public VolumeContext saveVolumeContext(@PathVariable("itemId")int itemId, @RequestBody VolumeContext context){
+        VolumeContext result =  businessService.putVolumeContext(itemId,context);
         if (result == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
         }
-        return "{\"id\":\"" + result.getId() + "\"}";
+        return result;
     }
 
-    @RequestMapping(value="/business/content/all/{businessId}",method = RequestMethod.PUT)
-    public String putAllVolumeContext(@PathVariable("businessId")String businessId, @RequestBody List<VolumeContext> contexts){
-        int result = businessService.updateAllVolumeContext(contexts,businessId);
-        return "{\"count\":\"" + result + "\"}";
+    @RequestMapping(value="/business/content/all/{itemId}",method = RequestMethod.PUT)
+    public String putAllVolumeContext(@PathVariable("itemId")int itemId, @RequestBody List<VolumeContext> contexts){
+        VolumeItem item = businessService.updateAllVolumeContext(contexts,itemId);
+        if (item == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
+        }
+        return "{\"id\":" +  item.getId() + "}";
     }
 
     @RequestMapping(value = "/business/content/delete/{contextId}",method = RequestMethod.DELETE)
@@ -152,10 +180,10 @@ public class BusinessController {
         return "{\"id\":\"" + contextId + "\"}";
     }
 
-    @RequestMapping(value = "/business/content/clear/{businessId}",method = RequestMethod.DELETE)
-    public String clearVolumeContext(@PathVariable("businessId")String businessId){
-        int count = businessService.clearVolumeContext(businessId);
-        return "{\"count\":\"" + count + "\"}";
+    @RequestMapping(value = "/business/content/clear/{itemId}",method = RequestMethod.DELETE)
+    public String clearVolumeContext(@PathVariable("itemId")int itemId){
+        businessService.clearVolumeContext(itemId);
+        return "{\"id\":" + itemId + "}";
     }
 
     @RequestMapping(value = "/status",method = RequestMethod.GET)

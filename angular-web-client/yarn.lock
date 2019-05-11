@@ -810,6 +810,11 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
+angular2-ui-switch@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/angular2-ui-switch/-/angular2-ui-switch-1.2.0.tgz#096a2ccc3eed06e78ef76130cd27a8220e2c0a50"
+  integrity sha1-CWoszD7tBueO92EwzSeoIg4sClA=
+
 ansi-colors@^3.0.0:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-3.2.4.tgz#e3a3da4bfbae6c86a9c285625de124a234026fbf"
@@ -4813,6 +4818,13 @@ ngx-loading@2.0.1:
   resolved "https://registry.yarnpkg.com/ngx-loading/-/ngx-loading-2.0.1.tgz#f28c3e21fe161bb5868b1a2f786ebc1c75d706b4"
   integrity sha512-gS6bmclcwcyPm0UyHvim3iigXND0GY39Oe4ZRqs1apnFQuVg8MAxSmLzLpky1y4NJo0Owo6XWgvvGtWaafTHoQ==
 
+ngx-print@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/ngx-print/-/ngx-print-1.1.4.tgz#16804258e90631d3be5c89afa495410ddb8e37be"
+  integrity sha512-/bxOvCltF+kO5K7+GF3sDwMyQf9B6xMafF8DIvjLyynQcucrTNI+3ENtJioyDZzgAisJ/R8BQShC/1SBUM3yhg==
+  dependencies:
+    tslib "^1.9.3"
+
 ngx-toastr@^10.0.2:
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-10.0.2.tgz#afc51eba792fb569f82c1563fecd5c34dc0968c7"
@@ -7148,7 +7160,7 @@ ts-node@~7.0.0:
     source-map-support "^0.5.6"
     yn "^2.0.0"
 
-tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==

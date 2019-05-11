@@ -3,5 +3,5 @@ export class VolumeContext{
     type:string;
     ordinal:number;
     pageCount:number;
-    name:string;
+    md5:string;
 }

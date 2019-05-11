@@ -4,8 +4,11 @@ import cc.coopersoft.archives.room.model.*;
 import cc.coopersoft.archives.room.repository.*;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Service
@@ -167,6 +170,91 @@ public class RoomLocationService {
             }
         }
         return result;
+    }
+
+    private void calcPercentage(Box box){
+
+        int size = 0;
+        for (Box b: box.getCell().getBoxes()){
+            if (b.isFull() && !b.equals(box)){
+                size += box.getSize();
+            }
+        }
+        if (box.isFull()){
+            size += box.getSize();
+        }
+
+        int cellPercentage = 0;
+        if (size > 0){
+            cellPercentage = new BigDecimal(size).divide(new BigDecimal(box.getCell().getSize()),2, RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
+        }
+
+        box.getCell().setPercentage(cellPercentage);
+
+        Integer cellTotal =  cellRepository.sumPercentage(box.getCell().getCabinet().getId(),box.getCell().getId());
+        int cellTotalPercentage = (cellTotal == null) ? 0 : cellTotal;
+        cellTotalPercentage += cellPercentage;
+
+        int cabinetPercentage = 0;
+        if (cellTotalPercentage > 0){
+            int cellCount = cellRepository.countPercentage(box.getCell().getCabinet().getId(),box.getCell().getId());
+            cellCount = (cellCount + 1)  * 100;
+            cabinetPercentage = new BigDecimal(cellTotalPercentage).divide(new BigDecimal(cellCount),2,RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
+        }
+        box.getCell().getCabinet().setPercentage(cabinetPercentage);
+
+
+
+        Integer cabinetTotal = cabinetRepository.sumPercentage(box.getCell().getCabinet().getRack().getId(),box.getCell().getCabinet().getId());
+        int cabinetTotalPercentage = (cabinetTotal == null) ? 0 : cabinetTotal;
+        cabinetTotalPercentage += cabinetPercentage;
+
+        int rackPercentage = 0;
+        if (cabinetTotalPercentage > 0){
+            int cabinetCount = cabinetRepository.countPercentage(box.getCell().getCabinet().getRack().getId(),box.getCell().getCabinet().getId());
+            cabinetCount = (cabinetCount + 1) * 100;
+            rackPercentage = new BigDecimal(cabinetTotalPercentage).divide(new BigDecimal(cabinetCount),2,RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
+        }
+        box.getCell().getCabinet().getRack().setPercentage(rackPercentage);
+
+
+        Integer rackTotal = rackRepository.sumPercentage(box.getCell().getCabinet().getRack().getRoom().getId(),box.getCell().getCabinet().getRack().getId());
+        int rackTotalPercentage = (rackTotal == null) ? 0 : rackTotal;
+        rackTotalPercentage += rackPercentage;
+
+        int roomPercentage = 0;
+        if (rackTotalPercentage > 0){
+            int rackCount = rackRepository.countByRoomIdAndIdNot(box.getCell().getCabinet().getRack().getRoom().getId(),box.getCell().getCabinet().getRack().getId());
+            rackCount = (rackCount + 1) * 100;
+            roomPercentage = new BigDecimal(rackTotalPercentage).divide(new BigDecimal(rackCount),2,RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
+        }
+        box.getCell().getCabinet().getRack().getRoom().setPercentage(roomPercentage);
+
+    }
+
+    @Transient
+    public Box createBox(String cellId, Box box){
+        Optional<Cell> cell = cellRepository.findById(cellId);
+        if (!cell.isPresent()){
+            return null;
+        }
+        box.setCell(cell.get());
+        box.setId(box.getCell().getId() + "-" + box.getSeq());
+        calcPercentage(box);
+        return boxRepository.save(box);
+    }
+
+    @Transient
+    public Box setBoxFull(String boxId, boolean isFull){
+        Optional<Box> box = boxRepository.findById(boxId);
+        if (!box.isPresent()){
+            return null;
+        }
+        if (box.get().isFull() != isFull){
+            box.get().setFull(isFull);
+            calcPercentage(box.get());
+        }
+        return boxRepository.save(box.get());
     }
 
 

@@ -44,7 +44,7 @@ export class BusinessCreateComponent implements OnInit {
     ).subscribe(data => {
       console.log("save success: " + data);
       if (data){
-        this._router.navigate(["/business-file/" + data]);
+        this._router.navigate(["/business-volume/" + data]);
       }
     });
   }

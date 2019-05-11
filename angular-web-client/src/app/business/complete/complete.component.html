@@ -1,0 +1,95 @@
+<ngx-loading [show]="saveing" ></ngx-loading>
+<div class="container">
+  <div class="Subhead">
+    <h2 class="Subhead-heading">
+
+        <span class="author" itemprop="author">{{business.defineName}}</span><!--
+        --><span class="path-divider">/</span><!--
+        --><strong itemprop="name">{{business.id}}</strong>
+        
+    </h2>
+    <p class="Subhead-description">
+        {{business.summary}}
+    </p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <dl class="form-group">
+        <dt class="input-label">
+            <label for="id_input">卷编号</label>
+        </dt>
+        <dd>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">{{business.defineId}}.</span> 
+
+                </div>
+
+                <input id="id_input" type="text" class="form-control" placeholder="编号" formControlName="id" required>
+               
+            </div>
+       
+            <app-vaild-message [control]="form.get('id')"></app-vaild-message>
+ 
+        </dd>
+    </dl>
+
+    <div *ngIf="business.source === 'INPUT'" class="form-checkbox form-group">
+        <label>
+            <input class="mt-2" aria-describedby="是否补录档案" type="checkbox" formControlName="old" >
+            是否补录档案
+        </label>
+        <span  class="float-left mt-1 mr-2" color="#959da5"  octicon="repo" width="24"></span>
+        <span class="note">
+            补录旧档案，仅补录的档案上架时可以使用保留空间！
+        </span>
+    </div>
+
+    <dl *ngIf="form.value.old" class="form-group ">
+        <dt class="input-label">
+            <label>归档日期</label>
+        </dt>
+        <dd class="form-inline">
+            <app-date-time-picker inputDatetimeFormat="yyyy-M-d HH:mm:ss" formControlName="recordTime"></app-date-time-picker>
+        </dd>
+    </dl>
+
+    <hr/>
+
+
+
+    <dl class="form-group">
+        <dt class="input-label">
+            <label>保密级别</label>
+        </dt>
+        <dd>
+            <div class="row">
+                <div class="col-lg-3 col-md-12">
+                    <ng-select placeholder="保密级别" formControlName="secrecyLevel" [items]="secrecyLevelList" bindLabel="name" bindValue="id" notFoundText="没有符合条件的项"></ng-select>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+
+                        <input type="number" [required]="isSecrecy" placeholder="保密期限" class="form-control" formControlName="secrecyLen" [attr.disabled]="isSecrecy ? null : ''">
+                        <div class="input-group-append">
+                                <span class="input-group-text">年</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </dd>
+    </dl>
+
+    <hr/>
+
+
+    <button type="submit" class="btn btn-success first-in-line" [disabled]="!form.valid || saveing" >
+        <span *ngIf="saveing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span *ngIf="!saveing">建立档案</span>
+        <span *ngIf="saveing">正在建立档案...</span>
+    </button>
+
+  </form>
+</div>

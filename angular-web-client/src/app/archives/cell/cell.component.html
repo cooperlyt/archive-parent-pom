@@ -1,0 +1,22 @@
+<div>
+  <div class="box-header">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="cabinet">
+    <div *ngFor="let row of cells" class="row">
+      <div *ngFor="let cell of row" class="col cell">
+
+        <a [routerLink]="cell.id" routerLinkActive="selected">
+          <span class="content" >
+              <span [style.width.%]="cell.percentage"></span>
+          </span>
+          <div class="cell-body">
+              {{cell.name}}
+          </div>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+
+</div>

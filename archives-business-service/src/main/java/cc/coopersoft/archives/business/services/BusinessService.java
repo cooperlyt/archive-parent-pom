@@ -2,6 +2,7 @@ package cc.coopersoft.archives.business.services;
 
 import cc.coopersoft.archives.business.model.*;
 import cc.coopersoft.archives.business.repository.*;
+import cc.coopersoft.construct.data.VolumeItemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,66 @@ public class BusinessService {
     @Autowired
     private BusinessSearchRepo businessSearchRepo;
 
+    @Autowired
+    private VolumeItemRepo volumeItemRepo;
+
+    public List<VolumeContext> listContent(int itemId){
+        return volumeContextRepo.queryAllByItemIdOrderByOrdinal(itemId);
+    }
+
+    public List<VolumeItem> listVolumeItem(String businessId){
+        return volumeItemRepo.queryAllByBusinessIdOrderBySeqAsc(businessId);
+    }
+
+    public VolumeItem getVolumeItem(int id){
+        Optional<VolumeItem> item = volumeItemRepo.findById(id);
+        if (item.isPresent()){
+            return item.get();
+        }
+        return null;
+    }
+
+    public void deleteVolumeContext(String contextId){
+        volumeContextRepo.deleteById(contextId);
+    }
+
+    public void clearVolumeContext(int itemId){
+        volumeContextRepo.deleteAllByItemId(itemId);
+    }
+
+    public VolumeItem updateAllVolumeContext(List<VolumeContext> contexts, int itemId){
+        Optional<VolumeItem> item = volumeItemRepo.findById(itemId);
+        if (item.isPresent()){
+            for(VolumeContext context: contexts){
+                context.setItem(item.get());
+            }
+            volumeContextRepo.saveAll(contexts);
+            return item.get();
+        }
+        return null;
+    }
+
+    public VolumeContext putVolumeContext(int itemId, VolumeContext context){
+        Optional<VolumeItem> item = volumeItemRepo.findById(itemId);
+        if (!item.isPresent()){
+            return null;
+        }
+        context.setItem(item.get());
+        return volumeContextRepo.save(context);
+    }
+
+    public VolumeItem saveVolumeItem(String businessId, VolumeItem item){
+        Business business = getBusiness(businessId);
+        item.setBusiness(business);
+        return volumeItemRepo.save(item);
+    }
+
+    public void deleteVolumeItem(int id){
+        volumeContextRepo.deleteAllByItemId(id);
+        volumeItemRepo.deleteById(id);
+    }
+
+
     @Transient
     public String putArchive(String volumeId, String boxId, String explain, String userName){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -91,7 +152,7 @@ public class BusinessService {
         }
 
         int pageCount = 0;
-        for(VolumeContext context: business.getContexts()){
+        for(VolumeItem context: business.getItems()){
             pageCount += context.getPageCount();
         }
         volume.setPageCount(pageCount);
@@ -137,68 +198,27 @@ public class BusinessService {
     }
 
     @Transactional
-    public String deleteBusiness(String id){
-        Business business = businessRepo.findBusinessById(id);
-        if (business != null) {
-            operationRepo.deleteAll(business.getOperations());
-            volumeContextRepo.deleteAll(business.getContexts());
-            for(BusinessField field: business.getFields()){
-                field.getValues().clear();
-                fieldRepo.save(field);
-            }
-            fieldRepo.deleteAll(business.getFields());
-            volumeRepo.deleteAllByBusinessId(id);
-            businessRepo.delete(business);
-            return business.getId();
-        }else{
-            return null;
-        }
+    public void deleteBusiness(String id){
+        operationRepo.deleteAllByBusinessId(id);
+        volumeContextRepo.deleteAllByItemBusinessId(id);
+        volumeItemRepo.deleteAllByBusinessId(id);
+        volumeRepo.deleteAllByBusinessId(id);
+        fieldRepo.deleteAllByBusinessId(id);
+        businessRepo.deleteById(id);
     }
 
-    public String abortBusiness(String id){
-        Business business = businessRepo.findBusinessById(id);
-        if (business != null){
-            business.setStatus(Business.Status.ABORT);
-            businessRepo.save(business);
-            return business.getId();
-        }
-        return null;
-    }
+//    public String abortBusiness(String id){
+//
+//
+//        Business business = businessRepo.findBusinessById(id);
+//        if (business != null){
+//            business.setStatus(Business.Status.ABORT);
+//            businessRepo.save(business);
+//            return business.getId();
+//        }
+//        return null;
+//    }
 
-    public void deleteVolumeContext(String contextId){
-        volumeContextRepo.deleteById(contextId);
-    }
-
-    public int clearVolumeContext(String businessId){
-        int result = 0;
-        Business business = getBusiness(businessId);
-        if (business != null){
-            result = business.getContexts().size();
-            business.getContexts().clear();
-            businessRepo.save(business);
-        }
-        return result;
-    }
-
-    public int updateAllVolumeContext(List<VolumeContext> contexts, String businessId){
-        int result = 0;
-        Business business = getBusiness(businessId);
-        if (business !=null ){
-            for(VolumeContext context: contexts){
-                context.setBusiness(business);
-            }
-            result = business.getContexts().size();
-            business.getContexts().clear();
-            business.getContexts().addAll(contexts);
-
-            businessRepo.save(business);
-        }
-        return result;
-    }
-
-    public List<VolumeContext> listContent(String businessId){
-       return volumeContextRepo.queryAllByBusinessIdOrderByOrdinal(businessId);
-    }
 
     public List<BusinessField> getFields(String id){
         return fieldRepo.queryAllByBusinessIdOrderByRow(id);
@@ -256,6 +276,10 @@ public class BusinessService {
                     value.setField(field);
                 }
             }
+        }
+
+        for(VolumeItem item: business.getItems()){
+            item.setBusiness(business);
         }
 
 
@@ -320,13 +344,5 @@ public class BusinessService {
         return businessRepo.save(business);
     }
 
-    public VolumeContext putVolumeContext(String businessId, VolumeContext context){
-        Business business = businessRepo.findBusinessById(businessId);
-        if (business == null){
-            return null;
-        }
-        context.setBusiness(business);
-        return volumeContextRepo.save(context);
 
-    }
 }

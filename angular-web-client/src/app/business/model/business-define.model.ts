@@ -20,6 +20,7 @@ export class BusinessDefine{
     defaultSecrecyLen:number;
     defaultSecrecyLevel:string;
 
+    itemDefines:{id:number,name:string,type: string,el:string,description:string,seq: number}[];
     fields: FieldGroup[];
     businessCategory: BusinessCategory;
 }

@@ -94,10 +94,10 @@ public class Business {
     @OrderBy("ordinal asc")
     private List<BusinessField> fields = new ArrayList<>(0);
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL)
-    @OrderBy(" ordinal asc ")
-    private List<VolumeContext> contexts = new ArrayList<>(0);
+    @OrderBy(" seq asc ")
+    private List<VolumeItem> items = new ArrayList<>(0);
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "business", cascade = CascadeType.ALL)
@@ -243,12 +243,12 @@ public class Business {
         this.fields = fields;
     }
 
-    public List<VolumeContext> getContexts() {
-        return contexts;
+    public List<VolumeItem> getItems() {
+        return items;
     }
 
-    public void setContexts(List<VolumeContext> contexts) {
-        this.contexts = contexts;
+    public void setItems(List<VolumeItem> items) {
+        this.items = items;
     }
 
     public List<Operation> getOperations() {

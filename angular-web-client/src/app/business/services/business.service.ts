@@ -16,6 +16,7 @@ import { ValueGroup } from '../model/value-group.model';
 import { Operation } from '../model/operation.model';
 import { DefaultRecord } from '../model/default-record.model';
 import { Volume } from '../model/volume.model';
+import { VolumeItem } from '../model/volume-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,16 @@ import { Volume } from '../model/volume.model';
 export class BusinessService {
 
   constructor(private _http: HttpClient) { }
+
+  saveVolumeItem(businessId:string , item:VolumeItem):Observable<VolumeItem>{
+    return this._http.put<VolumeItem>(`${environment.apiUrl}/business/v1/business/volume/item/${businessId}`,item)
+  }
+
+  archive(volumeId:string , boxId:string,  explain:string):Observable<string>{
+    return this._http.put<any>(`${environment.apiUrl}/business/v1/business/archive/${volumeId}`,{id: boxId, explain: explain}).pipe(
+      map(data => data.id)
+    )
+  }
 
   saveVolume(businessId:string , volume: Volume):Observable<string>{
     return this._http.post<any>(`${environment.apiUrl}/business/v1/business/volume/${businessId}`,volume).pipe(
@@ -62,7 +73,7 @@ export class BusinessService {
     return this._http.get<ValueGroup[]>(`${environment.apiUrl}/business/v1/business/field/${id}`);
   }
 
-  getVolumeContext(id: string):Observable<VolumeContext[]>{
+  getVolumeContext(id: number):Observable<VolumeContext[]>{
     return this._http.get<VolumeContext[]>(`${environment.apiUrl}/business/v1/business/context/${id}`).pipe(
       map((data  : VolumeContext[]) => {
         return data.sort((c1,c2) => {
@@ -84,17 +95,26 @@ export class BusinessService {
     );
   }
 
-  clearVolumeContext(id: string):Observable<number>{
+  clearVolumeContext(id: number):Observable<number>{
     return this._http.delete<any>(`${environment.apiUrl}/business/v1/business/content/clear/${id}`).pipe(
-      map(data => data.count)
+      map(data => data.id)
     );
   }
 
-  updateVolumeContexts(businessId: string , context: VolumeContext[]):Observable<number>{
-    return this._http.put<any>(`${environment.apiUrl}/business/v1/business/content/all/${businessId}`,context).pipe(
-      map(data => data.count)
+  updateVolumeContexts(itemId: number , context: VolumeContext[]):Observable<number>{
+    return this._http.put<any>(`${environment.apiUrl}/business/v1/business/content/all/${itemId}`,context).pipe(
+      map(data => data.id)
     );
   }
+
+  listVolumeItem(id:string):Observable<VolumeItem[]>{
+    return this._http.get<VolumeItem[]>(`${environment.apiUrl}/business/v1/business/volume/items/${id}`);
+  }
+
+  getVolumeItem(id:number):Observable<VolumeItem>{
+    return this._http.get<VolumeItem>(`${environment.apiUrl}/business/v1/business/volume/item/${id}`);
+  }
+
 
   listDefineSummary():Observable<any>{
     return this._http.get(`${environment.apiUrl}/template/v1/mine`);
@@ -113,10 +133,8 @@ export class BusinessService {
     return this._http.post<any>(`${environment.apiUrl}/business/v1/business/new`,business).pipe(map(data => data.id));
   }
 
-  putVolumeContext(context: VolumeContext,businessId: string):Observable<string>{
-    return this._http.put<any>(`${environment.apiUrl}/business/v1/business/context/${businessId}`,context).pipe(
-      map(data => data.id)
-    );
+  saveVolumeContext(context: VolumeContext,itemId: number):Observable<VolumeContext>{
+    return this._http.put<VolumeContext>(`${environment.apiUrl}/business/v1/business/context/${itemId}`,context);
   }
 
   private newFieldControl(groupType:string,groupOption:any, option: any, value?: any|null): FormControl{
@@ -296,8 +314,21 @@ export class BusinessService {
           source: new FormControl("INPUT"),
           version: new FormControl(0),
           corpType: new FormControl(null,Validators.required),
-          fields:  new FormArray([])
+          fields:  new FormArray([]),
+          items: new FormArray([])
         });
+
+        define.itemDefines.forEach(item => {
+          let i = 1;
+          (result.get('items') as FormArray).push(new FormGroup({
+            name: new FormControl(item.name),
+            type: new FormControl(item.type),
+            el: new FormControl(item.el),
+            description: new FormControl(item.description),
+            pageCount: new FormControl(0),
+            seq: new FormControl(item.seq)
+          }));
+        })
 
         let fields = define.fields.sort((f1,f2) => {
           return (f1.editorOrdinal == f2.editorOrdinal) ? 0 : (f1.editorOrdinal < f2.editorOrdinal ? -1 : 1);

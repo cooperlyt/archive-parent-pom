@@ -9,6 +9,10 @@ import java.util.List;
 @Repository
 public interface VolumeContextRepo extends CrudRepository<VolumeContext,String> {
 
-    List<VolumeContext> queryAllByBusinessIdOrderByOrdinal(String id);
+    List<VolumeContext> queryAllByItemIdOrderByOrdinal(int id);
+
+    void deleteAllByItemBusinessId(String id);
+
+    void deleteAllByItemId(int id);
 
 }

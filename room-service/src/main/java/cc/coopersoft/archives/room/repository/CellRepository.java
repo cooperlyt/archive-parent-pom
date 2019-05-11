@@ -14,5 +14,9 @@ public interface CellRepository extends CrudRepository<Cell,String> {
     @Query("select c from Cell c where c.cabinet.id = :cabinetId order by c.row , c.col")
     List<Cell> listCellByCabinet(@Param("cabinetId") String cabinetId);
 
+    @Query("SELECT SUM(c.percentage) FROM Cell c where c.cabinet.id = :cabinetId and c.id <> :cellId")
+    Integer sumPercentage(@Param("cabinetId") String cabinetId, @Param("cellId")String cellId);
 
+    @Query("SELECT COUNT(c.id) from Cell c where c.cabinet.id = :cabinetId and c.id <> :cellId")
+    int countPercentage(@Param("cabinetId") String cabinetId, @Param("cellId")String cellId);
 }

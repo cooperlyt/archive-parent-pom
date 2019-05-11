@@ -13,4 +13,10 @@ public interface CabinetRepository extends CrudRepository<Cabinet,String> {
 
     @Query("select c from Cabinet c where c.rack.id = :rackId order by c.seq")
     List<Cabinet> listCabinetByRack(@Param("rackId")String rackId);
+
+    @Query("SELECT SUM(c.percentage) FROM Cabinet c where c.rack.id = :rackId and c.id <> :cabinetId")
+    Integer sumPercentage(@Param("rackId")String rackId, @Param("cabinetId")String cabinetId);
+
+    @Query("SELECT count(c.id) FROM Cabinet c where c.rack.id = :rackId and c.id <> :cabinetId")
+    int countPercentage(@Param("rackId")String rackId, @Param("cabinetId")String cabinetId);
 }
