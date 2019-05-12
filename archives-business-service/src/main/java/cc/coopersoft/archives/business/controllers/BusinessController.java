@@ -2,14 +2,15 @@ package cc.coopersoft.archives.business.controllers;
 
 import cc.coopersoft.archives.business.model.*;
 import cc.coopersoft.archives.business.security.JWTUtils;
-import cc.coopersoft.archives.business.services.BusinessService;
-import cc.coopersoft.comm.JsonFieldFilter;
+import cc.coopersoft.archives.business.services.GovBusinessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,10 +25,29 @@ public class BusinessController {
     private static final Logger logger = LoggerFactory.getLogger(BusinessController.class);
 
     @Autowired
-    private BusinessService businessService;
+    private GovBusinessService govBusinessService;
 
     @Autowired
-    private JWTUtils JWTUtils;
+    private JWTUtils jwtUtils;
+
+    @RequestMapping(value = "/business/reject", method = RequestMethod.PUT)
+    public String rejectBusiness(HttpServletRequest request,
+                                 @RequestBody OperationAction operationAction){
+
+        Business result = govBusinessService.rejectBusiness(jwtUtils.getUserName(request),
+                operationAction.getId(),operationAction.getExplain());
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_ACCEPTABLE, "entity error！"
+            );
+        }
+        return "{\"id\":\"" + result.getId() + "\"}";
+    }
+
+    @RequestMapping(value="/archive/business/{boxId}",method = RequestMethod.GET)
+    public List<Business> listBusinessByBoxId(@PathVariable("boxId")String boxId){
+        return govBusinessService.listBusinessByBoxId(boxId);
+    }
 
     @RequestMapping(value = {"/business/search"}, method = RequestMethod.GET)
     public Page<Business> search(@RequestParam("page") Optional<Integer> page,
@@ -35,26 +55,28 @@ public class BusinessController {
                                  @RequestParam("define")Optional<String> define,
                                  @RequestParam("sort")Optional<String> sort,
                                  @RequestParam("dir")Optional<String> dir){
+        Sort sortable = new Sort((dir.isPresent() ? ("DESC".equals(dir.get()) ? Sort.Direction.DESC : Sort.Direction.ASC) : Sort.Direction.DESC)
+                , (sort.isPresent() ? sort.get() : "changeTime"));
 
         logger.debug("search page:" + (page.isPresent() ? page.get() : " nav ") + "key:" + (key.isPresent() ? key.get() : " nav ") );
-        return businessService.searchBusiness(key,page,define,sort,dir);
+        return govBusinessService.searchBusiness(key,define,PageRequest.of(page.isPresent() ? page.get() : 0, 20,sortable ));
     }
 
     @RequestMapping(value = "/business/operations/{businessId}", method = RequestMethod.GET)
     public List<Operation> listOperation(@PathVariable("businessId")String businessId){
-        return businessService.getOperationList(businessId);
+        return govBusinessService.getOperationList(businessId);
     }
 
     @RequestMapping(value = "/business/used-define", method = RequestMethod.GET)
     public List<UsedDefine> usedDefines(){
-        return businessService.listUsedDefined();
+        return govBusinessService.listUsedDefined();
     }
 
     @RequestMapping(value = "/business/new", method = RequestMethod.POST)
     public String createBusiness(@RequestBody Business business, HttpServletRequest request){
         logger.debug("------------ PUT NEW BUSINESS -------------------");
 
-        Business result = businessService.saveBusiness(business, JWTUtils.getUserName(request));
+        Business result = govBusinessService.saveBusiness(business, jwtUtils.getUserName(request));
 
         if (result == null) {
             throw new ResponseStatusException(
@@ -67,13 +89,13 @@ public class BusinessController {
 
     @RequestMapping(value = "/business/list/top", method = RequestMethod.GET)
     public List<BusinessOperation> listBusinessTop(){
-        return businessService.listTopBusiness();
+        return govBusinessService.listTopBusiness();
     }
 
     @RequestMapping(value = "/business/{id}", method = RequestMethod.GET)
     public Business getBusiness(@PathVariable("id") String id){
         logger.debug("request id:" + id);
-        Business business = businessService.getBusiness(id);
+        Business business = govBusinessService.getBusiness(id);
         if (business == null){
             logger.debug("business is:" + id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found! ");
@@ -84,7 +106,7 @@ public class BusinessController {
 
     @RequestMapping(value = "/business/{id}", method = RequestMethod.DELETE)
     public String deleteBusiness(@PathVariable("id")String businessId){
-        businessService.deleteBusiness(businessId);
+        govBusinessService.deleteBusiness(businessId);
 
         return "{\"id\":\"ok\"}";
     }
@@ -100,12 +122,12 @@ public class BusinessController {
 
     @RequestMapping(value = "/business/volume/items/{businessId}", method = RequestMethod.GET)
     public List<VolumeItem> listVolumeItem(@PathVariable("businessId")String businessId){
-        return businessService.listVolumeItem(businessId);
+        return govBusinessService.listVolumeItem(businessId);
     }
 
     @RequestMapping(value = "/business/volume/item/{itemId}", method = RequestMethod.GET)
     public VolumeItem getVolumeItem(@PathVariable("itemId")int itemId){
-        VolumeItem result = businessService.getVolumeItem(itemId);
+        VolumeItem result = govBusinessService.getVolumeItem(itemId);
         if (result == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
         }
@@ -114,14 +136,14 @@ public class BusinessController {
 
     @RequestMapping(value = "/business/volume/item/{businessId}", method = RequestMethod.PUT)
     public VolumeItem saveVolumeItem(@PathVariable("businessId") String businessId, @RequestBody VolumeItem item){
-        return businessService.saveVolumeItem(businessId,item);
+        return govBusinessService.saveVolumeItem(businessId,item);
     }
 
 
     @RequestMapping(value = "/business/volume/{id}", method = RequestMethod.POST)
     public String saveVolume(@PathVariable("id")String businessId, @RequestBody Volume volume,
                              HttpServletRequest request){
-        Volume result = businessService.saveVolume(businessId,volume,JWTUtils.getUserName(request));
+        Volume result = govBusinessService.saveVolume(businessId,volume,jwtUtils.getUserName(request));
         if (result == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
         }
@@ -131,7 +153,7 @@ public class BusinessController {
     @RequestMapping(value = "/business/archive/{volumeId}", method = RequestMethod.PUT)
     public String archive(@PathVariable("volumeId")String volumeId, @RequestBody OperationAction operationAction,
                           HttpServletRequest request){
-        String id = businessService.putArchive(volumeId,operationAction.getId(),operationAction.getExplain(),JWTUtils.getUserName(request));
+        String id = govBusinessService.putArchive(volumeId,operationAction.getId(),operationAction.getExplain(),jwtUtils.getUserName(request));
         if (id == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
         }
@@ -141,24 +163,24 @@ public class BusinessController {
 
     @RequestMapping(value = "/business/context/{itemId}", method = RequestMethod.GET)
     public List<VolumeContext> getVolumeContents(@PathVariable("itemId")int itemId){
-        return businessService.listContent(itemId);
+        return govBusinessService.listContent(itemId);
     }
 
 
     @RequestMapping(value = "/business/context/delete-item/{itemId}",method = RequestMethod.DELETE)
     public String deleteVolumeItem(@PathVariable("itemId")int itemId){
-        businessService.deleteVolumeItem(itemId);
+        govBusinessService.deleteVolumeItem(itemId);
         return "{\"id\":" + itemId + "}";
     }
 
     @RequestMapping(value = "/business/field/{businessId}", method = RequestMethod.GET)
     public List<BusinessField> getBusinessFields(@PathVariable("businessId")String businessId){
-        return businessService.getFields(businessId);
+        return govBusinessService.getFields(businessId);
     }
 
     @RequestMapping(value="/business/context/{itemId}",method =RequestMethod.PUT)
     public VolumeContext saveVolumeContext(@PathVariable("itemId")int itemId, @RequestBody VolumeContext context){
-        VolumeContext result =  businessService.putVolumeContext(itemId,context);
+        VolumeContext result =  govBusinessService.putVolumeContext(itemId,context);
         if (result == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
         }
@@ -167,7 +189,7 @@ public class BusinessController {
 
     @RequestMapping(value="/business/content/all/{itemId}",method = RequestMethod.PUT)
     public String putAllVolumeContext(@PathVariable("itemId")int itemId, @RequestBody List<VolumeContext> contexts){
-        VolumeItem item = businessService.updateAllVolumeContext(contexts,itemId);
+        VolumeItem item = govBusinessService.updateAllVolumeContext(contexts,itemId);
         if (item == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"business not found!");
         }
@@ -176,13 +198,13 @@ public class BusinessController {
 
     @RequestMapping(value = "/business/content/delete/{contextId}",method = RequestMethod.DELETE)
     public String delVolumeContext(@PathVariable("contextId")String contextId){
-        businessService.deleteVolumeContext(contextId);
+        govBusinessService.deleteVolumeContext(contextId);
         return "{\"id\":\"" + contextId + "\"}";
     }
 
     @RequestMapping(value = "/business/content/clear/{itemId}",method = RequestMethod.DELETE)
     public String clearVolumeContext(@PathVariable("itemId")int itemId){
-        businessService.clearVolumeContext(itemId);
+        govBusinessService.clearVolumeContext(itemId);
         return "{\"id\":" + itemId + "}";
     }
 

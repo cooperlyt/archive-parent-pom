@@ -47,4 +47,10 @@ public class TemplateController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/corp/defines", method = RequestMethod.GET)
+    public List<BusinessDefineSummary> listCorpDefine(){
+        return templateService.getAllDefine();
+    }
+
 }

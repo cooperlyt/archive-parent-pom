@@ -1,0 +1,49 @@
+
+    
+<div class="container">
+    <ngx-loading [show]="saveing" ></ngx-loading>
+  <div class="row justify-content-center">
+    <div class="col col-sm-12 col-md-9 ">
+      <div class="row">
+        <div class="col Subhead">
+            <h2 class="Subhead-heading">建立业务 {{form.value.defineName}}</h2>
+            <p class="Subhead-description">
+              建立档案业务。
+            </p>
+        </div>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+          <div class="col-12">
+            <dl class="form-group">
+              <dt class="input-label">
+                  <label>项目名称</label>
+              </dt>
+              <dd>
+                <input class="form-control" formControlName="projectName" required>
+              </dd>
+            </dl>
+          </div> 
+        </div>
+        <div *ngFor="let fieldGroup of fields.controls; let i=index" class="row">
+          <app-field-input class="col" [formGroup]="fields.at(i)"></app-field-input>   
+        </div>
+   
+     
+        <hr>
+           
+        <button type="submit" class="btn btn-success first-in-line" [disabled]="!form.valid || saveing" >
+            <span *ngIf="saveing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span *ngIf="!saveing">建立业务</span>
+            <span *ngIf="saveing">正在创建业务...</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+
+    
+</div>
+
+   

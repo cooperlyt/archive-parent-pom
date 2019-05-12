@@ -25,6 +25,12 @@ export class BusinessService {
 
   constructor(private _http: HttpClient) { }
 
+  rejectBusiness(businessId:string, explain:string):Observable<string>{
+    return this._http.put<any>(`${environment.apiUrl}/business/v1/business/reject`,{id:businessId, explain: explain}).pipe(
+      map(data => data.id)
+    )
+  }
+
   saveVolumeItem(businessId:string , item:VolumeItem):Observable<VolumeItem>{
     return this._http.put<VolumeItem>(`${environment.apiUrl}/business/v1/business/volume/item/${businessId}`,item)
   }
@@ -287,6 +293,7 @@ export class BusinessService {
           summary: new FormControl(business.summary),
           status: new FormControl(business.status),
           source: new FormControl(business.source),
+          projectName: new FormControl(null,Validators.required),
           version: new FormControl(business.version),
           corpType: new FormControl(business.corpType,Validators.required),
           seq: new FormControl(business.seq),
@@ -314,6 +321,7 @@ export class BusinessService {
           source: new FormControl("INPUT"),
           version: new FormControl(0),
           corpType: new FormControl(null,Validators.required),
+          projectName: new FormControl(null,Validators.required),
           fields:  new FormArray([]),
           items: new FormArray([])
         });
@@ -325,7 +333,6 @@ export class BusinessService {
             type: new FormControl(item.type),
             el: new FormControl(item.el),
             description: new FormControl(item.description),
-            pageCount: new FormControl(0),
             seq: new FormControl(item.seq)
           }));
         })

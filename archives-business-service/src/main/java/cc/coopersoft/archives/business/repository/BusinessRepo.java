@@ -5,6 +5,7 @@ import cc.coopersoft.archives.business.model.UsedDefine;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -24,5 +25,11 @@ public interface BusinessRepo extends CrudRepository<Business,String> {
 
     @Query("SELECT new cc.coopersoft.archives.business.model.UsedDefine(b.defineId,b.defineName, count(b) ) FROM Business b  group by b.defineId,b.defineName order by b.defineId")
     List<UsedDefine> listUsedDefine();
+
+    @Query("SELECT new cc.coopersoft.archives.business.model.UsedDefine(b.defineId,b.defineName, count(b) ) FROM Business b where b.deliverId=:orgId  group by b.defineId,b.defineName order by b.defineId")
+    List<UsedDefine> listUsedDefineByOrg(@Param("orgId")String orgId);
+
+    List<Business> findBusinessesByVolumeBoxIdOrderByVolumeRecordTime(String id);
+
 
 }

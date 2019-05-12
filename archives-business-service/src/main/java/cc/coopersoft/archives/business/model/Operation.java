@@ -15,6 +15,7 @@ public class Operation {
         EDITOR,
         RECORD,
         ARCHIVE,
+        REJECT,
         ABORT
     }
 

@@ -42,13 +42,13 @@
                                                     <div>
                                                         <a class="link-gray-dark no-underline text-bold wb-break-all d-inline-block">{{item.deliver}}</a>
                                                         <span class="text-gray-dark no-underline">
-                                                            {{item.defineName}}
+                                                            {{item.defineName}} /
                                                             <a class="link-gray-dark no-underline text-bold wb-break-all d-inline-block" 
                                                                 routerLink="/business-view/{{item.id}}/files">
-                                                                {{item.id}}
+                                                                {{item.id}} <span *ngIf="item.volume">  / {{item.volume.id}} </span>
                                                             </a>
                                                             <span class="f6 text-gray-light no-wrap ml-1">
-                                                                    {{item.receiveDate | date: 'yyyy-MM-dd'}}
+                                                                    {{item.receiveDate | date: 'yyyy年M月d日'}}
                                                             </span>
                                                         </span>
                                                        
@@ -56,23 +56,26 @@
                                                 </div>
                                                 <div>
                                                     <div class="dashboard-rollup-item Box p-3 mt-2">
-                                                        <span class="branch-name">{{businessStatus[item.status]}} </span>
+                                                        <span>业务当前状态为:</span>
+                                                        <span class="branch-name"> <strong>{{businessStatus[item.status]}} </strong> </span>
                                             
                                                         <div class="commits pusher-is-only-committer">
                                                             <ul class="pt-1">
                                                                     <li *ngFor="let operation of item.operations" class="d-flex flex-items-baseline m-0">
-                                                                        <span title="23504653">
-                                                                            <a class="d-inline-block">{{operationType[operation.type]}}</a>
+                                                                        <span>
+                                                                            <span class="badge badge-pill badge-primary d-inline-block">{{operationType[operation.type]}}</span>
+                                                                        
                                                                         </span>
-                                                                        <code><a class="mr-1">{{operation.employeeName}} </a></code>
+                                                                        <span><a class="mr-1 corp-a">{{operation.employeeName}} </a></span>
                                                                         <div class="dashboard-break-word lh-condensed">
+                                                                                <span>
+                                                                                        {{operation.operationTime | date: 'yyyy年M月d日 HH:mm:ss'}}
+                                                                                    </span>
                                                                             <blockquote>
                                                                             
                                                                             {{operation.explain}}
                                                                             </blockquote>
-                                                                            <span>
-                                                                                {{operation.operationTime | date: 'yyyy-MM-dd HH:mm:ss'}}
-                                                                            </span>
+                                                                     
                                                                         </div>
                                                                     </li>
                                                             </ul>

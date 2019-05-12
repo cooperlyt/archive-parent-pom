@@ -41,4 +41,8 @@ public class TemplateService {
         return businessDefineRep.getDefaultRecord(id);
     }
 
+
+    public List<BusinessDefineSummary> getAllDefine(){
+        return businessDefineRep.listDefineSummary();
+    }
 }

@@ -11,7 +11,7 @@ public class BusinessOperation {
     public BusinessOperation() {
     }
 
-    public BusinessOperation(String id, String defineName, String deliverId, String deliver, Date receiveDate,Business.Status status, List<Operation> operations) {
+    public BusinessOperation(String id, String defineName, String deliverId, String deliver, Date receiveDate,Business.Status status, List<Operation> operations,Volume volume) {
         this.id = id;
         this.defineName = defineName;
         this.deliver = deliver;
@@ -19,6 +19,7 @@ public class BusinessOperation {
         this.operations = operations;
         this.receiveDate = receiveDate;
         this.status = status;
+        this.volume = volume;
     }
 
     private String id;
@@ -34,6 +35,8 @@ public class BusinessOperation {
     private Business.Status status;
 
     private List<Operation> operations = new ArrayList<>(0);
+
+    private Volume volume;
 
     public String getId() {
         return id;
@@ -89,5 +92,13 @@ public class BusinessOperation {
 
     public void setStatus(Business.Status status) {
         this.status = status;
+    }
+
+    public Volume getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Volume volume) {
+        this.volume = volume;
     }
 }

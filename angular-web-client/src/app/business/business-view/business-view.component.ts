@@ -36,6 +36,8 @@ export class BusinessViewComponent implements OnInit {
   inputBusinessId:string;
   loadding :boolean = false;
 
+  rejectExplain:string;
+
   get canComplete():boolean{
     return (this.business.status === 'CREATED') || (this.business.status === 'RUNNING')
   }
@@ -49,7 +51,17 @@ export class BusinessViewComponent implements OnInit {
   }
 
   openModal(content) {
+    this.rejectExplain = null;
     this.modalService.open(content);
+  }
+
+  rejectBusiness(){
+    this.loadding = true;
+    this.businessService.rejectBusiness(this.business.id,this.rejectExplain).subscribe(_ => {
+      this.loadding = false;
+      this.business.status = 'REJECT';
+      this.modalService.dismissAll();
+    })
   }
 
   deleteBusiness(){

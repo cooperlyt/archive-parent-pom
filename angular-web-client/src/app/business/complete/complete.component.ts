@@ -60,7 +60,7 @@ export class CompleteComponent implements OnInit {
       this.business = data.business;
       this.form = this.fb.group({
         id: [null,[Validators.required,Validators.maxLength(15)]],
-        recordTime: [new Date(),Validators.required],
+        recordTime: [new Date()],
         secrecyLevel: [null, Validators.required],
         secrecyLen: [null],
         old: [false,Validators.required],

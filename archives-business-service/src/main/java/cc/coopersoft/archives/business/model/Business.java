@@ -85,6 +85,12 @@ public class Business {
     @Column(name = "SUMMARY_TEMPLATE")
     private String summaryTemplate;
 
+    @Column(name = "PROJECT_ID")
+    private String projectId;
+
+    @Column(name = "PROJECT_NAME")
+    private String projectName;
+
 
     @OneToOne(fetch = FetchType.LAZY , mappedBy = "business" )
     private Volume volume;
@@ -273,5 +279,21 @@ public class Business {
 
     public void setVolume(Volume volume) {
         this.volume = volume;
+    }
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }

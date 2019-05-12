@@ -10,7 +10,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/v1/business/.*").hasRole("USER")
+//                .regexMatchers("\\/v1\\/business\\/.*").hasRole("GOV")
+//                .regexMatchers("\\/v1\\/corp\\/.*").hasRole("CORP")
                 .anyRequest().authenticated();
     }
 

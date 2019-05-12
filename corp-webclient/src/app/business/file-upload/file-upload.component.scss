@@ -1,0 +1,172 @@
+
+
+
+
+
+
+
+.upload-item{
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    flex: none;
+    margin: 6px auto;
+    min-height: 103px;
+    position: relative;
+
+    background-image: initial;
+    box-shadow: rgba(60,64,67,.3) 0 1px 2px 0 ,rgba(60,64,67,.15) 0 1px 3px 1px;
+}
+
+.upload-item .icon-wrapper{
+    overflow: hidden;
+    align-self: center;
+    flex: none;
+    justify-content: center;
+
+}
+
+.upload-item .thumbnail-wrapper{
+    overflow: hidden;
+    align-self: center;
+    flex: none;
+    justify-content: center;
+
+}
+
+.upload-item .controls .btn {
+    margin-right:5px;
+}
+
+.upload-item .details{
+    border-inline-start: 1px #d8d8d8 solid;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    padding-bottom: 12px;
+    padding-inline-end: 16px;
+    padding-inline-start: 24px;
+    padding-top: 16px;
+}
+
+.upload-item .title-area a{
+    font-weight: 500;
+    word-break: break-all;
+    max-width: 100%;
+    color: rgb(26,115,232);
+    display: inline-block;
+    text-decoration: none;
+}
+
+.upload-item .details .description{
+    color: #616161;
+    font-size: 14px;
+    margin-top: 6px;
+}
+
+.upload-item ngb-progressbar{
+    margin-top: 16px;
+}
+
+.upload-item .file-name{
+    color: rgb(95,99,104);
+    margin-top: 6px;
+    min-height: 0;
+    overflow: hidden;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.upload-item .controls{
+    margin-top: 16px;   
+}
+
+.upload-item .controls .action-link{
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.upload-item .action-link{
+    color: rgb(26,115,232);
+    display: inline-block;
+    text-decoration: none;
+}
+
+.upload-item .form-group{
+    margin: 0;
+    
+}
+
+.upload-item .form-control{
+    margin: 0;
+}
+
+.upload-item .btn-hide{
+    float: right;
+    margin-top: 10px;
+}
+
+.btn-hide{
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    outline: none;
+    vertical-align: middle;
+    color: rgb(95,99,104);
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent; 
+}
+
+.paper-icon-button-light .btn-hide{
+    margin-top: 8px;
+    margin-right: 16px;
+}
+
+
+
+.pr-0{
+    padding-right: 0px;
+    display: flex;
+    flex: none;
+    position: relative;
+    text-align: center
+}
+
+.pr-0 .icon-wrapper{
+    width: 100px;
+    margin: auto; 
+}
+
+
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+    pointer-events: none;
+  }
+  /* high-performance display:none; helper */
+  .gu-hide {
+    left: -9999px !important;
+  }
+  /* added to mirrorContainer (default = body) while dragging */
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  /* added to the source element while its mirror is dragged */
+  .gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  }

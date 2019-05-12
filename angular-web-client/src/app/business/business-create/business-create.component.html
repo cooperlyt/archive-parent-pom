@@ -14,7 +14,7 @@
       </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="row">
-          <div class="col">
+          <div class="col-12">
      
               <dl class="form-group">
                 <dt class="input-label">
@@ -26,7 +26,16 @@
               </dl>
     
           </div>
-
+          <div class="col-12">
+            <dl class="form-group">
+              <dt class="input-label">
+                  <label>项目名称</label>
+              </dt>
+              <dd>
+                <input class="form-control" formControlName="projectName" required>
+              </dd>
+            </dl>
+          </div>
         </div>
         
         <div *ngFor="let fieldGroup of fields.controls; let i=index" class="row">

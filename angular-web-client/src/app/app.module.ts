@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
-import { UiSwitchModule } from 'angular2-ui-switch';
+// import { UiSwitchModule } from 'angular2-ui-switch';
 import {NgxPrintModule} from 'ngx-print';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -127,7 +127,7 @@ fontLibrary.add(
     BrowserAnimationsModule,
     ImageViewerModule,
     NgxGalleryModule,
-    UiSwitchModule,
+    // UiSwitchModule,
     NgxPrintModule,
     ToastrModule.forRoot(),
     DragulaModule.forRoot(),

@@ -19,4 +19,9 @@ public interface BusinessSearchRepo extends PagingAndSortingRepository<Business,
 
     @EntityGraph(value = "Business.volume",type = EntityGraph.EntityGraphType.FETCH)
     Page<Business> findAll(Pageable pageable);
+
+
+
+
+
 }

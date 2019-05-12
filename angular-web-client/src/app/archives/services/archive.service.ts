@@ -12,6 +12,7 @@ import { RackPath } from '../model/rack-path.model';
 import { CabinetPath } from '../model/cabinet-path.model';
 import { CellPath } from '../model/cell-path.model';
 import { map } from 'rxjs/operators';
+import { Business } from '../../business/model/business.model';
 
 
 @Injectable({
@@ -79,6 +80,10 @@ export class ArchiveService {
         return this._http.get<any>(`${environment.apiUrl}/rooms/v1/editor/full/${boxId}`).pipe(
             map(data => data.id)
         )
+    }
+
+    listBoxBusiness(boxId:string):Observable<Business[]>{
+        return this._http.get<Business[]>(`${environment.apiUrl}/business/v1/archive/business/${boxId}`);
     }
 
 }

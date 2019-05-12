@@ -32,6 +32,8 @@ CREATE TABLE _user
 	password varchar(512) NOT NULL,
 	name varchar(64) NOT NULL,
 	enabled boolean NOT NULL,
+	org varchar(32),
+	orgname varchar(128),
 	PRIMARY KEY (username)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET utf8;
 

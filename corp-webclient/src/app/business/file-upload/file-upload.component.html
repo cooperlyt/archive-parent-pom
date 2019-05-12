@@ -1,0 +1,136 @@
+<ng-template #imageViewContext let-modal >
+
+    <div class="modal-header">
+        <h4 class="modal-title" >{{selectItem.control.value.name}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <div #imagewrapper  class="modal-body imagewrapper">
+    <ngx-imageviewer *ngIf="selectItem" [width]="766" [height]="600" [src]="selectItem.previewSource"></ngx-imageviewer>
+
+    </div>
+</ng-template>
+
+<ng-template #deleteContext let-modal >
+  <div class="modal-header">
+    <h4 class="modal-title" >删除确认</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    确定要删除此文件！删除后不可恢复。
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-danger" style="width:100%" (click)="deleteItem()" [disabled]="saveing">
+        <span *ngIf="saveing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span *ngIf="!saveing">我确定要删除</span>
+        <span *ngIf="saveing">正在删除文件...</span>
+    </button>
+  </div>
+
+</ng-template>
+
+<ng-template #clearContext let-modal >
+    <div class="modal-header">
+      <h4 class="modal-title" >删除确认</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      确认要清空这些文件？
+    </div>
+  
+    <div class="modal-footer">
+      <button class="btn btn-danger" style="width:100%" (click)="deleteAll()" [disabled]="saveing">
+          <span *ngIf="saveing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="!saveing">我确定要删除</span>
+          <span *ngIf="saveing">正在删除文件...</span>
+      </button>
+    </div>
+  
+  </ng-template>
+
+
+
+
+  <div class="container file-list"  dragula="SPILL" [(dragulaModel)]="item.contexts">
+
+    <div *ngFor="let bind of item.contexts; let i=index">
+      <form [formGroup]="bind.control">
+        <div id="{{'item-' + bind.index}}" class="row upload-item">
+            <div class="col-12" >
+                <button class="  btn-hide" (click)="openActionModal(bind.index, deleteContext )" > <span octicon="x"></span></button>
+              <div class="row">
+                <div class="col-2 pr-0" (click)="openActionModal(bind.index,imageViewContext, 'preview')">
+                  <div class="{{(bind.item && bind.isImage) ? 'thumbnail-wrapper' : 'icon-wrapper'}}">
+                    <img *ngIf="bind.item && bind.isImage" maxSize="100" thumbnail [image]="bind.item?._file" [type]="bind.fileType"/>
+                    <img *ngIf="!bind.item && bind.isImage" [src]="bind.imageThumb" />
+                    <fa-icon *ngIf="!bind.isImage" size="2x" [icon]="faFile"></fa-icon>
+                  </div>
+                </div>
+                <div class="col-10">
+                    <div class="details">
+                        <div class=" title-area">
+                          <div *ngIf="!bind.volume" class="row" >
+                            <div class="col-12 ">
+                            
+                              <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1">{{getPageByIndex(bind.index,true)}} </span>
+                                </div>
+                                <input type="number" placeholder="页数" class="form-control"  formControlName="pageCount">     
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="bind.volume" class="row" >
+                            <div class="col-12 ">
+                            
+                              <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1">{{getPageByIndex(bind.index,true)}} </span>
+                                </div>
+                                <input type="number" placeholder="页数" class="form-control" (change)="onPageCountChange(bind)" formControlName="pageCount">     
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <span class="description">
+                          <strong> 第 {{getPageByIndex(bind.index)}} 页 </strong>
+                          <span *ngIf="bind.item" >
+                            {{ bind.item?.file?.name }} ({{ bind.item?.file?.size/1024/1024 | number:'.2' }} MB)
+                          </span>
+                        </span>
+                        
+
+                        <ngb-progressbar *ngIf="bind.item" class="upload-progressbar" height="4px" role="progressbar" [value]="bind.progress" type="info"></ngb-progressbar>
+         
+                        <div  class="controls">
+                            <a *ngIf="bind.volume" target="_blank" [href]="bind.previewSource" class="action-link" download>下载到本地</a>
+                            
+                            <button *ngIf="!bind.volume" class="btn btn-sm btn-outline-primary" (click)="bind.item.upload()"
+                              [disabled]="bind.isUploading || bind.isSuccess || !bind.control.valid">
+                            上传
+                            </button>
+                  
+                            <button *ngIf="!bind.volume" class="btn btn-sm btn-outline-danger" (click)="bind.item.cancel()" [disabled]="!bind.isUploading">
+                            取消
+                            </button>
+      
+                        
+                          </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+

@@ -11,30 +11,19 @@
   <div class="modal-body">
 
       <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+          <a *ngFor="let business of businesses" (click)="modal.dismiss('live')" routerLink="/business-view/{{business.id}}/files" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">List group item heading</h5>
-              <small>3 days ago</small>
+              <h5 class="mb-1">{{business.defineName}}/{{business.id}}/{{business.volume.id}}</h5>
+              <small>{{business.volume.recordTime | date : 'yyyy年M月d日 HH:mm:ss'}}</small>
             </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small>Donec id elit non mi porta.</small>
+            <p class="mb-1">{{business.summary}}</p>
+            <small>共 {{business.volume.pageCount}} 页 {{secrecyLevels[business.volume.secrecyLevel]}}
+              <span *ngIf="business.volume.secrecyLen !== 'None'"  >
+                  保密期限 :{{business.volume.secrecyLen}}年 
+              </span>
+              </small>
           </a>
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">List group item heading</h5>
-              <small class="text-muted">3 days ago</small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small class="text-muted">Donec id elit non mi porta.</small>
-          </a>
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">List group item heading</h5>
-              <small class="text-muted">3 days ago</small>
-            </div>
-            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-            <small class="text-muted">Donec id elit non mi porta.</small>
-          </a>
+      
       </div>
   </div>
 

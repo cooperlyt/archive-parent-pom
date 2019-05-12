@@ -36,7 +36,6 @@ import { RecordComponent } from './business/record/record.component';
 import { CompleteComponent } from './business/complete/complete.component';
 import { VolumeComponent } from './business/volume/volume.component';
 import { VolumesItemResolver } from './business/resolver/volumes-item.resolver';
-import { VolumeItemResolver } from './business/resolver/volume-item.resolver';
 import { FunctionLayoutComponent } from './layouts/function-layout/function-layout.component';
 
 
@@ -127,7 +126,8 @@ const routes: Routes = [
               {
                 path: 'files',
                 component: FileGalleryComponent,
-                resolve: { business: BusinessResolver}
+                resolve: { business: BusinessResolver, items: VolumesItemResolver},
+                
               },
               {
                 path: 'details',

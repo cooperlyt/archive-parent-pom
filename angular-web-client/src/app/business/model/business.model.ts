@@ -19,7 +19,8 @@ export class Business{
     version:number;
     defineVersion:number;
     seq:number;
-
+    projectName: string;
+    
     volume:Volume;
     contexts:VolumeContext[];
     fields:ValueGroup[];

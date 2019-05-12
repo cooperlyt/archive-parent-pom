@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build -prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -50,8 +51,12 @@
     "ngx-toastr": "^10.0.2",
     "octicons": "^8.5.0",
     "pdfjs-dist": "^2.0.943",
+    "popper.js": "^1.15.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
+    "webpack": "^4.31.0",
     "yarn": "^1.15.2",
     "zone.js": "~0.8.26"
   },

@@ -1,0 +1,82 @@
+<ng-template #content let-modal>
+
+    <div class="modal-body"
+      ng2FileDrop [ngClass]="{dropping: isDropZoneOver}" [uploader]="uploader">
+      <div class="file-drop-zone">
+        <h1>文件拖拽到些处添加到上传列表</h1>
+      </div>
+        
+    </div>
+</ng-template>
+  
+
+<input hidden #fileSelect type="file" name="photo" ng2FileSelect [uploader]="uploader" multiple />
+
+<div class="component-body" ng2FileDrop [ngClass]="{dropping: isDropZoneOver}" 
+  (fileOver)="openFileOverModal($event,content)" [uploader]="uploader">
+  <ngx-loading [show]="saveing" ></ngx-loading>
+
+  <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav fix-head">
+    <div class="repohead-details-container clearfix container">
+        <ul class="pagehead-actions">
+          <li><button class="btn btn-git btn-sm btn-success" (click)="fileSelect.click()"> 文件选择</button></li>
+          
+          <li><button routerLink="/business-view/{{business.id}}/files" class="btn btn-git btn-sm btn-with-count" [disabled]="waitUpdateCount"> 完成上传 </button>
+            <span class="social-count {{waitUpdateCount ? 'disabled' : ''}} ">{{ pageCountTotal}}</span>
+          </li>
+        </ul>
+      <h1 class="public ">
+
+          <span octicon="repo"></span>
+          <span class="author" itemprop="author">{{business.defineName}}</span><!--
+        --><span class="path-divider">/</span><!--
+        --><strong itemprop="name">{{business.id}}</strong>
+         <span *ngIf="business.volume" class="path-divider">/</span><!--
+      --><strong *ngIf="business.volume" itemprop="name">{{business.volume.id}}</strong>
+        
+        </h1>
+    </div>
+    <div class="container">
+      <ul class="pagehead-actions">
+        <li><button class="btn btn-git btn-sm btn-with-count"
+            (click)="uploader.cancelAll()" [disabled]="!cancelCount">全部取消</button>
+          <span class="social-count {{cancelCount ? '' : 'disabled'}}">{{ cancelCount }}</span>
+        </li>
+        <!-- <li><button class="btn btn-git btn-sm btn-with-count"
+          (click)="deleteAllConfirme(clearContext)" [disabled]="!allUploadItemCount">全部删除</button>
+          <span class="social-count {{allUploadItemCount ? '' : 'disabled'}}">{{ allUploadItemCount }}</span>
+        </li> -->
+        <li><button class="btn btn-git btn-sm btn-with-count" (click)="uploader.uploadAll()" 
+          [disabled]="!waitUpdateCount" >全部上传</button>
+          <span class="social-count {{waitUpdateCount ? '' : 'disabled'}} ">{{ waitUpdateCount }}</span>
+        </li>
+      </ul>
+
+      <p>{{business.summary}}</p>
+    </div>
+  </div>
+
+  <div class="container items">
+    <div class="row">
+      <div class="col-4">
+        <nav class="menu" data-drag-enabled ="false">
+            <a *ngFor="let item of items" class="menu-item" [routerLink]="item.item.id" routerLinkActive="selected">
+              {{item.item.name}}
+            </a>
+        </nav>
+        <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="newItemName" placeholder="新建项" aria-label="新建项" aria-describedby="新建项名称">
+            <div class="input-group-append">
+              <button class="btn btn-git btn-success" (click)="addItem()" type="button"><span octicon="plus"></span></button>
+            </div>
+          </div>
+        
+      </div>
+
+      <div class="col">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Box } from '../model/box.model';
 import { Cell } from '../model/cell.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ArchiveService } from '../services/archive.service';
+import { Business } from '../../business/model/business.model';
+import { SecrecyLevel } from '../../business/enumData';
 
 @Component({
   selector: 'app-box',
@@ -11,17 +14,28 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class BoxComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private modalService: NgbModal) { }
+  businesses: Business[];
+
+  constructor(private route: ActivatedRoute, 
+    private modalService: NgbModal,
+    private arichiveService: ArchiveService) { }
 
   // boxs :Box[];
   cell: Cell;
 
   selectBox: Box;
 
+
+  secrecyLevels = SecrecyLevel;
+
   openBox(context,box:Box){
     this.selectBox = box;
-    this.modalService.open(context);
+    this.modalService.open(context, { size: 'lg' });
+    this.businesses = [];
+    this.arichiveService.listBoxBusiness(box.id).subscribe(businesses => this.businesses = businesses)
   }
+
+
 
   // get emptyBox():number[]{
   //   let count = this.cell.size;

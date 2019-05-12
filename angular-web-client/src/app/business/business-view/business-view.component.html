@@ -14,6 +14,35 @@
 
 </ng-template>
 
+<ng-template #comitContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">拒收此业务！</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <dl class="form-group">
+          <dt class="input-label">
+              <label>拒收说明</label>
+          </dt>
+          <dd>
+              <textarea ngbAutofocus rows="3" class="form-control" [(ngModel)]="rejectExplain"></textarea>
+          </dd>
+        </dl>
+    
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="d('cancel click')">取消</button>
+      <button type="button" [disabled]="loadding" class="btn btn-danger" (click)="rejectBusiness()">
+          <span *ngIf="loadding" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  ></span>
+          <span *ngIf="!loadding">拒收业务</span>
+          <span *ngIf="loadding">正在退回业务...</span>
+      </button>
+    </div>
+
+</ng-template>
+
 <div class="component-body">
   <ngx-loading [show]="loadding" ></ngx-loading>
     <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav fix-head">
@@ -24,7 +53,7 @@
             <li><button class="btn btn-git btn-sm" > 卷内目录</button></li>
 
             <li><button class="btn btn-git btn-sm btn-danger" (click)="openModal(delcontent)"> 删除</button></li>
-            <li><button class="btn btn-git btn-sm " > 拒收</button></li>
+            <li><button class="btn btn-git btn-sm " (click)="openModal(comitContent)"> 拒收</button></li>
 
             <li><div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-git btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
@@ -44,7 +73,8 @@
             --><span class="path-divider">/</span><!--
             --><strong itemprop="name">{{business.id}}</strong>
               
-            
+              <span *ngIf="business.volume" class="path-divider">/</span>
+              <strong *ngIf="business.volume" itemprop="name">{{business.volume.id}}</strong>
           </h1>
         </div>
 

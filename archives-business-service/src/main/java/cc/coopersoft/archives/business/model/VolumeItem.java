@@ -2,7 +2,6 @@ package cc.coopersoft.archives.business.model;
 
 import cc.coopersoft.construct.data.VolumeItemType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,8 +29,6 @@ public class VolumeItem {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "PAGE_COUNT" , nullable = false)
-    private int pageCount;
 
     @Column(name = "SEQ", nullable = false)
     private int seq;
@@ -87,13 +84,6 @@ public class VolumeItem {
         this.description = description;
     }
 
-    public int getPageCount() {
-        return pageCount;
-    }
-
-    public void setPageCount(int pageCount) {
-        this.pageCount = pageCount;
-    }
 
     public int getSeq() {
         return seq;

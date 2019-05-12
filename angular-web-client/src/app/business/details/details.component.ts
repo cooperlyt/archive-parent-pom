@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Business } from '../model/business.model';
 import { ValueGroup } from '../model/value-group.model';
-import { CORP_TYPE, BusinessStatus } from '../enumData';
+import { CORP_TYPE, BusinessStatus, SecrecyLevel } from '../enumData';
 import { number } from 'prop-types';
 import { FieldValue } from '../model/field-value.model';
 
@@ -32,7 +32,7 @@ export class RowFields {
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-
+  secrecyLevel = SecrecyLevel;
   corpType = CORP_TYPE;
   businessStatus = BusinessStatus;
 
