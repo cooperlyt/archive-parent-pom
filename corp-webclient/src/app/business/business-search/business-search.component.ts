@@ -17,7 +17,7 @@ export class BusinessSearchComponent implements OnInit {
   pageIndex: number;
   usedDefine: any[];
 
-  filterByDefine(id: string){
+  filterByDefine(id?: string){
     console.log("filter:" ,id);
     if (!id && !this.defineId){
       return;

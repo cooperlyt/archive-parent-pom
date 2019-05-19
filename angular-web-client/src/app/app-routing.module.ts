@@ -37,6 +37,11 @@ import { CompleteComponent } from './business/complete/complete.component';
 import { VolumeComponent } from './business/volume/volume.component';
 import { VolumesItemResolver } from './business/resolver/volumes-item.resolver';
 import { FunctionLayoutComponent } from './layouts/function-layout/function-layout.component';
+import { CategoryListComponent } from './business/category-list/category-list.component';
+import { TemplateCategoryResolver } from './business/resolver/template-category.resolver';
+import { TemplateListComponent } from './business/template-list/template-list.component';
+import { DefinesResolver } from './business/resolver/defines.resolver';
+import { BusinessPatchComponent } from './business/business-patch/business-patch.component';
 
 
 
@@ -54,6 +59,23 @@ const routes: Routes = [
         path: '',
         component: FunctionLayoutComponent,
         children:[
+          {
+            path: 'business-patch/:box/:id',
+            component: BusinessPatchComponent,
+            resolve: {editor: BusinessCreateResolver}
+          },
+          {
+            path: 'business-category',
+            component: CategoryListComponent,
+            resolve: {categories: TemplateCategoryResolver},
+            children: [
+              {
+                path: ':id',
+                component: TemplateListComponent,
+                resolve: {defines: DefinesResolver}
+              }
+            ]
+          },
           {
             path: 'business-record/:id',
             component: RecordComponent,

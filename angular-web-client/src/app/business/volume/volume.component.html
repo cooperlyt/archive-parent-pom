@@ -12,7 +12,7 @@
 
 <input hidden #fileSelect type="file" name="photo" ng2FileSelect [uploader]="uploader" multiple />
 
-<div class="component-body" ng2FileDrop [ngClass]="{dropping: isDropZoneOver}" 
+<div class="component-body" ng2FileDrop 
   (fileOver)="openFileOverModal($event,content)" [uploader]="uploader">
   <ngx-loading [show]="saveing" ></ngx-loading>
 

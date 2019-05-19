@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, AfterViewChecked, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormArray, FormControl } from '@angular/forms';
-import { CorpService } from '../services/corp.service';
-import { CorpSummary } from '../model/corp-summary.model';
 import { CORP_TYPE } from '../enumData';
 
 
@@ -19,7 +17,6 @@ export class CorpSelectComponent implements OnInit {
 
   @Input() formArray: string;
 
-  corpNoFoundText:string = "请选择公司类型";
 
   corpType = CORP_TYPE;
 
@@ -49,7 +46,7 @@ export class CorpSelectComponent implements OnInit {
     }
   }
 
-  private getTypeValue():string{
+  get typeValue():string{
     if (this.formArray){
       return this.form.value[this.formArray][0]['value'];
     }else if (this.typeKey){
@@ -59,35 +56,34 @@ export class CorpSelectComponent implements OnInit {
     }
   }
 
-  constructor(private _corpService: CorpService) { }
-
-  corpList: CorpSummary[] = [];
-  load: boolean = false;
-
-  private typeChange(value:string){
-    if (value && (this.getTypeValue() != value)){
-      this.load = true;
-
-      this.getIdControl().setValue("");
-      this.getNameControl().setValue("");
-      this.corpList = [];
-      this.corpNoFoundText = '请选择公司类型';
-      this._corpService.getCorpByType(value).subscribe((res:CorpSummary[]) => {
-        this.corpList = res;
-        this.load = false;
-        this.corpNoFoundText = '没有符合条件的选项';
-      });
-    }else if (!value){
-      this.getIdControl().setValue("");
-      this.getNameControl().setValue("");
-      this.corpList = [];
-      this.corpNoFoundText = '请选择公司类型';
+  get valueFormGroup():FormGroup{
+    if (this.formArray){
+      return (this.form.get(this.formArray) as FormArray).at(1) as FormGroup;
+    }else{
+      return this.form;
     }
   }
 
-  private corpChange(value:string){
-    if (value){
-      this.getNameControl().setValue(this.corpList.find(data => data.id === value).name);
+  constructor() { }
+
+
+  private typeChange(value:string){
+    if (value && (this.typeValue != value)){
+
+
+      this.getIdControl().setValue("");
+      this.getNameControl().setValue("");
+
+
+    }else if (!value){
+      this.getIdControl().setValue("");
+      this.getNameControl().setValue("");
+    }
+  }
+
+  corpChange(event){
+    if (event){
+      this.getNameControl().setValue(event.name);
     }else{
       this.getNameControl().setValue(null);
     }    
@@ -108,14 +104,6 @@ export class CorpSelectComponent implements OnInit {
       this.form.get(this.idKey).valueChanges.subscribe(value => this.corpChange(value));
     }
 
-    if (this.getTypeValue()){
-      this.load = true;
-      this._corpService.getCorpByType(this.getTypeValue()).subscribe((res:CorpSummary[]) => {
-        this.corpList = res;
-        this.load = false;
-        this.corpNoFoundText = '没有符合条件的选项';
-      });
-    }
   }
 
   ngOnInit() {

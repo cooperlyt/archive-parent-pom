@@ -50,10 +50,12 @@
           <ul class="pagehead-actions">
             <li *ngIf="canComplete"><button class="btn btn-git btn-sm btn-success" routerLink="/business-complete/{{business.id}}">归档建卷</button></li>
             <li *ngIf="canRecord"><button class="btn btn-git btn-sm btn-success" routerLink="/business-record/{{business.id}}">装盒上架</button></li>
+            <li><button *ngIf="canReject" class="btn btn-git btn-sm " (click)="openModal(comitContent)" > 拒收</button></li>
+
             <li><button class="btn btn-git btn-sm" > 卷内目录</button></li>
 
             <li><button class="btn btn-git btn-sm btn-danger" (click)="openModal(delcontent)"> 删除</button></li>
-            <li><button class="btn btn-git btn-sm " (click)="openModal(comitContent)"> 拒收</button></li>
+        
 
             <li><div ngbDropdown class="d-inline-block">
                 <button type="button" class="btn btn-git btn-sm " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
@@ -90,7 +92,7 @@
 
           <span >
             <a class="reponav-item" routerLink="details" routerLinkActive='selected'>
-              <span [innerHTML]="fileMediaIcon"></span>
+              <!-- <span octicon="note"></span> -->
               <span itemprop="name">档案信息</span>
               
               <meta itemprop="position" content="2">
@@ -98,7 +100,7 @@
           </span>
             <span >
               <a class="reponav-item" routerLink="operations" routerLinkActive='selected'>
-                <span [innerHTML]="fileMediaIcon"></span>
+                <!-- <span octicon="note"></span> -->
                 <span itemprop="name">操作记录</span>
                 
                 <meta itemprop="position" content="2">

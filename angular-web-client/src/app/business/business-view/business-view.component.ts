@@ -46,6 +46,10 @@ export class BusinessViewComponent implements OnInit {
     return this.business.status === 'COMPLETE'
   }
 
+  get canReject():boolean{
+    return this.business.status === 'RUNNING';
+  }
+
   get isInputBusinessId():boolean{
     return this.inputBusinessId === this.business.id;
   }

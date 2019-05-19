@@ -1,5 +1,6 @@
 package cc.coopersoft.business.controllers;
 
+import cc.coopersoft.business.model.BusinessCategory;
 import cc.coopersoft.business.model.BusinessDefine;
 import cc.coopersoft.business.model.BusinessDefineSummary;
 import cc.coopersoft.business.model.DefaultRecord;
@@ -48,9 +49,22 @@ public class TemplateController {
         return result;
     }
 
+    @RequestMapping(value = "/define/category/list", method = RequestMethod.GET)
+    public List<BusinessCategory> listAllDefine(){
+        return templateService.listAllCategory();
+    }
+
+    @RequestMapping(value = "/define/list/{categoryId}", method = RequestMethod.GET)
+    public List<BusinessDefineSummary> listDefine(@PathVariable("categoryId")String categoryId){
+        return templateService.listDefineByCategory(categoryId);
+    }
+
     @RequestMapping(value = "/corp/defines", method = RequestMethod.GET)
     public List<BusinessDefineSummary> listCorpDefine(){
         return templateService.getAllDefine();
     }
+
+
+
 
 }

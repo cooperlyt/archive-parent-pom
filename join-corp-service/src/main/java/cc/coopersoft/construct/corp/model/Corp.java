@@ -1,8 +1,10 @@
 package cc.coopersoft.construct.corp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +36,7 @@ public class Corp implements java.io.Serializable{
     @Column(name = "OWNER_NAME", nullable = false, length = 64)
     private String ownerName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "OWNER_ID_TYPE", nullable = false, length = 16)
     private Person.IdentityType ownerIdType;
 
@@ -53,7 +56,13 @@ public class Corp implements java.io.Serializable{
     @Column(name = "_VERSION", nullable = false)
     private int version;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @Column(name = "ENABLE", nullable = false)
+    private boolean enable;
+
+    @Column(name = "DATA_TIME", nullable = false)
+    private Date dataTime;
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "corp")
     private Set<ConstructCorp> constructCorps = new HashSet<>(0);
 
@@ -154,5 +163,21 @@ public class Corp implements java.io.Serializable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    public Date getDataTime() {
+        return dataTime;
+    }
+
+    public void setDataTime(Date dataTime) {
+        this.dataTime = dataTime;
     }
 }

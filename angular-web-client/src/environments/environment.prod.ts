@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://192.168.1.21:5555/api',
+  apiUrl: 'http://10.20.16.235:5555/api',
   clientId: 'archives',
   clientPassword: 'thisissecret',
-  fileUrl: "http://192.168.1.21:6699"
+  fileUrl: "http://10.20.16.235:6699"
 };

@@ -148,16 +148,16 @@ INSERT INTO CELL(CELL_ID,NAME,CABINET_ID,_SIZE,SEQ,_ROW,_COL,PERCENTAGE) VALUES(
 INSERT INTO CELL(CELL_ID,NAME,CABINET_ID,_SIZE,SEQ,_ROW,_COL,PERCENTAGE) VALUES('A-1-1B-3-4','3-4','A-1-1B',10,12,3,4,0);
 
 
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-1',true,false,1,1,'A-1-1B-1-1',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-2',true,false,1,2,'A-1-1B-1-1',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-3',true,false,1,3,'A-1-1B-1-1',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-4',true,false,2,4,'A-1-1B-1-1',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-5',true,false,1,5,'A-1-1B-1-1',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-6',true,false,2,6,'A-1-1B-1-1',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-7',true,false,1,7,'A-1-1B-1-1',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-8',true,false,1,8,'A-1-1B-1-1',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-2-1',true,false,1,1,'A-1-1B-1-2',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-2-2',true,false,1,2,'A-1-1B-1-2',true);
-INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-2-3',true,false,2,3,'A-1-1B-1-2',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-1',false,false,1,1,'A-1-1B-1-1',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-2',false,false,1,2,'A-1-1B-1-1',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-3',false,false,1,3,'A-1-1B-1-1',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-4',false,false,2,4,'A-1-1B-1-1',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-5',false,false,1,5,'A-1-1B-1-1',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-6',false,false,2,6,'A-1-1B-1-1',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-7',false,false,1,7,'A-1-1B-1-1',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-1-8',false,false,1,8,'A-1-1B-1-1',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-2-1',false,false,1,1,'A-1-1B-1-2',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-2-2',false,false,1,2,'A-1-1B-1-2',true);
+INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-2-3',true,false,2,3,'A-1-1B-1-2',false);
 INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-2-4',false,false,1,4,'A-1-1B-1-2',false);
 INSERT BOX(BOX_ID, `_FULL`, `EMPTY`, `_SIZE`, SEQ, CELL_ID, OLD) VALUES('A-1-1B-1-2-5',false,true,1,5,'A-1-1B-1-2',false);

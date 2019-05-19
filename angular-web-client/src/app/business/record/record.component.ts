@@ -129,7 +129,7 @@ export class RecordComponent implements OnInit {
     if (this.selectBox){
       this.saveing = true;
       if (this.selectBox.id && this.isFull){
-        this.arichiveService.setBoxFull(this.selectBox.id).subscribe(id =>this.saveBusiness(id));
+        this.arichiveService.setBoxFull(this.selectBox.id).subscribe(box =>this.saveBusiness(box.id));
       }else{
         this.selectBox.full = this.isFull;
         this.selectBox.empty = false;

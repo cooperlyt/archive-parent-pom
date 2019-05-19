@@ -16,6 +16,8 @@ export class RoomComponent implements OnInit {
   faFile = faFile;
   inboxIcon = inbox.toSVG();
 
+  loadding = false;
+
   constructor(private route: ActivatedRoute,private router: Router,private sanitizer: DomSanitizer) { }
 
   rooms: Room[];

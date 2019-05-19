@@ -124,24 +124,24 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/editor/full/{boxId}", method = RequestMethod.GET)
-    public String setBoxFull(@PathVariable("boxId") String boxId){
+    public Box setBoxFull(@PathVariable("boxId") String boxId){
         Box result = roomLocationService.setBoxFull(boxId,true);
         if (result == null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "define entity not found"
             );
         }
-        return "{\"id\":\"" + result.getId() + "\"}";
+        return result;
     }
 
     @RequestMapping(value = "/editor/not-full/{boxId}", method = RequestMethod.GET)
-    public String setBoxNotFull(@PathVariable("boxId") String boxId){
+    public Box setBoxNotFull(@PathVariable("boxId") String boxId){
         Box result = roomLocationService.setBoxFull(boxId,false);
         if (result == null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "define entity not found"
             );
         }
-        return "{\"id\":\"" + result.getId() + "\"}";
+        return result;
     }
 }

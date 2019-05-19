@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
-import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import {NgxPrintModule} from 'ngx-print';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -85,8 +85,6 @@ fontLibrary.add(
     VaildMessageComponent,
     DateTimePickerComponent,
     FileUploadComponent,
-    FileSelectDirective,
-    FileDropDirective,
     BusinessCreateListComponent,
     ThumbnailDirective,
     BusinessViewComponent,
@@ -98,6 +96,7 @@ fontLibrary.add(
     FunctionLayoutComponent
   ],
   imports: [
+    FileUploadModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

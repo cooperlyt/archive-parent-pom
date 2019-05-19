@@ -92,7 +92,7 @@ public class Business {
     private String projectName;
 
 
-    @OneToOne(fetch = FetchType.LAZY , mappedBy = "business" )
+    @OneToOne(fetch = FetchType.LAZY , mappedBy = "business" , cascade = CascadeType.ALL)
     private Volume volume;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

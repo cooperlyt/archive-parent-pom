@@ -1,7 +1,7 @@
 <ng-template #content let-modal>
 
     <div class="modal-body"
-      ng2FileDrop [ngClass]="{dropping: isDropZoneOver}" [uploader]="uploader">
+      ng2FileDrop  [uploader]="uploader">
       <div class="file-drop-zone">
         <h1>文件拖拽到些处添加到上传列表</h1>
       </div>
@@ -12,7 +12,7 @@
 
 <input hidden #fileSelect type="file" name="photo" ng2FileSelect [uploader]="uploader" multiple />
 
-<div class="component-body" ng2FileDrop [ngClass]="{dropping: isDropZoneOver}" 
+<div class="component-body" ng2FileDrop 
   (fileOver)="openFileOverModal($event,content)" [uploader]="uploader">
   <ngx-loading [show]="saveing" ></ngx-loading>
 
@@ -34,7 +34,7 @@
          <span *ngIf="business.volume" class="path-divider">/</span><!--
       --><strong *ngIf="business.volume" itemprop="name">{{business.volume.id}}</strong>
         
-        </h1>
+      </h1>
     </div>
     <div class="container">
       <ul class="pagehead-actions">

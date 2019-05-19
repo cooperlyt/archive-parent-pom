@@ -17,8 +17,6 @@ export class BusinessCreateComponent implements OnInit {
 
   saveing: boolean = false;
 
-
-
   get fields() {
     return this.form.get('fields') as FormArray;
   }
@@ -27,10 +25,17 @@ export class BusinessCreateComponent implements OnInit {
   constructor(private _route: ActivatedRoute,private _router:Router, private _businessService: BusinessService,private toastr: ToastrService) { 
   }
 
+  onCorpChange(event){
+    console.log(event);
+    if (event){
+      this.form.get('deliver').setValue(event.name);
+    }else{
+      this.form.get('deliver').setValue(null);
+    }
+  }
+
   ngOnInit() {
-    this._route.data.subscribe(
-      data => {this.form = data.editor; console.log(this.form.value)}
-    );
+    this._route.data.subscribe(data => this.form = data.editor);
   }
 
   onSubmit(){

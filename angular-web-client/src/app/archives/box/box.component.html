@@ -10,6 +10,17 @@
 
   <div class="modal-body">
 
+      <div class="form-checkbox form-group">
+          <label>
+              <input class="mt-2" aria-describedby="是否装满" type="checkbox" [(ngModel)]="selectBox.full" (ngModelChange)="onFullChange($event)">
+              盒是否装满
+          </label>
+          <span  class="float-left mt-1 mr-2" color="#959da5"  octicon="repo-push" width="24"></span>
+          <span class="note">
+              盒是已否装满！设置为已装满的盒装不再能放入卷。
+          </span>
+      </div>
+
       <div class="list-group">
           <a *ngFor="let business of businesses" (click)="modal.dismiss('live')" routerLink="/business-view/{{business.id}}/files" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
@@ -24,6 +35,9 @@
               </small>
           </a>
       
+          <a *ngIf="selectBox.old && !selectBox.full" class="list-group-item list-group-item-action" (click)="modal.dismiss('live')" routerLink="/business-category" [queryParams]="{fun: 'patch', box: selectBox.id}">
+            补录档案
+          </a>
       </div>
   </div>
 
@@ -32,7 +46,8 @@
   <div class="cell-box">
     <ul>
       <li  *ngFor="let box of cell.boxes">
-        <a [style.width.px]="box.size * 41" class="box {{box.old ? 'old' : ''}} {{ !box.old && box.full ? 'full' : ''}} {{!box.old && box.empty ? 'empty' : ''}}" 
+        <a [style.width.px]="box.size * 41" class="box" 
+          [class.old] ="!box.full && box.old" [class.full]="box.full" [class.empty]="!box.old && box.empty "
           (click)="openBox(content,box)">{{box.seq}}</a>
       </li>
       <li  *ngFor="let i of cell.emptyBox" >

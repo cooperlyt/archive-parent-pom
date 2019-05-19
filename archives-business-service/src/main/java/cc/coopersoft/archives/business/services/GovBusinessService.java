@@ -269,7 +269,9 @@ public class GovBusinessService {
         volumeItemRepo.deleteAllByBusinessId(id);
         volumeRepo.deleteAllByBusinessId(id);
         fieldRepo.deleteAllByBusinessId(id);
-        businessRepo.deleteById(id);
+        if (businessRepo.existsById(id)) {
+            businessRepo.deleteById(id);
+        }
     }
 
 //    public String abortBusiness(String id){
@@ -310,7 +312,15 @@ public class GovBusinessService {
 
     @Transient
     public Business saveBusiness(Business business,String userName){
+        if (business.getVolume() != null){
+            Volume volume = business.getVolume();
+            volume.setBusiness(business);
+            if (business.getId() == null){
+                volume.setId(business.getDefineId() + volume.getId());
+                volume.setPageCount(0);
+            }
 
+        }
         return businessService.saveBusiness(business,userName);
     }
 

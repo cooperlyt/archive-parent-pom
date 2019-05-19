@@ -28,6 +28,19 @@ export class BoxComponent implements OnInit {
 
   secrecyLevels = SecrecyLevel;
 
+
+
+  onFullChange($event){
+    if (this.selectBox.full){
+
+      this.arichiveService.setBoxFull(this.selectBox.id).subscribe();
+    }else{
+      this.arichiveService.setBoxNotFull(this.selectBox.id).subscribe();
+    }
+    
+    console.log(this.selectBox.full)
+  }
+
   openBox(context,box:Box){
     this.selectBox = box;
     this.modalService.open(context, { size: 'lg' });

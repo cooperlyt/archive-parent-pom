@@ -17,6 +17,8 @@ import { Operation } from '../model/operation.model';
 import { DefaultRecord } from '../model/default-record.model';
 import { Volume } from '../model/volume.model';
 import { VolumeItem } from '../model/volume-item.model';
+import { BusinessCategory } from '../model/business-category.model';
+import { DefineSummary } from '../model/define-summary.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,14 @@ import { VolumeItem } from '../model/volume-item.model';
 export class BusinessService {
 
   constructor(private _http: HttpClient) { }
+
+  listBusinessDefineCategory():Observable<BusinessCategory[]>{
+    return this._http.get<BusinessCategory[]>(`${environment.apiUrl}/template/v1/define/category/list`);
+  }
+
+  listDefineByCategory(categoryId:string):Observable<DefineSummary[]>{
+    return this._http.get<DefineSummary[]>(`${environment.apiUrl}/template/v1/define/list/${categoryId}`);
+  }
 
   rejectBusiness(businessId:string, explain:string):Observable<string>{
     return this._http.put<any>(`${environment.apiUrl}/business/v1/business/reject`,{id:businessId, explain: explain}).pipe(
@@ -281,7 +291,7 @@ export class BusinessService {
   editorBusiness(id:string):Observable<FormGroup>{
     return this._http.get<any>(`${environment.apiUrl}/business/v1/business/${id}`).pipe(
       map((business:Business) => {
-        return new FormGroup({
+        let result = new FormGroup({
           id: new FormControl(business.id),
           defineId: new FormControl(business.defineId),
           defineName: new FormControl(business.defineName),
@@ -293,13 +303,26 @@ export class BusinessService {
           summary: new FormControl(business.summary),
           status: new FormControl(business.status),
           source: new FormControl(business.source),
-          projectName: new FormControl(null,Validators.required),
+          projectName: new FormControl(business.projectName,Validators.required),
           version: new FormControl(business.version),
-          corpType: new FormControl(business.corpType,Validators.required),
+          corpType: new FormControl(business.corpType),
           seq: new FormControl(business.seq),
           summaryTemplate: new FormControl(business.summaryTemplate)
           //fields:  new FormArray([])
         });
+        if (business.volume){
+          result.addControl('volume', new FormGroup({
+            id: new FormControl({value: business.volume.id, disabled: true},Validators.required),
+            boxId: new FormControl(business.volume.boxId),
+            pageCount: new FormControl(business.volume.pageCount),
+            secrecyLevel: new FormControl(business.volume.secrecyLevel,Validators.required),
+            recordTime: new FormControl(business.volume.recordTime,Validators.required),
+            secrecyLen: new FormControl(business.volume.secrecyLen),
+            old: new FormControl(business.volume.old),
+            memo: new FormControl(business.volume.memo)
+          }))
+        }
+        return result;
       })
     );
   }
@@ -320,7 +343,7 @@ export class BusinessService {
           status: new FormControl('CREATED'),
           source: new FormControl("INPUT"),
           version: new FormControl(0),
-          corpType: new FormControl(null,Validators.required),
+          corpType: new FormControl(null),
           projectName: new FormControl(null,Validators.required),
           fields:  new FormArray([]),
           items: new FormArray([])

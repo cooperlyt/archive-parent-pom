@@ -13,6 +13,66 @@
         </div>
       </div>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+        <div *ngIf="form.get('volume')" class="row" formGroupName="volume">
+            <dl class="form-group col-12">
+                <dt class="input-label">
+                    <label for="id_input">卷编号</label>
+                </dt>
+                <dd>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">{{form.get('defineId').value}}</span> 
+        
+                        </div>
+        
+                        <input id="id_input" type="text" class="form-control" placeholder="编号" formControlName="id" required>
+                       
+                    </div>
+               
+                    <app-vaild-message [control]="form.get('id')"></app-vaild-message>
+         
+                </dd>
+            </dl>
+  
+  
+            <dl class="form-group col-md-4">
+                <dt class="input-label">
+                    <label>归档日期</label>
+                </dt>
+                <dd class="form-inline">
+                    <app-date-time-picker inputDatetimeFormat="yyyy-M-d HH:mm:ss" formControlName="recordTime"></app-date-time-picker>
+                </dd>
+            </dl>
+  
+  
+            <dl class="form-group col-md-8" >
+                <dt class="input-label">
+                    <label>保密级别</label>
+                </dt>
+                <dd>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ng-select placeholder="保密级别" formControlName="secrecyLevel" [items]="secrecyLevelList" bindLabel="name" bindValue="id" notFoundText="没有符合条件的项"></ng-select>
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+  
+                                <input type="number" [required]="isSecrecy" placeholder="保密期限" class="form-control" formControlName="secrecyLen" [attr.disabled]="isSecrecy ? null : ''">
+                                <div class="input-group-append">
+                                        <span class="input-group-text">年</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+  
+                </dd>
+            </dl>
+        </div>
+
+        <hr *ngIf="form.get('volume')">
         <div class="row">
           <div class="col-12">
      
@@ -21,7 +81,7 @@
                     <label>移交单位</label>
                 </dt>
                 <dd>
-                  <app-corp-select [form]="form" typeKey="corpType" idKey="deliverId" nameKey="deliver" class="required"></app-corp-select>
+                    <app-all-corp-select (corpChange)="onCorpChange($event)" [formGroup]="form" controlName="deliverId"></app-all-corp-select>
                 </dd>
               </dl>
     

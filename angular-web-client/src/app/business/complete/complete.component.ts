@@ -36,7 +36,7 @@ export class CompleteComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService) {}
 
-  //TODO: 一个联合难器 如果保密 那么期限不能为空
+  //TODO: 一个联合验证器 如果保密 那么期限不能为空
   get isSecrecy():boolean{
     return this.form.value.secrecyLevel !== 'None';
   }

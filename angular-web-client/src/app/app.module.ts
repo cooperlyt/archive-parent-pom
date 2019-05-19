@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
 
-import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 // import { UiSwitchModule } from 'angular2-ui-switch';
 import {NgxPrintModule} from 'ngx-print';
 
@@ -62,9 +62,13 @@ import { CellComponent } from './archives/cell/cell.component';
 import { BoxComponent } from './archives/box/box.component';
 import { RecordComponent } from './business/record/record.component';
 import { CompleteComponent } from './business/complete/complete.component';
-import { OcticonDirective } from './comm/octicon.directive';
 import { VolumeComponent } from './business/volume/volume.component';
 import { FunctionLayoutComponent } from './layouts/function-layout/function-layout.component';
+import { CategoryListComponent } from './business/category-list/category-list.component';
+import { TemplateListComponent } from './business/template-list/template-list.component';
+import { BusinessPatchComponent } from './business/business-patch/business-patch.component';
+import { CorpModule } from './corp/corp.module';
+import { SharedModule } from './shared/shared.module';
 
 
 fontLibrary.add(
@@ -93,8 +97,6 @@ fontLibrary.add(
     VaildMessageComponent,
     DateTimePickerComponent,
     FileUploadComponent,
-    FileSelectDirective,
-    FileDropDirective,
     BusinessCreateListComponent,
     ThumbnailDirective,
     BusinessViewComponent,
@@ -109,12 +111,15 @@ fontLibrary.add(
     BoxComponent,
     RecordComponent,
     CompleteComponent,
-    OcticonDirective,
     VolumeComponent,
-    FunctionLayoutComponent
+    FunctionLayoutComponent,
+    CategoryListComponent,
+    TemplateListComponent,
+    BusinessPatchComponent
   ],
   entryComponents: [],
   imports: [
+    CorpModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -127,6 +132,8 @@ fontLibrary.add(
     BrowserAnimationsModule,
     ImageViewerModule,
     NgxGalleryModule,
+    FileUploadModule,
+    SharedModule,
     // UiSwitchModule,
     NgxPrintModule,
     ToastrModule.forRoot(),

@@ -5,6 +5,7 @@ import { BusinessService } from '../services/business.service';
 import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import { SecrecyLevel } from '../enumData';
 
 @Component({
   selector: 'app-edit',
@@ -19,9 +20,14 @@ export class BusinessEditComponent implements OnInit {
   saveing: boolean = false;
 
 
+  secrecyLevelList = Object.keys(SecrecyLevel).map(key => ({id: key,name:SecrecyLevel[key]}));
 
   get fields() {
     return this.form.get('fields') as FormArray;
+  }
+
+  get isSecrecy():boolean{
+    return this.form.value.volume && (this.form.value.volume.secrecyLevel !== 'None');
   }
 
   constructor(private _route: ActivatedRoute,private _router:Router, private _businessService: BusinessService,private toastr: ToastrService) { }
@@ -32,6 +38,14 @@ export class BusinessEditComponent implements OnInit {
       this.form.addControl("fields", data.field);
       console.log("edit business:", this.form.value);
     })
+  }
+
+  onCorpChange(event){
+    if (event){
+      this.form.get('deliver').setValue(event.name);
+    }else{
+      this.form.get('deliver').setValue(null);
+    }
   }
 
   onSubmit(){

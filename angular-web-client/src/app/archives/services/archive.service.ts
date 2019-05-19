@@ -76,10 +76,12 @@ export class ArchiveService {
         )
     }
 
-    setBoxFull(boxId:string):Observable<string>{
-        return this._http.get<any>(`${environment.apiUrl}/rooms/v1/editor/full/${boxId}`).pipe(
-            map(data => data.id)
-        )
+    setBoxFull(boxId:string):Observable<Box>{
+        return this._http.get<Box>(`${environment.apiUrl}/rooms/v1/editor/full/${boxId}`);
+    }
+
+    setBoxNotFull(boxId:string):Observable<Box>{
+        return this._http.get<Box>(`${environment.apiUrl}/rooms/v1/editor/not-full/${boxId}`);
     }
 
     listBoxBusiness(boxId:string):Observable<Business[]>{

@@ -4,16 +4,16 @@
             <ng-select placeholder="机构类型" [formControlName]="typeKey" [items]="typeList" bindLabel="name" bindValue="id" notFoundText="没有符合条件的项"></ng-select>
         </div>
         <div class="col" >
-            <ng-select [formControlName]="idKey" [items]="corpList" bindLabel="name" bindValue="id" [loading]="load" loadingText="正在加载..." [notFoundText]="corpNoFoundText"></ng-select>
+            <app-join-corp-select (corpChange)="corpChange($event)" [formControlName]="idKey"  [formGroup]="valueFormGroup"  [type]="typeValue"></app-join-corp-select>
         </div>
     </div>  
   
-    <div [formArrayName]="formArray"  *ngIf="formArray"class="row" >
+    <div [formArrayName]="formArray"  *ngIf="formArray" class="row" >
         <div class="col-lg-3 col-md-12" formGroupName="0">
             <ng-select placeholder="机构类型" formControlName="value" [items]="typeList" bindLabel="name" bindValue="id" notFoundText="没有符合条件的项"></ng-select>
         </div>
         <div class="col" formGroupName="1">
-            <ng-select formControlName="value" [items]="corpList" bindLabel="name" bindValue="id" [loading]="load" loadingText="正在加载..." [notFoundText]="corpNoFoundText"></ng-select>
+            <app-join-corp-select (corpChange)="corpChange($event)" controlName="value" [formGroup]="valueFormGroup" [type]="typeValue"></app-join-corp-select>
         </div>
     </div>
   

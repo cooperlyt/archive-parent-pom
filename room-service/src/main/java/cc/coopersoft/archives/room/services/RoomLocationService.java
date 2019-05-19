@@ -3,6 +3,8 @@ package cc.coopersoft.archives.room.services;
 import cc.coopersoft.archives.room.model.*;
 import cc.coopersoft.archives.room.repository.*;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import java.util.*;
 
 @Service
 public class RoomLocationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(RoomLocationService.class);
 
     @Autowired
     private RoomRepository roomRepository;
@@ -176,11 +180,12 @@ public class RoomLocationService {
 
         int size = 0;
         for (Box b: box.getCell().getBoxes()){
-            if (b.isFull() && !b.equals(box)){
-                size += box.getSize();
+            if ((b.isFull() || b.isOld()) && !b.equals(box)){
+                size += b.getSize();
             }
         }
-        if (box.isFull()){
+
+        if (box.isFull() || box.isOld()){
             size += box.getSize();
         }
 

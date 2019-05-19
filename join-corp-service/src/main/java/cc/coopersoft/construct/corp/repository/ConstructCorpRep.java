@@ -19,4 +19,7 @@ public interface ConstructCorpRep extends CrudRepository<ConstructCorp, String> 
 
     @Query("SELECT new cc.coopersoft.construct.corp.model.CorpSummary(cc.id,c.name,c.description) FROM ConstructCorp cc left join cc.corp c where cc.type = :type and cc.status in (:status) order by cc.regDate desc")
     List<CorpSummary> listCorpSummary(@Param("type") CorpType type,@Param("status") Collection<CorpStatus> statuses);
+
+
+
 }

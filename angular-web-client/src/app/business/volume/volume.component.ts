@@ -57,8 +57,6 @@ export class VolumeComponent implements OnInit {
   }
 
 
-
-
   openFileOverModal(event,content){
     this._modalService.dismissAll("reopen");
     this._modalService.open(content,{ size: 'lg' ,centered: true});
