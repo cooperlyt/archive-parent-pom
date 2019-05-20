@@ -1,0 +1,88 @@
+<div [formGroup]="formGroup">
+
+  <dl class="form-group">
+    <dt class="input-label">
+        <label>机构名称</label>
+    </dt>
+    <dd>
+        <input type="text" class="form-control" formControlName="name" required>
+    </dd>
+  </dl>
+
+  <dl class="form-group">
+    <dt class="input-label">
+        <label>机构注册类型</label>
+    </dt>
+    <dd>
+      <div class="row">
+        <div class=" col-12 col-sm-4 ">
+          <ng-select placeholder="注册类型"  formControlName="corpIdType" [items]="corpIdTypeList" bindLabel="name" bindValue="id" notFoundText="没有符合条件的选项" required></ng-select>
+        </div>
+        <div class=" col-12 col-sm-8 ">
+          <input class="form-control " type="text" placeholder="注册证件号码" formControlName="number" required>
+        </div>
+      </div>
+    </dd>
+  </dl>
+
+
+  <dl class="form-group">
+    <dt class="input-label">
+      <label>机构法人</label>
+    </dt>
+    <dd>
+      <div class="row">
+          <div class=" col-12 col-sm-4 ">
+              <ng-select placeholder="证件类型" formControlName="ownerIdType" [items]="identityTypeList" bindLabel="name" bindValue="id" notFoundText="没有符合条件的选项" required></ng-select>
+          </div>
+
+          <div class=" col-12 col-sm-8 ">
+              <input placeholder="证件号码" class="form-control" type="text" formControlName="ownerIdNumber">
+          </div>
+      </div>
+      
+      <div class="ml-4">
+        <dl class="form-group">
+          <dt class="input-label">
+            <label>姓名</label>
+          </dt>
+          <dd>
+              <input placeholder="姓名" class="form-control" type="text" formControlName="ownerName">
+          </dd>
+        </dl>
+          
+      </div>
+
+    </dd>
+  </dl>
+
+
+  <dl class="form-group">
+    <dt class="input-label">
+      <label>联系地址</label>
+    </dt>
+    <dd>
+      <input placeholder="联系地址" class="form-control" type="text" formControlName="address">
+    </dd>
+  </dl>
+
+  
+  <dl class="form-group">
+    <dt class="input-label">
+      <label>联系电话</label>
+    </dt>
+    <dd>
+      <input placeholder="联系电话"  class="form-control" type="text" formControlName="tel">
+    </dd>
+  </dl>
+
+  <dl class="form-group">
+    <dt class="input-label">
+      <label>描述</label>
+    </dt>
+    <dd>
+      <textarea class="form-control" formControlName="description"></textarea>
+    </dd>
+  </dl>
+
+</div>

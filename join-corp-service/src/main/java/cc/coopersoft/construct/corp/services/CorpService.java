@@ -10,6 +10,7 @@ import cc.coopersoft.construct.data.CorpType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
@@ -45,5 +46,13 @@ public class CorpService {
         }else{
             return corpRepo.queryAllByEnableTrueOrderByDataTimeDesc();
         }
+    }
+
+    public Corp saveCorp(Corp corp){
+        if (corp.getId() == null){
+            corp.setId(corp.getCorpIdType().getCode() + corp.getNumber());
+            corp.setDataTime(new Date());
+        }
+        return corpRepo.save(corp);
     }
 }

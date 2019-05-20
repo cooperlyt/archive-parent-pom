@@ -6,10 +6,7 @@ import cc.coopersoft.construct.corp.model.CorpSummary;
 import cc.coopersoft.construct.corp.services.CorpService;
 import cc.coopersoft.construct.data.CorpType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,5 +27,10 @@ public class CorpController {
     @RequestMapping(value = {"/list/{type}" , "/list"}, method = RequestMethod.GET)
     public List<Corp> listCorp(@PathVariable(required = false,value = "type") Optional<CorpType> type){
         return corpService.listAllValidCorp(type);
+    }
+
+    @RequestMapping(value="/save", method = RequestMethod.PUT)
+    public Corp saveCorp(@RequestBody Corp corp){
+        return corpService.saveCorp(corp);
     }
 }

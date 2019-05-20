@@ -950,9 +950,10 @@ span.disabled{
     margin-bottom: 0;
 }
 
-.ng-valid[required], .ng-valid.required,  .required .ng-valid .ng-select-container{
+.ng-valid[required]:not(ng-select), .ng-valid.required,  .required .ng-valid .ng-select-container, .ng-valid[required] .ng-select-container{
     border-left: 5px solid #42A948; /* green */
 }
+
 
 .input-inner-check .ng-valid[required], 
 .input-group input.ng-valid[required],

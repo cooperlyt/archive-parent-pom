@@ -26,4 +26,8 @@ export class CorpService {
     
   }
 
+  saveCorp(corp: Corp):Observable<Corp>{
+    return this._http.put<Corp>(`${environment.apiUrl}/corp/v1/corp/save`,corp);
+  }
+
 }

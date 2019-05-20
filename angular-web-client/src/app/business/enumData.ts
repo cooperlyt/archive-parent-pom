@@ -34,3 +34,19 @@ export const SecrecyLevel = {
     Secret: '秘密',
     None: '公开'
 }
+
+export const CorpIdType = {
+    COMPANY_CODE: '营业执照',
+    CORP_CODE: '机构代码证',
+    RELIGIOUS_GROUP: '宗教组织',
+}
+
+export const IdentityType = {
+    MASTER_ID: '身份证',
+    SOLDIER_CARD: '士兵证',
+    OFFICER_CARD: '军官证',
+    PASSPORT: '护照',
+    TW_ID: '台湾通行证',
+    GA_ID: '港澳通行证',
+    OTHER: '其它'
+}

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JoinCorpSelectComponent } from './join-corp-select/join-corp-select.component';
-import { AllCorpSelectComponent } from './all-corp-select/all-corp-select.component';
+import { AllCorpSelectComponent, CorpEditorModal } from './all-corp-select/all-corp-select.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../shared/shared.module';
+import { CorpEditorComponent } from './corp-editor/corp-editor.component';
 
 
 @NgModule({
-  declarations: [ JoinCorpSelectComponent, AllCorpSelectComponent],
+  declarations: [ JoinCorpSelectComponent, AllCorpSelectComponent, CorpEditorComponent,CorpEditorModal],
   imports: [
     CommonModule,    
     FormsModule,
@@ -19,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
   exports: [
     AllCorpSelectComponent, JoinCorpSelectComponent
   ],
+  entryComponents: [CorpEditorModal],
   providers:[]
     
   

@@ -13,10 +13,19 @@ import java.util.Set;
 public class Corp implements java.io.Serializable{
 
     public enum CorpIdType{
-        COMPANY_CODE,
-        CORP_CODE,
-        RELIGIOUS_GROUP,
-        OTHER
+        COMPANY_CODE(""),
+        CORP_CODE("G-"),
+        RELIGIOUS_GROUP("R-");
+
+        private String code;
+
+        public String getCode(){
+            return code;
+        }
+
+        CorpIdType(String code){
+            this.code = code;
+        }
     }
 
     @Id
