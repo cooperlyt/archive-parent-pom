@@ -1,0 +1,14 @@
+<div class="boxed-group flush">
+  <h3>请选择业务</h3>
+  <ul class="boxed-group-inner list-group notifications">
+    <li *ngFor="let define of defines" class="list-group-item">
+        <span class="list-group-item-name css-truncate">
+            <span class="type-icon type-icon-state-none tooltipped tooltipped-w" octicon="repo"></span>
+        
+            <a class="css-truncate-target list-group-item-link" (click)="doAction(define.id)">
+                {{define.name}}
+            </a>  
+        </span>
+    </li>
+  </ul>
+</div>

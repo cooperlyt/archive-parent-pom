@@ -1,0 +1,119 @@
+<div class="container">
+  <ngx-loading [show]="saveing" ></ngx-loading>
+<div class="row justify-content-center">
+  <div class="col col-sm-12 col-md-9 ">
+    <div class="row">
+      <div class="col Subhead">
+          <h2 class="Subhead-heading">档案补录 {{form.value.defineName}}</h2>
+          <p class="Subhead-description">
+            补录档案业务。
+          </p>
+      </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+      <div class="row" formGroupName="volume">
+          <dl class="form-group col-12">
+              <dt class="input-label">
+                  <label for="id_input">卷编号</label>
+              </dt>
+              <dd>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">{{form.get('defineId').value}}</span> 
+      
+                      </div>
+      
+                      <input id="id_input" type="text" class="form-control" placeholder="编号" formControlName="id" required>
+                     
+                  </div>
+             
+                  <app-vaild-message [control]="form.get('id')"></app-vaild-message>
+       
+              </dd>
+          </dl>
+
+
+          <dl class="form-group col-md-4">
+              <dt class="input-label">
+                  <label>归档日期</label>
+              </dt>
+              <dd class="form-inline">
+                  <app-date-time-picker inputDatetimeFormat="yyyy-M-d HH:mm:ss" formControlName="recordTime"></app-date-time-picker>
+              </dd>
+          </dl>
+
+
+          <dl class="form-group col-md-8" >
+              <dt class="input-label">
+                  <label>保密级别</label>
+              </dt>
+              <dd>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <ng-select placeholder="保密级别" formControlName="secrecyLevel" [items]="secrecyLevelList" bindLabel="name" bindValue="id" notFoundText="没有符合条件的项"></ng-select>
+                      </div>
+                      <div class="col">
+                          <div class="input-group">
+
+                              <input type="number" [required]="isSecrecy" placeholder="保密期限" class="form-control" formControlName="secrecyLen" [attr.disabled]="isSecrecy ? null : ''">
+                              <div class="input-group-append">
+                                      <span class="input-group-text">年</span>
+                              </div>
+                          </div>
+                          
+                      </div>
+                  </div>
+
+              </dd>
+          </dl>
+      </div>
+      
+      <hr/>
+      <div class="row">
+        <div class="col-12">
+   
+            <dl class="form-group">
+              <dt class="input-label">
+                  <label>移交单位</label>
+              </dt>
+              <dd>
+                <app-corp-select [form]="form" typeKey="corpType" idKey="deliverId" nameKey="deliver" class="required"></app-corp-select>
+              </dd>
+            </dl>
+  
+        </div>
+        <div class="col-12">
+          <dl class="form-group">
+            <dt class="input-label">
+                <label>项目名称</label>
+            </dt>
+            <dd>
+              <input class="form-control" formControlName="projectName" required>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      
+      <div *ngFor="let fieldGroup of fields.controls; let i=index" class="row">
+        <app-field-input class="col" [formGroup]="fields.at(i)"></app-field-input>   
+      </div>
+ 
+   
+      <hr>
+         
+      <button type="submit" class="btn btn-success first-in-line" [disabled]="!form.valid || saveing" >
+          <span *ngIf="saveing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="!saveing">建立业务</span>
+          <span *ngIf="saveing">正在创建业务...</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+
+  
+</div>
+
+ 
