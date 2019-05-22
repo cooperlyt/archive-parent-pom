@@ -35,7 +35,7 @@ public class Cell implements Comparable<Cell>{
     private List<Box> boxes = new ArrayList<>(0);
 
     @Column(name = "_SIZE")
-    private Integer size;
+    private BigDecimal size;
 
     @Column(name = "SEQ",nullable = false)
     private int seq;
@@ -81,11 +81,11 @@ public class Cell implements Comparable<Cell>{
         this.boxes = boxes;
     }
 
-    public Integer getSize() {
+    public BigDecimal getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(BigDecimal size) {
         this.size = size;
     }
 

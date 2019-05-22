@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2019-04-10 22:06:32</creation_date>
-			<updated_date>2019-05-22 20:27:13</updated_date>
+			<updated_date>2019-05-22 21:15:54</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -489,8 +489,8 @@
 		</word>
 		<word>
 			<id>21</id>
-			<length>null</length>
-			<decimal>null</decimal>
+			<length>4</length>
+			<decimal>2</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
@@ -500,12 +500,12 @@
 			<description></description>
 			<logical_name>_SIZE</logical_name>
 			<physical_name>_SIZE</physical_name>
-			<type>integer</type>
+			<type>decimal(p,s)</type>
 		</word>
 		<word>
 			<id>22</id>
-			<length>null</length>
-			<decimal>null</decimal>
+			<length>4</length>
+			<decimal>2</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
@@ -515,7 +515,7 @@
 			<description></description>
 			<logical_name>_SIZE</logical_name>
 			<physical_name>_SIZE</physical_name>
-			<type>integer</type>
+			<type>decimal(p,s)</type>
 		</word>
 	</dictionary>
 	<tablespace_set>
@@ -1384,7 +1384,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>integer</type>
+					<type>decimal(p,s)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -1705,7 +1705,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type>integer</type>
+					<type>decimal(p,s)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>

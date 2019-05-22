@@ -191,20 +191,20 @@ public class RoomLocationService {
 
     private void calcPercentage(Box box){
 
-        int size = 0;
+        BigDecimal size = BigDecimal.ZERO;
         for (Box b: box.getCell().getBoxes()){
             if ((b.isFull() || b.isOld()) && !b.equals(box)){
-                size += b.getSize();
+                size = size.add(b.getSize());
             }
         }
 
         if (box.isFull() || box.isOld()){
-            size += box.getSize();
+            size = size.add(box.getSize());
         }
 
         int cellPercentage = 0;
-        if (size > 0){
-            cellPercentage = new BigDecimal(size).divide(new BigDecimal(box.getCell().getSize()),2, RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
+        if (size.compareTo(BigDecimal.ZERO) > 0){
+            cellPercentage = size.divide(box.getCell().getSize(),2, RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
         }
 
         if (cellPercentage > 100){

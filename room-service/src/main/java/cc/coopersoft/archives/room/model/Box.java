@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "BOX")
@@ -29,7 +30,7 @@ public class Box {
     private boolean old;
 
     @Column(name = "_SIZE", nullable = false)
-    private int size;
+    private BigDecimal size;
 
     @Column(name = "SEQ", nullable = false)
     private int seq;
@@ -40,7 +41,7 @@ public class Box {
     public Box() {
     }
 
-    public Box(String id, Cell cell, boolean full, boolean empty, boolean old, int size, int seq, String description) {
+    public Box(String id, Cell cell, boolean full, boolean empty, boolean old, BigDecimal size, int seq, String description) {
         this.id = id;
         this.cell = cell;
         this.full = full;
@@ -99,11 +100,11 @@ public class Box {
         this.description = description;
     }
 
-    public int getSize() {
+    public BigDecimal getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(BigDecimal size) {
         this.size = size;
     }
 

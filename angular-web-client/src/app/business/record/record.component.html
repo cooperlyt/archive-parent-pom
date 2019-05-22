@@ -4,13 +4,13 @@
     <div *ngIf="roomPath?.rackPath?.cabinetPath?.cellPath?.cell" class="cell-box">
       <ul>
         <li  *ngFor="let box of roomPath.rackPath.cabinetPath.cellPath.cell.boxes" >
-          <span [style.width.px]="box.size * 41" 
+          <span [style.width.px]="box.size * 20" 
             class="box {{box.old ? 'old' : ''}} {{ !box.old && box.full ? 'full' : ''}} {{!box.old && box.empty ? 'empty' : ''}}" >
             {{box.seq}}
           </span>
         </li>
         <li  *ngFor="let i of roomPath.rackPath.cabinetPath.cellPath.cell.emptyBox" >
-          <span [style.width.px]="41">
+          <span [style.width.px]="20">
             {{i}}
           </span>
         </li>
@@ -129,13 +129,13 @@
         </span>
     <ul>
       <li  *ngFor="let box of selectCell.boxes" [class.selected] = "selectBox?.id === box.id">
-        <a [style.width.px]="box.size * 41" (click)="onBoxChange(box)"
+        <a [style.width.px]="box.size * 20" (click)="onBoxChange(box)"
           [class.old] = "box.old" [class.full] = "!box.old && box.full" [class.empty] = "!box.old && box.empty" class="box" >
           {{box.seq}}
         </a>
       </li>
       <li  *ngFor="let i of selectCell.emptyBox" >
-        <span [style.width.px]="41">
+        <span [style.width.px]="20">
           {{i}}
         </span>
       </li>
