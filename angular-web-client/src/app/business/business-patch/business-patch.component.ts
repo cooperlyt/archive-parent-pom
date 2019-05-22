@@ -33,6 +33,15 @@ export class BusinessPatchComponent  implements OnInit {
     return this.form.value.volume.secrecyLevel !== 'None';
   }
 
+  onCorpChange(event){
+    console.log(event);
+    if (event){
+      this.form.get('deliver').setValue(event.name);
+    }else{
+      this.form.get('deliver').setValue(null);
+    }
+  }
+  
   constructor(private _route: ActivatedRoute,private _router:Router, private _businessService: BusinessService,private toastr: ToastrService) { 
   }
 

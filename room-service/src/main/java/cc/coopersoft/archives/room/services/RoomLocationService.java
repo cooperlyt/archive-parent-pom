@@ -48,6 +48,10 @@ public class RoomLocationService {
 
 
     public List<List<Cell>> getCells(String cabinetId){
+        Optional<Cabinet> cabinet = cabinetRepository.findById(cabinetId);
+        if (!cabinet.isPresent()){
+            return null;
+        }
         List<Cell> cells = cellRepository.listCellByCabinet(cabinetId);
         List<List<Cell>> result = new ArrayList<>();
         int row = -1;
@@ -58,6 +62,15 @@ public class RoomLocationService {
             }
             List<Cell> cellRow = result.get(result.size() - 1);
             cellRow.add(cell);
+        }
+
+        if (cabinet.get().isColDesc()){
+            for(List<Cell> rowCell : result){
+                Collections.sort(rowCell, (o1, o2) -> Integer.valueOf(o2.getCol()).compareTo(o1.getCol()) );
+            }
+        }
+        if (cabinet.get().isRowDesc()){
+            Collections.sort(result , (o1,o2) -> Integer.valueOf(o2.get(0).getRow()).compareTo(o1.get(0).getRow()));
         }
         return result;
     }
@@ -194,6 +207,9 @@ public class RoomLocationService {
             cellPercentage = new BigDecimal(size).divide(new BigDecimal(box.getCell().getSize()),2, RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
         }
 
+        if (cellPercentage > 100){
+            cellPercentage = 100;
+        }
         box.getCell().setPercentage(cellPercentage);
 
         Integer cellTotal =  cellRepository.sumPercentage(box.getCell().getCabinet().getId(),box.getCell().getId());
@@ -205,6 +221,9 @@ public class RoomLocationService {
             int cellCount = cellRepository.countPercentage(box.getCell().getCabinet().getId(),box.getCell().getId());
             cellCount = (cellCount + 1)  * 100;
             cabinetPercentage = new BigDecimal(cellTotalPercentage).divide(new BigDecimal(cellCount),2,RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
+        }
+        if (cabinetPercentage > 100){
+            cabinetPercentage = 100;
         }
         box.getCell().getCabinet().setPercentage(cabinetPercentage);
 
@@ -220,6 +239,9 @@ public class RoomLocationService {
             cabinetCount = (cabinetCount + 1) * 100;
             rackPercentage = new BigDecimal(cabinetTotalPercentage).divide(new BigDecimal(cabinetCount),2,RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
         }
+        if (rackPercentage > 100){
+            rackPercentage = 100;
+        }
         box.getCell().getCabinet().getRack().setPercentage(rackPercentage);
 
 
@@ -232,6 +254,9 @@ public class RoomLocationService {
             int rackCount = rackRepository.countByRoomIdAndIdNot(box.getCell().getCabinet().getRack().getRoom().getId(),box.getCell().getCabinet().getRack().getId());
             rackCount = (rackCount + 1) * 100;
             roomPercentage = new BigDecimal(rackTotalPercentage).divide(new BigDecimal(rackCount),2,RoundingMode.DOWN).multiply(new BigDecimal(100)).intValue();
+        }
+        if (roomPercentage > 100){
+            roomPercentage = 100;
         }
         box.getCell().getCabinet().getRack().getRoom().setPercentage(roomPercentage);
 

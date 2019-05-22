@@ -25,6 +25,12 @@ public class Cabinet {
     @Column(name = "PERCENTAGE" , nullable = false)
     private int percentage;
 
+    @Column(name = "ROW_DESC", nullable = false)
+    private boolean rowDesc;
+
+    @Column(name = "COL_DESC", nullable = false)
+    private boolean colDesc;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "RACK_ID", nullable = false)
@@ -80,5 +86,21 @@ public class Cabinet {
 
     public void setPercentage(int percentage) {
         this.percentage = percentage;
+    }
+
+    public boolean isRowDesc() {
+        return rowDesc;
+    }
+
+    public void setRowDesc(boolean rowDesc) {
+        this.rowDesc = rowDesc;
+    }
+
+    public boolean isColDesc() {
+        return colDesc;
+    }
+
+    public void setColDesc(boolean colDesc) {
+        this.colDesc = colDesc;
     }
 }

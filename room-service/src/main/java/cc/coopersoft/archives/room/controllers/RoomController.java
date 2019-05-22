@@ -36,7 +36,13 @@ public class RoomController {
 
     @RequestMapping(value = "/list-cell/{cabinet}", method = RequestMethod.GET)
     public List<List<Cell>> listCell(@PathVariable("cabinet") String cabinetId){
-        return roomLocationService.getCells(cabinetId);
+        List<List<Cell>> result = roomLocationService.getCells(cabinetId);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
     }
 
 

@@ -79,7 +79,8 @@
                   <label>移交单位</label>
               </dt>
               <dd>
-                <app-corp-select [form]="form" typeKey="corpType" idKey="deliverId" nameKey="deliver" class="required"></app-corp-select>
+                <app-all-corp-select (corpChange)="onCorpChange($event)" [formGroup]="form" controlName="deliverId" class="required"></app-all-corp-select>
+      
               </dd>
             </dl>
   
