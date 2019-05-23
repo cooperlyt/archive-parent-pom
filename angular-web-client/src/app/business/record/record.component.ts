@@ -10,7 +10,7 @@ import { ArchiveService } from '../../archives/services/archive.service';
 import { DefaultRecord } from '../model/default-record.model';
 import { Box } from '../../archives/model/box.model';
 import { Room } from '../../archives/model/room.model';
-import { SecrecyLevel } from '../enumData';
+import { SecrecyLevel, BoxSize } from '../enumData';
 import { check } from 'octicons';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Rack } from '../../archives/model/rack.model';
@@ -32,6 +32,7 @@ export class RecordComponent implements OnInit {
 
   checkIcon = check.toSVG();
   secrecyLevelList = Object.keys(SecrecyLevel).map(key => ({id: key,name:SecrecyLevel[key]}));
+  boxSizes = Object.keys(BoxSize).map(key => ({id:BoxSize[key] ,name:key}));
 
   business:Business;
   roomPath: RoomPath;
@@ -133,7 +134,7 @@ export class RecordComponent implements OnInit {
       }else{
         this.selectBox.full = this.isFull;
         this.selectBox.empty = false;
-        this.arichiveService.addBox(this.selectCell.id,this.selectBox).subscribe(id => this.saveBusiness(id));
+        this.arichiveService.addBox(this.selectCell.id,this.selectBox).subscribe(box => this.saveBusiness(box.id));
       }
     }
   }

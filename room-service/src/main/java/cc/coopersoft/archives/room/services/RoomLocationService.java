@@ -269,6 +269,16 @@ public class RoomLocationService {
             return null;
         }
         box.setCell(cell.get());
+        if (box.getSeq() == null){
+            int seq = 0;
+            for(Box b: cell.get().getBoxes()){
+                if (b.getSeq() > seq){
+                    seq = b.getSeq();
+                }
+            }
+            seq++;
+            box.setSeq(seq);
+        }
         box.setId(box.getCell().getId() + "-" + box.getSeq());
         calcPercentage(box);
         return boxRepository.save(box);

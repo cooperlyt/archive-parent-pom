@@ -124,8 +124,10 @@
   <hr/>
 
   <div *ngIf="selectCell" class="cell-box">
-      <span class="form-inline" *ngIf="selectBox">
-          <input type="number" *ngIf="!selectBox.id"  [(ngModel)]="newSize" class="form-control" min="1" [max]="emptyCount" required>
+      <span [style.width.px]="200" class="form-inline" *ngIf="selectBox">
+          <!-- <input type="number" *ngIf="!selectBox.id"  [(ngModel)]="newSize" class="form-control" min="1" [max]="emptyCount" required> -->
+          <ng-select notFoundText="没有符合条件的项" bindLabel="name" bindValue="id"
+            [(ngModel)]="newSize" [items]="boxSizes" ></ng-select>
         </span>
     <ul>
       <li  *ngFor="let box of selectCell.boxes" [class.selected] = "selectBox?.id === box.id">

@@ -5,7 +5,9 @@ import { Cell } from '../model/cell.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArchiveService } from '../services/archive.service';
 import { Business } from '../../business/model/business.model';
-import { SecrecyLevel } from '../../business/enumData';
+import { SecrecyLevel, BoxSize } from '../../business/enumData';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-box',
@@ -18,7 +20,8 @@ export class BoxComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
     private modalService: NgbModal,
-    private arichiveService: ArchiveService) { }
+    private arichiveService: ArchiveService,
+    private fb: FormBuilder) { }
 
   // boxs :Box[];
   cell: Cell;
@@ -28,7 +31,9 @@ export class BoxComponent implements OnInit {
 
   secrecyLevels = SecrecyLevel;
 
+  saveing = false;
 
+  boxSizes = Object.keys(BoxSize).map(key => ({id:BoxSize[key] ,name:key}));
 
   onFullChange($event){
     if (this.selectBox.full){
@@ -48,7 +53,35 @@ export class BoxComponent implements OnInit {
     this.arichiveService.listBoxBusiness(box.id).subscribe(businesses => this.businesses = businesses)
   }
 
+  newBoxForm: FormGroup;
 
+  onNewBoxSubmit(){
+    this.saveing = true;
+    if (this.newBoxForm.get('old').value){
+      this.newBoxForm.get('empty').setValue(false);
+      this.newBoxForm.get('full').setValue(false);
+    }else{
+      this.newBoxForm.get('empty').setValue(true);
+    }
+    this.arichiveService.addBox(this.cell.id,this.newBoxForm.value).subscribe(box => {
+      this.cell.boxes.push(box);
+      this.saveing = false;
+      this.modalService.dismissAll();
+    })
+  }
+
+  newBox(context){
+    
+    this.newBoxForm = this.fb.group(
+      {
+        full: this.fb.control(true),
+        empty: this.fb.control(false),
+        old:this.fb.control(false),
+        size:this.fb.control(null,Validators.required)
+      }
+    )
+    this.modalService.open(context);
+  }
 
   // get emptyBox():number[]{
   //   let count = this.cell.size;

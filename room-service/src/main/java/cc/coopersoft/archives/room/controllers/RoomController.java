@@ -119,14 +119,14 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/editor/new/{cell}", method = RequestMethod.PUT)
-    public String createBox(@PathVariable("cell") String id, @RequestBody Box box){
+    public Box createBox(@PathVariable("cell") String id, @RequestBody Box box){
         Box result = roomLocationService.createBox(id,box);
         if (result == null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "define entity not found"
             );
         }
-        return "{\"id\":\"" + result.getId() + "\"}";
+        return result;
     }
 
     @RequestMapping(value = "/editor/full/{boxId}", method = RequestMethod.GET)

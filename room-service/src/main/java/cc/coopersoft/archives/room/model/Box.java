@@ -33,7 +33,7 @@ public class Box {
     private BigDecimal size;
 
     @Column(name = "SEQ", nullable = false)
-    private int seq;
+    private Integer seq;
 
     @Column(name = "DESCRIPTION",  length = 256)
     private String description;
@@ -84,11 +84,11 @@ public class Box {
         this.empty = empty;
     }
 
-    public int getSeq() {
+    public Integer getSeq() {
         return seq;
     }
 
-    public void setSeq(int seq) {
+    public void setSeq(Integer seq) {
         this.seq = seq;
     }
 

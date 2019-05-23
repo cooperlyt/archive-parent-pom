@@ -1,4 +1,61 @@
 
+<ng-template #newContent let-modal>
+    <form [formGroup]="newBoxForm" (ngSubmit)="onNewBoxSubmit()">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">新建盒</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+       
+
+            <div class="form-checkbox form-group">
+                <label>
+                    <input formControlName="old" class="mt-2" aria-describedby="是否补录档案盒" type="checkbox" >
+                    补录档案盒
+                </label>
+                <span  class="float-left mt-1 mr-2" color="#959da5"  octicon="repo-push" width="24"></span>
+                <span class="note">
+                    此盒装的是补录档案！补录档案盒可进行档案补录。
+                </span>
+            </div>
+            <div *ngIf="!newBoxForm.value.old" class="form-checkbox form-group">
+                <label>
+                    <input formControlName="full" class="mt-2" aria-describedby="是否补录档案盒" type="checkbox" >
+                    盒是否装满
+                </label>
+                <span  class="float-left mt-1 mr-2" color="#959da5"  octicon="repo-push" width="24"></span>
+                <span class="note">
+                    盒是已否装满！设置为已装满的盒装不再能放入卷。
+                </span>
+            </div>
+
+            <dl class="form-group">
+                <dt class="input-label">
+                    <label>盒尺寸</label>
+                </dt>
+                <dd>
+                    <ng-select ngbAutoFocus notFoundText="没有符合条件的项" bindLabel="name" bindValue="id"
+                      formControlName="size" [items]="boxSizes" ></ng-select>
+    
+                </dd>
+              </dl>
+
+       
+    </div>
+    <div class="modal-footer">
+        <button  type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">取消</button>
+        <button type="submit" [disabled]="!newBoxForm.valid || saveing" class="btn btn-success" >
+          <span *ngIf="saveing" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span *ngIf="!saveing">生成档案盒</span>
+          <span *ngIf="saveing">正在生成档案盒...</span>
+          
+        </button>
+    </div>
+  </form>
+</ng-template>
+
 <ng-template #content let-modal>
 
   <div class="modal-header">
@@ -43,7 +100,10 @@
 
 </ng-template>
 <div>
-  <div class="cell-box">
+  <div class="cell-box" style="width:100%">
+    <button type="button" (click)="newBox(newContent)" style="float: right;  margin: 3px 0;" class="btn btn-git btn-success">
+      <span octicon="plus"></span>
+    </button>
     <ul>
       <li  *ngFor="let box of cell.boxes">
         <a [style.width.px]="box.size * 20" class="box" 

@@ -70,10 +70,8 @@ export class ArchiveService {
         return this._http.get<CellPath>(`${environment.apiUrl}/rooms/v1/path/cell/${id}`);
     }
 
-    addBox(cellId:string ,box:Box):Observable<string>{
-        return this._http.put<any>(`${environment.apiUrl}/rooms/v1/editor/new/${cellId}`,box).pipe(
-            map(data => data.id)
-        )
+    addBox(cellId:string ,box:Box):Observable<Box>{
+        return this._http.put<Box>(`${environment.apiUrl}/rooms/v1/editor/new/${cellId}`,box);
     }
 
     setBoxFull(boxId:string):Observable<Box>{
