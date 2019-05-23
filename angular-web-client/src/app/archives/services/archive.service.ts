@@ -82,6 +82,14 @@ export class ArchiveService {
         return this._http.get<Box>(`${environment.apiUrl}/rooms/v1/editor/not-full/${boxId}`);
     }
 
+    changeBoxSize(boxId:string, size:number):Observable<Box>{
+        return this._http.get<Box>(`${environment.apiUrl}/rooms/v1/editor/box/${boxId}/${size}`);
+    }
+
+    getCellByBox(boxId:string):Observable<Cell>{
+        return this._http.get<Cell>(`${environment.apiUrl}/rooms/v1/cell-box/${boxId}`);
+    }
+
     listBoxBusiness(boxId:string):Observable<Business[]>{
         return this._http.get<Business[]>(`${environment.apiUrl}/business/v1/archive/business/${boxId}`);
     }

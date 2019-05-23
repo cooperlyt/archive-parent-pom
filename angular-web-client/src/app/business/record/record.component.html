@@ -4,13 +4,13 @@
     <div *ngIf="roomPath?.rackPath?.cabinetPath?.cellPath?.cell" class="cell-box">
       <ul>
         <li  *ngFor="let box of roomPath.rackPath.cabinetPath.cellPath.cell.boxes" >
-          <span [style.width.px]="box.size * 20" 
+          <span [style.width.px]="(box.size > 1 ? box.size * 0.8 : box.size  ) * 18" 
             class="box {{box.old ? 'old' : ''}} {{ !box.old && box.full ? 'full' : ''}} {{!box.old && box.empty ? 'empty' : ''}}" >
             {{box.seq}}
           </span>
         </li>
         <li  *ngFor="let i of roomPath.rackPath.cabinetPath.cellPath.cell.emptyBox" >
-          <span [style.width.px]="20">
+          <span [style.width.px]="16">
             {{i}}
           </span>
         </li>
@@ -124,20 +124,20 @@
   <hr/>
 
   <div *ngIf="selectCell" class="cell-box">
-      <span [style.width.px]="200" class="form-inline" *ngIf="selectBox">
+      <span [style.width.px]="200" class="form-inline" *ngIf="selectBox && !selectBox.id">
           <!-- <input type="number" *ngIf="!selectBox.id"  [(ngModel)]="newSize" class="form-control" min="1" [max]="emptyCount" required> -->
-          <ng-select notFoundText="没有符合条件的项" bindLabel="name" bindValue="id"
+          <ng-select  notFoundText="没有符合条件的项" bindLabel="name" bindValue="id"
             [(ngModel)]="newSize" [items]="boxSizes" ></ng-select>
         </span>
     <ul>
       <li  *ngFor="let box of selectCell.boxes" [class.selected] = "selectBox?.id === box.id">
-        <a [style.width.px]="box.size * 20" (click)="onBoxChange(box)"
+        <a [style.width.px]="(box.size > 1 ? box.size * 0.8 : box.size) * 18" (click)="onBoxChange(box)"
           [class.old] = "box.old" [class.full] = "!box.old && box.full" [class.empty] = "!box.old && box.empty" class="box" >
           {{box.seq}}
         </a>
       </li>
       <li  *ngFor="let i of selectCell.emptyBox" >
-        <span [style.width.px]="20">
+        <span [style.width.px]="16">
           {{i}}
         </span>
       </li>

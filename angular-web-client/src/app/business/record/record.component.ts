@@ -84,7 +84,7 @@ export class RecordComponent implements OnInit {
         this.roomPath.rackPath.cabinetPath.cellPath.cell = new Cell(this.roomPath.rackPath.cabinetPath.cellPath.cell);
 
 
-        if (this.selectCell.percentage < 100){
+      
           if (!this.selectCell.boxes){
             this.selectCell.boxes = [];
           }
@@ -106,14 +106,7 @@ export class RecordComponent implements OnInit {
           this.selectCell.boxes.push(box);
           this.onBoxChange(box);
           return;
-        }else{
-          for (let b of this.selectCell.boxes){
-            if (!b.full){
-              this.onBoxChange(b);
-              return ;
-            }
-          }
-        }   
+       
     }
     this.selectBox = null;
     this.selectCell = null;

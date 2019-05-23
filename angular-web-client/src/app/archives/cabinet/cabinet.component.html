@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-3">
+  <div class="col-2">
       <ng-select *ngIf="hasRack" placeholder="架" (change)="rackSelected()" [clearable]="false" [searchable]="false" [clearOnBackspace]="false" [(ngModel)]="selectRackId" [items]="racks" bindLabel="name" bindValue="id" notFoundText="没有符合条件的项"></ng-select>
     
       <div *ngIf="loadding">
@@ -19,7 +19,7 @@
       <button class="btn btn-success btn-block ">添加架</button>
     </div>
   </div>
-  <div class="col-9">
+  <div class="col-10">
     <router-outlet></router-outlet>
   </div>
 </div>

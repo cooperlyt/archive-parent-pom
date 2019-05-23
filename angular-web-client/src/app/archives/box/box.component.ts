@@ -7,6 +7,7 @@ import { ArchiveService } from '../services/archive.service';
 import { Business } from '../../business/model/business.model';
 import { SecrecyLevel, BoxSize } from '../../business/enumData';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CellBoxService } from '../cell/cell-box.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class BoxComponent implements OnInit {
   constructor(private route: ActivatedRoute, 
     private modalService: NgbModal,
     private arichiveService: ArchiveService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private cellBoxService: CellBoxService) { }
 
   // boxs :Box[];
   cell: Cell;
@@ -38,12 +40,17 @@ export class BoxComponent implements OnInit {
   onFullChange($event){
     if (this.selectBox.full){
 
-      this.arichiveService.setBoxFull(this.selectBox.id).subscribe();
+      this.arichiveService.setBoxFull(this.selectBox.id).subscribe(box => this.cellBoxService.boxChanged(box.id));
     }else{
-      this.arichiveService.setBoxNotFull(this.selectBox.id).subscribe();
+      this.arichiveService.setBoxNotFull(this.selectBox.id).subscribe(box => this.cellBoxService.boxChanged(box.id));
     }
     
     console.log(this.selectBox.full)
+  }
+
+  onSizeChange(event){
+    console.log("change box size:", event.id);
+    this.arichiveService.changeBoxSize(this.selectBox.id,event.id).subscribe(box => this.cellBoxService.boxChanged(box.id));
   }
 
   openBox(context,box:Box){
@@ -57,16 +64,12 @@ export class BoxComponent implements OnInit {
 
   onNewBoxSubmit(){
     this.saveing = true;
-    if (this.newBoxForm.get('old').value){
-      this.newBoxForm.get('empty').setValue(false);
-      this.newBoxForm.get('full').setValue(false);
-    }else{
-      this.newBoxForm.get('empty').setValue(true);
-    }
+
     this.arichiveService.addBox(this.cell.id,this.newBoxForm.value).subscribe(box => {
       this.cell.boxes.push(box);
       this.saveing = false;
       this.modalService.dismissAll();
+      this.cellBoxService.boxChanged(box.id);
     })
   }
 
@@ -74,8 +77,8 @@ export class BoxComponent implements OnInit {
     
     this.newBoxForm = this.fb.group(
       {
-        full: this.fb.control(true),
-        empty: this.fb.control(false),
+        full: this.fb.control(false),
+        empty: this.fb.control(true),
         old:this.fb.control(false),
         size:this.fb.control(null,Validators.required)
       }

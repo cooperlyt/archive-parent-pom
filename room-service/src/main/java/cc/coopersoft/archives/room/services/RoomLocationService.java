@@ -87,6 +87,24 @@ public class RoomLocationService {
        return null;
     }
 
+    public Cell getCellByBox(String id){
+        Optional<Box> box = boxRepository.findById(id);
+        if (!box.isPresent()){
+            return null;
+        }
+        return box.get().getCell();
+    }
+
+    public Box changeBoxSize(String boxId, BigDecimal size){
+        Optional<Box> box = boxRepository.findById(boxId);
+        if (!box.isPresent()){
+            return null;
+        }
+        box.get().setSize(size);
+        calcPercentage(box.get());
+        return boxRepository.save(box.get());
+    }
+
     public RoomPath getRoomPathByRack(String rackId){
         RackPath rackPath = getRackPath(rackId);
         RoomPath result = new RoomPath(rackPath.getRack().getRoom());

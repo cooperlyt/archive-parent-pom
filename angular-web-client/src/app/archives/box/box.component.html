@@ -20,16 +20,6 @@
                     此盒装的是补录档案！补录档案盒可进行档案补录。
                 </span>
             </div>
-            <div *ngIf="!newBoxForm.value.old" class="form-checkbox form-group">
-                <label>
-                    <input formControlName="full" class="mt-2" aria-describedby="是否补录档案盒" type="checkbox" >
-                    盒是否装满
-                </label>
-                <span  class="float-left mt-1 mr-2" color="#959da5"  octicon="repo-push" width="24"></span>
-                <span class="note">
-                    盒是已否装满！设置为已装满的盒装不再能放入卷。
-                </span>
-            </div>
 
             <dl class="form-group">
                 <dt class="input-label">
@@ -66,16 +56,28 @@
   </div>
 
   <div class="modal-body">
-
-      <div class="form-checkbox form-group">
-          <label>
-              <input class="mt-2" aria-describedby="是否装满" type="checkbox" [(ngModel)]="selectBox.full" (ngModelChange)="onFullChange($event)">
-              盒是否装满
-          </label>
-          <span  class="float-left mt-1 mr-2" color="#959da5"  octicon="repo-push" width="24"></span>
-          <span class="note">
-              盒是已否装满！设置为已装满的盒装不再能放入卷。
-          </span>
+      <div class="row">
+        <div class="col-12 col-md-6">
+            <div style="margin-top:0" class="form-checkbox form-group">
+                <label>
+                    <input class="mt-2" aria-describedby="是否装满" type="checkbox" [(ngModel)]="selectBox.full" (ngModelChange)="onFullChange($event)">
+                    盒是否装满
+                </label>
+                <span  class="float-left mt-1 mr-2" color="#959da5"  octicon="repo-push" width="24"></span>
+                <span class="note">
+                    盒是已否装满！设置为已装满的盒装不再能放入卷。
+                </span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                
+                
+                    <ng-select ngbAutoFocus notFoundText="没有符合条件的项" bindLabel="name" bindValue="id"
+                      [(ngModel)]="selectBox.size" [items]="boxSizes" (change)="onSizeChange($event)"></ng-select>
+      
+            </div>
+        </div>
       </div>
 
       <div class="list-group">
@@ -106,12 +108,12 @@
     </button>
     <ul>
       <li  *ngFor="let box of cell.boxes">
-        <a [style.width.px]="box.size * 20" class="box" 
+        <a [style.width.px]="box.size * 18" class="box" 
           [class.old] ="!box.full && box.old" [class.full]="box.full" [class.empty]="!box.old && box.empty "
           (click)="openBox(content,box)">{{box.seq}}</a>
       </li>
       <li  *ngFor="let i of cell.emptyBox" >
-        <span [style.width.px]="20">
+        <span [style.width.px]="18">
           {{i}}
         </span>
       </li>

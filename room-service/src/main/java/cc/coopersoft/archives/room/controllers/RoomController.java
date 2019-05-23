@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -117,6 +118,29 @@ public class RoomController {
         }
         return result;
     }
+
+    @RequestMapping(value = "/cell-box/{boxId}", method = RequestMethod.GET)
+    public Cell getCellByBox(@PathVariable("boxId")String boxId){
+        Cell result = roomLocationService.getCellByBox(boxId);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/editor/box/{boxId}/{size}", method = RequestMethod.GET)
+    public Box changeBoxSize(@PathVariable("boxId")String boxId, @PathVariable("size")BigDecimal size){
+        Box result = roomLocationService.changeBoxSize(boxId,size);
+        if (result == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "define entity not found"
+            );
+        }
+        return result;
+    }
+
 
     @RequestMapping(value = "/editor/new/{cell}", method = RequestMethod.PUT)
     public Box createBox(@PathVariable("cell") String id, @RequestBody Box box){
