@@ -17,6 +17,11 @@ public class RoomController {
     @Autowired
     private RoomLocationService roomLocationService;
 
+    @RequestMapping(value = "/path/name/{boxId}", method = RequestMethod.GET)
+    public List<String> getPathNameByBoxId(@PathVariable("boxId")String boxId){
+        return roomLocationService.getPathNameByBoxId(boxId);
+    }
+
     @RequestMapping(value = "/list-room",method = RequestMethod.GET)
     public List<Room> listRoom(){
         return roomLocationService.getAllRoom();

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Room } from '../model/room.model';
 import { inbox } from 'octicons';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -15,15 +15,33 @@ export class RoomComponent implements OnInit {
 
   faFile = faFile;
   inboxIcon = inbox.toSVG();
-
-  loadding = false;
-
-  constructor(private route: ActivatedRoute,private router: Router,private sanitizer: DomSanitizer) { }
+  namePath: string[];
 
   rooms: Room[];
 
+  loadding = false;
+
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private archiveService: ArchiveService,
+    private sanitizer: DomSanitizer) { 
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd){
+          let lastChild = this.route.snapshot;
+          while (lastChild.firstChild){
+            lastChild = lastChild.firstChild;
+          }
+          if (lastChild.params["id"]){
+            this.archiveService.getPathName(lastChild.params["id"]).subscribe(data => this.namePath = data);
+          }
+        }
+      })
+  }
+
   ngOnInit() {
     this.inboxIcon = this.sanitizer.bypassSecurityTrustHtml(inbox.toSVG());
+
+    this.route.firstChild
     this.route.data.subscribe(data => {
       this.rooms = data.rooms;
       if (!this.route.firstChild && (this.rooms.length > 0)){

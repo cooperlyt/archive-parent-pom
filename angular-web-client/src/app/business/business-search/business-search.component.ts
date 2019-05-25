@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { BusinessStatus } from '../enumData';
 
 @Component({
   selector: 'app-business-search',
@@ -8,14 +9,79 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 })
 export class BusinessSearchComponent implements OnInit {
 
+  
+
+  businessStatuses = Object.keys(BusinessStatus).filter(key => key !== 'PREPARE' && key !== 'REJECT').map(data => ({key : data , title : BusinessStatus[data]}));
+
+  businessStatus = BusinessStatus;
+
   constructor(private _route: ActivatedRoute,private _router: Router) { }
 
   searchKey:string;
   defineId:string;
+  searchStatus:string;
+  beginDate: string;
+  endDate:string;
+
 
   page: any;
   pageIndex: number;
   usedDefine: any[];
+
+  navigateToBox(boxId:string){
+    console.log(boxId.split("-")) ;
+    const path = boxId.split("-");
+
+    this._router.navigate(["/rooms",path[0],`${path[0]}-${path[1]}-${path[2]}`, `${path[0]}-${path[1]}-${path[2]}-${path[3]}-${path[4]}` ]);
+  }
+
+  private genParams(page :number):Params{
+    let result: Params = {page: page};
+    if (this.searchKey){
+      result['key'] = this.searchKey;
+    }
+    if (this.searchStatus){
+      result['status'] = this.searchStatus;
+    }
+    if (this.beginDate){
+      result['begin'] = this.beginDate;
+    }
+    if (this.endDate){
+      result['end'] = this.endDate;
+    }
+    if (this.defineId){
+      result['define'] = this.defineId;
+    }
+
+    return result;
+  }
+
+  filterBegin(date?:string){
+  
+      let params = this.genParams(0);
+      params['begin']= date;
+      this._router.navigate(['/business-search'], { queryParams: params});
+    
+  }
+
+  filterEnd(date?: string){
+
+      let params = this.genParams(0);
+      params['end']= date;
+      this._router.navigate(['/business-search'], { queryParams: params});
+    
+  }
+
+  filterStatus(status?:string){
+    if (!status && !this.searchStatus){
+      return;
+    }
+    if (status !== this.searchStatus){
+      let params: Params =  this.genParams(0);
+      params['status'] = status;
+      this._router.navigate(['/business-search'], { queryParams: params});
+    }
+  }
 
   filterByDefine(id?: string){
     console.log("filter:" ,id);
@@ -24,10 +90,8 @@ export class BusinessSearchComponent implements OnInit {
     }
     console.log("filter:" ,this.defineId);
     if (id !== this.defineId){
-      let params: Params = {page: 0 , define: id};
-      if (this.searchKey){
-        params['key'] = this.searchKey;
-      }
+      let params: Params =  this.genParams(0);
+      params['define'] = id;
       this._router.navigate(['/business-search'], { queryParams: params});
     }
   }
@@ -35,13 +99,7 @@ export class BusinessSearchComponent implements OnInit {
   onPageChange(page: number){
     console.log("chang page:" , page);
     if (page !== this.pageIndex){
-      let params: Params = {page: page -1};
-      if (this.searchKey){
-        params['key'] = this.searchKey;
-      }
-      if (this.defineId){
-        params['define'] = this.defineId;
-      }
+      let params: Params = this.genParams(page - 1);
       this._router.navigate(['/business-search'], { queryParams: params});
     }
   }
@@ -63,6 +121,21 @@ export class BusinessSearchComponent implements OnInit {
         this.defineId = params['define'];
       }else{
         this.defineId = null;
+      }
+      if (params.hasOwnProperty('status')){
+        this.searchStatus = params['status'];
+      }else{
+        this.searchStatus = null;
+      }
+      if (params.hasOwnProperty('begin')){
+        this.beginDate = params['begin'];
+      }else{
+        this.beginDate = null;
+      }
+      if (params.hasOwnProperty('end')){
+        this.endDate = params['end'];
+      }else{
+        this.endDate = null;
       }
     });
   }

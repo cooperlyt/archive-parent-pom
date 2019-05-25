@@ -4,7 +4,14 @@
         <div class="col-sm-12 col-md-5">
           <label>档案位置</label>
           <div class="content">
-            {{business.volume.boxId}}
+            <span *ngFor="let name of businessNamePath; let i = index;">
+              <span *ngIf="i !== 0" class="path-divider">/</span>
+              <strong itemprop="name">{{name}}</strong>
+            </span>
+
+            <a (click)="navigateToBox(business.volume.boxId)" class="badge badge-light box-link">{{business.volume.boxId}}</a>
+                      
+      
           </div>
         </div>
         <div class="col-sm-12 col-md-3">

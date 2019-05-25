@@ -15,16 +15,13 @@ export class NavbarComponent implements OnInit {
 
   searchKey: string;
 
-  define:string;
 
   search(){
     let params: Params = {page:0};
     if (this.searchKey){
       params['key'] = this.searchKey;
     }
-    if (this.define){
-      params['define'] = this.define;
-    }
+
     
     this._router.navigate(['/business-search'], { queryParams: params });
   }
@@ -40,11 +37,7 @@ export class NavbarComponent implements OnInit {
         }else{
           this.searchKey = null;
         }
-        if (params.hasOwnProperty('define')){
-          this.define = params['define'];
-        }else{
-          this.define = null;
-        }
+    
       });
 
 

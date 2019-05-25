@@ -315,5 +315,45 @@ public class RoomLocationService {
         return boxRepository.save(box.get());
     }
 
+    public List<String> getPathNameByBoxId(String boxId){
+        String[] ids = boxId.split("-");
+        List<String> result = new ArrayList<>();
+        String id;
+        if (ids.length > 0){
+            id = ids[0];
+            Optional<Room> room = roomRepository.findById(id);
+            if (room.isPresent()){
+               result.add(room.get().getName());
+            }
+            if (ids.length > 1){
+                id = id + "-" + ids[1];
+                Optional<Rack> rack = rackRepository.findById(id);
+                if (rack.isPresent()){
+                   result.add(rack.get().getName());
+                }
+
+                if (ids.length > 2){
+                    id = id + "-" + ids[2];
+                    Optional<Cabinet> cabinet = cabinetRepository.findById(id);
+                    if (cabinet.isPresent()){
+                        result.add(cabinet.get().getName());
+                    }
+
+                    if (ids.length > 4){
+                        id = id + "-" + ids[3] + "-" + ids[4];
+                        Optional<Cell> cell = cellRepository.findById(id);
+                        if (cell.isPresent()){
+                            result.add(cell.get().getName());
+                        }
+                        if (ids.length > 5){
+                            result.add(ids[5]);
+                        }
+                    }
+                }
+            }
+
+        }
+        return result;
+    }
 
 }

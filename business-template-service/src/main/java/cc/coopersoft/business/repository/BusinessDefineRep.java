@@ -30,5 +30,7 @@ public interface BusinessDefineRep extends CrudRepository<BusinessDefine,String>
     @Query("SELECT distinct new cc.coopersoft.business.model.BusinessDefineSummary(b.id,b.name,c.name,b.memo) from BusinessDefine b left join b.businessCategory c  where c.id = :categoryId order by b.priority")
     List<BusinessDefineSummary> listDefineSummaryByCategory(@Param("categoryId")String categoryId);
 
+    
+
     BusinessDefine getBusinessDefineById(String id);
 }

@@ -10,11 +10,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,13 +55,17 @@ public class BusinessController {
     public Page<Business> search(@RequestParam("page") Optional<Integer> page,
                                  @RequestParam("key")Optional<String> key,
                                  @RequestParam("define")Optional<String> define,
+                                 @RequestParam("status")Optional<Business.Status> status,
+                                 @RequestParam("b")@DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)Optional<Date> begin,
+                                 @RequestParam("e")@DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)Optional<Date> end,
                                  @RequestParam("sort")Optional<String> sort,
                                  @RequestParam("dir")Optional<String> dir){
         Sort sortable = new Sort((dir.isPresent() ? ("DESC".equals(dir.get()) ? Sort.Direction.DESC : Sort.Direction.ASC) : Sort.Direction.DESC)
                 , (sort.isPresent() ? sort.get() : "changeTime"));
 
         logger.debug("search page:" + (page.isPresent() ? page.get() : " nav ") + "key:" + (key.isPresent() ? key.get() : " nav ") );
-        return govBusinessService.searchBusiness(key,define,PageRequest.of(page.isPresent() ? page.get() : 0, 20,sortable ));
+        return govBusinessService.searchBusiness(key,define,status,begin,end,
+                PageRequest.of(page.isPresent() ? page.get() : 0, 20,sortable ));
     }
 
     @RequestMapping(value = "/business/operations/{businessId}", method = RequestMethod.GET)

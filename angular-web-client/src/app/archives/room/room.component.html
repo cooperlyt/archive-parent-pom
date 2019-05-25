@@ -8,10 +8,11 @@
         <h1 class="public ">
   
             <span [innerHTML]="inboxIcon"></span>
-            <span class="author" itemprop="author">档案室</span><!--
-          --><span class="path-divider">/</span><!--
-          --><strong itemprop="name"></strong>
-            
+            <span class="author" itemprop="author">档案室</span>
+            <span *ngFor="let name of namePath">
+              <span class="path-divider">/</span>
+              <strong itemprop="name">{{name}}</strong>
+            </span>
           
         </h1>
     </div>

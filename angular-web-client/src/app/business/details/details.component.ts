@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Business } from '../model/business.model';
 import { ValueGroup } from '../model/value-group.model';
 import { CORP_TYPE, BusinessStatus, SecrecyLevel } from '../enumData';
 import { number } from 'prop-types';
 import { FieldValue } from '../model/field-value.model';
+import { ArchiveService } from '../../archives/services/archive.service';
 
 export class RowFields {
 
@@ -37,15 +38,24 @@ export class DetailsComponent implements OnInit {
   businessStatus = BusinessStatus;
 
   business: Business;
+  businessNamePath: string[];
+
+  navigateToBox(boxId:string){
+    console.log(boxId.split("-")) ;
+    const path = boxId.split("-");
+
+    this._router.navigate(["/rooms",path[0],`${path[0]}-${path[1]}-${path[2]}`, `${path[0]}-${path[1]}-${path[2]}-${path[3]}-${path[4]}` ]);
+  }
 
   fields: RowFields[] = [];
 
-  constructor(private _route: ActivatedRoute) { }
+  constructor(private _route: ActivatedRoute,private _router: Router, private archiveService: ArchiveService) { }
 
   ngOnInit() {
 
     this._route.data.subscribe((data: {business: Business, fields: ValueGroup[]}) => {
       this.business = data.business;
+      this.archiveService.getPathName(this.business.volume.boxId).subscribe(data => this.businessNamePath = data);
       let fieldSimple : {[key:number] : ValueGroup[]} = {};
 
       data.fields.forEach(item =>{

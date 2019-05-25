@@ -15,9 +15,12 @@ export class BusinessSearchResolver implements Resolve<any>{
         const page = route.queryParams["page"];
         const key = route.queryParams['key'];
         const define = route.queryParams['define'];
+        const status = route.queryParams['status'];
+        const begin = route.queryParams['begin'];
+        const end = route.queryParams['end'];
         console.log("search business page:", page, 'key:', key);
 
-        return this.businessService.search(page,key,define);
+        return this.businessService.search(page,key,define,status,begin,end);
       
     }
 

@@ -23,7 +23,11 @@ export class TemplateListComponent implements OnInit {
       case 'patch' :{
         this.router.navigate(["/business-patch",
           this.route.snapshot.queryParams.box,
-          defineId])
+          defineId]);
+        break;
+      }
+      case 'new' :{
+        this.router.navigate(["/business-create",defineId]);
         break;
       }
       default: {

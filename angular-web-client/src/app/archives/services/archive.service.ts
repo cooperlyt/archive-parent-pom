@@ -90,6 +90,10 @@ export class ArchiveService {
         return this._http.get<Cell>(`${environment.apiUrl}/rooms/v1/cell-box/${boxId}`);
     }
 
+    getPathName(id:string):Observable<string[]>{
+        return this._http.get<string[]>(`${environment.apiUrl}/rooms/v1/path/name/${id}`);
+    }
+
     listBoxBusiness(boxId:string):Observable<Business[]>{
         return this._http.get<Business[]>(`${environment.apiUrl}/business/v1/archive/business/${boxId}`);
     }

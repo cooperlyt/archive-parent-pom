@@ -77,6 +77,12 @@
               
               <span *ngIf="business.volume" class="path-divider">/</span>
               <strong *ngIf="business.volume" itemprop="name">{{business.volume.id}}</strong>
+              <span class="badge "
+              [class.badge-primary]="['RUNNING', 'CREATED', 'COMPLETE'].indexOf(business.status) >= 0"
+              [class.badge-success]="business.status === 'RECORDED' "
+              [class.badge-secondary]="business.status === 'ABORT' ">
+              {{businessStatus[business.status]}}
+            </span>
           </h1>
         </div>
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpParameterCodec } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from "rxjs";
 import { BusinessDefine } from '../model/business-define.model';
@@ -19,6 +19,24 @@ import { Volume } from '../model/volume.model';
 import { VolumeItem } from '../model/volume-item.model';
 import { BusinessCategory } from '../model/business-category.model';
 import { DefineSummary } from '../model/define-summary.model';
+
+class CustomEncoder implements HttpParameterCodec {
+  encodeKey(key: string): string {
+    return encodeURIComponent(key);
+  }
+
+  encodeValue(value: string): string {
+    return encodeURIComponent(value);
+  }
+
+  decodeKey(key: string): string {
+    return decodeURIComponent(key);
+  }
+
+  decodeValue(value: string): string {
+    return decodeURIComponent(value);
+  }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -65,13 +83,24 @@ export class BusinessService {
     return this._http.get(`${environment.apiUrl}/business/v1/business/used-define`);
   }
 
-  search(page: number, key: string | null , define?:string):Observable<any>{
-    let params = new HttpParams().set("page",page.toString()); //Create new HttpParams
+  search(page: number, key: string | null , define?:string, status?:string , begin?:string, end?:string):Observable<any>{
+  
+    //begin =  "2019-05-30T00:00:00.000+08:00";
+    let params = new HttpParams({encoder: new CustomEncoder()}).set("page",page.toString()); //Create new HttpParams
     if (!!key){
       params = params.append("key", key);
     }
     if (define){
       params = params.append("define", define);
+    }
+    if (status){
+      params = params.append("status",status);
+    }
+    if (begin){
+      params = params.append("b",begin);
+    }
+    if (end){
+      params = params.append("e", end);
     }
     console.log("search business params:", JSON.stringify(params));
     return this._http.get<any>(`${environment.apiUrl}/business/v1/business/search`,{params: params});

@@ -2,10 +2,41 @@
   <div class="row">
     <div class="col-12 col-md-3 float-left px-md-2">
       <nav class="menu border d-none d-md-block">
-          <a class="menu-item {{ !defineId ? 'selected' : '' }}" (click)="filterByDefine()" >所有业务</a>
-          <a *ngFor="let define of usedDefine" (click)="filterByDefine(define.id)" class="menu-item {{(define.id === defineId) ? 'selected' : ''}} " >{{define.name}}<span class="ml-1 mt-1 Counter Counter--gray">{{define.count}}</span></a>
+          <a class="menu-item" 
+            [class.selected]="!searchStatus"
+            (click)="filterStatus()" >所有业务</a>
+          <a *ngFor="let status of businessStatuses" (click)="filterStatus(status.key)" 
+            [class.selected]="status.key === searchStatus"
+            class="menu-item" >
+              {{status.title}}
+            <!-- <span class="ml-1 mt-1 Counter Counter--gray">{{define.count}}</span> -->
+          </a>
      
-        </nav>
+      </nav>
+
+      <div class="filter-date">
+          <app-date-time-picker [dateString]="beginDate" [(ngModel)]="beginDate" (ngModelChange)="filterBegin($event)" placeholder="起始时间" inputDatetimeFormat="yyyy-M-d"  name="reciveBeginDate"></app-date-time-picker> 
+          <app-date-time-picker [dateString]="endDate" [(ngModel)]="endDate" (ngModelChange)="filterEnd($event)" placeholder="结束时间" inputDatetimeFormat="yyyy-M-d"   name="reciveBeginDate"></app-date-time-picker> 
+      </div>
+
+      <div class="border rounded-1 p-3 mb-3 d-none d-md-block">
+        <h2 class="d-inline-block f5 mb-2">
+          业务种类
+        </h2>
+        <ul class="filter-list small">
+          <li *ngFor="let define of usedDefine">
+   
+
+            <a (click)="filterByDefine(define.id)" tabindex="1" class="filter-item" [class.selected]="define.id === defineId" >
+              <span *ngIf="define.id === defineId" (click)="filterByDefine()"  class="float-right" octicon="x" ></span>
+              <span  *ngIf="define.id !== defineId" class="count">{{define.count > 1000 ? Math.floor(define.count/1000) + "K" : define.count}}</span>
+              {{define.name}}
+            </a>        
+          </li>
+
+        </ul>
+      </div>
+
     </div>
     <div class="col-12 col-md-9 float-left px-2 pt-3 pt-md-0 codesearch-results">
         <div *ngIf="page.empty" class="px-2">
@@ -28,10 +59,15 @@
           </div>
           <ul class="repo-list">
               <li *ngFor="let business of page.content" class="repo-list-item d-flex flex-column flex-md-row flex-justify-start py-4 public source">
-                  <div class="col-12 col-md-8 pr-md-3">
+                  <div class="col-12 col-md-10 pr-md-3">
                     <h3>
                       <a class="v-align-middle" routerLink="/business-view/{{business.id}}/files">{{business.defineName}} / {{business.id}} <span *ngIf="business.volume">/{{business.volume.id}}</span></a>
-                
+                      <span class="badge "
+                        [class.badge-primary]="['RUNNING', 'CREATED', 'COMPLETE'].indexOf(business.status) >= 0"
+                        [class.badge-success]="business.status === 'RECORDED' "
+                        [class.badge-secondary]="business.status === 'ABORT' ">
+                        {{businessStatus[business.status]}}
+                      </span>
                     </h3>
                 
                       <p class="col-12 col-md-9 d-inline-block text-gray mb-2 pr-4 pl-0">
@@ -48,8 +84,10 @@
                     </div>
                   </div>
                 
-                  <div class="flex-shrink-0 col-6 col-md-4 pt-2 pr-md-3 d-flex">
-                    <div class="text-gray flex-auto min-width-0">
+                  <div *ngIf="business.volume" class="flex-shrink-0 col-6 col-md-2 pt-2 pr-md-3 d-flex">
+                    <div *ngIf="business.volume.boxId" class="text-gray flex-auto min-width-0">
+                        <a (click)="navigateToBox(business.volume.boxId)" class="badge badge-light box-link">{{business.volume.boxId}}</a>
+                      
                     </div>
                 
                   </div>
@@ -57,8 +95,6 @@
           </ul>
 
           <div  class="paginate-container">
-
-          
             <ngb-pagination  class="d-flex justify-content-center" (pageChange)="onPageChange($event)" [collectionSize]="page.totalElements" [pageSize]="page.size" [(page)]="pageIndex" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
           </div>
         </div>

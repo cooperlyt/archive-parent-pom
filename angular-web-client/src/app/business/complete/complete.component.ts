@@ -5,8 +5,6 @@ import { repo } from 'octicons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SecrecyLevel } from '../enumData';
-import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
-import { CustomDatepickerI18n, I18n } from '../../comm/datepicker-i18n';
 import { BusinessService } from '../services/business.service';
 import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
@@ -15,8 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-complete',
   templateUrl: './complete.component.html',
-  styleUrls: ['./complete.component.scss'],
-  providers: [I18n, {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}] 
+  styleUrls: ['./complete.component.scss']
 })
 export class CompleteComponent implements OnInit {
 

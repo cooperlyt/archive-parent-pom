@@ -1,5 +1,5 @@
 
-<p *ngIf="control.valid || control.pristine" class="note">{{note}}</p>
+<p *ngIf="(control.valid || control.pristine) && note" class="note">{{note}}</p>
 <div [class]="styleClass" [hidden]="control.valid || control.pristine">
 
     <p *ngIf="errors?.min">值不能小于 <strong>{{errors.min.min}}</strong>! </p>

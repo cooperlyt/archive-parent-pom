@@ -7,8 +7,7 @@ import { I18n, CustomDatepickerI18n } from '../../../comm/datepicker-i18n';
 @Component({
   selector: 'app-field-input',
   templateUrl: './field-input.component.html',
-  styleUrls: ['./field-input.component.scss'],
-  providers: [I18n, {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}] 
+  styleUrls: ['./field-input.component.scss']
 })
 export class FieldInputComponent implements OnInit {
 

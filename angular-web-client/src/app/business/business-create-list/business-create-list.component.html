@@ -26,11 +26,13 @@
         </li>
     </ul>
 
+    
     <div *ngIf="!defines">
         <div class="wait-item"></div>
         <div class="wait-item"></div>
         <div class="wait-item"></div>
         <div class="wait-item"></div>
     </div>
+    <a routerLink="/business-category" [queryParams]="{fun: 'new'}" class="width-full text-left btn-link f6 muted-link text-left mt-2">更多业务</a>
 
 </div>

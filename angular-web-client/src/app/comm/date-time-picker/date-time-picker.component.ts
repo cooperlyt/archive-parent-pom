@@ -1,9 +1,10 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChild, Injector, forwardRef, SimpleChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ViewChild, Injector, forwardRef, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms';
 import { DateTimeModel } from './date-time.model';
-import { NgbDateStruct, NgbTimeStruct, NgbDatepicker, NgbPopover, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbTimeStruct, NgbDatepicker, NgbPopover, NgbPopoverConfig, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { noop } from 'rxjs';
+import { I18n, CustomDatepickerI18n } from '../datepicker-i18n';
 
 @Component({
   selector: 'app-date-time-picker',
@@ -15,7 +16,8 @@ import { noop } from 'rxjs';
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => DateTimePickerComponent),
         multi: true
-    }
+    },
+    I18n, {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}
   ]
 })
 export class DateTimePickerComponent implements ControlValueAccessor, OnInit, AfterViewInit {
@@ -37,6 +39,10 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnInit, Af
 
   @Input()
   disabled = false;
+
+  @Input()
+  placeholder: string = '';
+
 
   private showTimePickerToggle = false;
 

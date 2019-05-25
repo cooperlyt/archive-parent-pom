@@ -3,10 +3,10 @@
 export const BusinessStatus = {
     PREPARE : '准备',
     REJECT : '驳回',
-    RUNNING: '运行中',
-    CREATED : '建立',
-    COMPLETE : '完成',
-    RECORDED : '归档',
+    RUNNING: '待处理',
+    CREATED : '完成',
+    COMPLETE : '归档',
+    RECORDED : '上架',
     ABORT : '中止'
 }
 

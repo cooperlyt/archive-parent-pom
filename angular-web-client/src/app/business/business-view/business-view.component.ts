@@ -10,6 +10,7 @@ import { BusinessService } from '../services/business.service';
 import { catchError } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { BusinessStatus } from '../enumData';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BusinessViewComponent implements OnInit {
 
+  businessStatus = BusinessStatus;
 
   constructor(private _route: ActivatedRoute,
     private sanitizer: DomSanitizer,

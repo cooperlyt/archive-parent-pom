@@ -70,7 +70,7 @@ export class DateTimeModel implements NgbDateTimeStruct {
                 return (norm < 10 ? '0' : '') + norm;
             };
 
-            const isoString = `${pad(year)}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}:${pad(second)}${dif}${pad(tzo / 60)}:${pad(tzo % 60)}`;
+            const isoString = `${pad(year)}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}:${pad(second)}.000${dif}${pad(tzo / 60)}:${pad(tzo % 60)}`;
             return isoString;
         }
 

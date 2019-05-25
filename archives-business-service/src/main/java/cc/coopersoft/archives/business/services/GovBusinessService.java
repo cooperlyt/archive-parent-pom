@@ -200,42 +200,54 @@ public class GovBusinessService {
         return volumeRepo.save(volume);
     }
 
-    public Page<Business> searchBusiness(Optional<String> key, Optional<String> define, Pageable pageable){
+    public Page<Business> searchBusiness(Optional<String> key, Optional<String> define,
+                                         Optional<Business.Status> status,
+                                         Optional<Date> begin,
+                                         Optional<Date> end,
+                                         Pageable pageable){
 
         Specification<Business> specification  = (Specification<Business>) (root, criteriaQuery, cb) -> {
-            Path<String> idPath = root.get("id");
-            Path<String> keyPath = root.get("key");
-            Path<String> deliverIdPath = root.get("deliverId");
-            Path<String> projectNamePath = root.get("projectName");
-            Path<String> projectIdPath = root.get("projectId");
-            Path<String> definePath = root.get("defineId");
+
+
 
             List<Predicate> predicates = new LinkedList<>();
 
             if (define.isPresent()){
-                predicates.add(cb.equal(definePath,define.get()));
+                predicates.add(cb.equal(root.get("defineId"),define.get()));
             }
 
+            if (begin.isPresent()){
+                predicates.add(cb.greaterThanOrEqualTo(root.get("receiveDate"),begin.get()));
+            }
 
+            if (end.isPresent()){
+                predicates.add(cb.lessThanOrEqualTo(root.get("receiveDate"),end.get()));
+            }
 
-             CriteriaBuilder.In<Object> in = cb.in(root.get("status"));
-             in.value(Business.Status.RUNNING);
-             in.value(Business.Status.CREATED);
-             in.value(Business.Status.COMPLETE);
-             in.value(Business.Status.RECORDED);
-             in.value(Business.Status.ABORT);
-             predicates.add(in);
+            if (status.isPresent()){
+                predicates.add(cb.equal(root.get("status"),status.get()));
 
+            }else {
 
+                CriteriaBuilder.In<Object> in = cb.in(root.get("status"));
+                in.value(Business.Status.RUNNING);
+                in.value(Business.Status.CREATED);
+                in.value(Business.Status.COMPLETE);
+                in.value(Business.Status.RECORDED);
+                in.value(Business.Status.ABORT);
+                predicates.add(in);
+
+            }
 
             if (key.isPresent()){
 
                 predicates.add(cb.or(
-                        cb.like(projectNamePath , "%" + key.get() + "%" ),
-                        cb.like(keyPath,"%" +  key.get() + "%"),
-                        cb.equal(projectIdPath,key.get()),
-                        cb.equal(idPath,key.get()),
-                        cb.equal(deliverIdPath,key.get()),
+                        cb.like(root.get("projectName") , "%" + key.get() + "%" ),
+                        cb.like(root.get("key"),"%" +  key.get() + "%"),
+                        cb.equal(root.join("volume",JoinType.LEFT).get("id"), key.get()),
+                        cb.equal(root.get("projectId"),key.get()),
+                        cb.equal(root.get("id"),key.get()),
+                        cb.equal(root.get("deliverId"),key.get()),
                         cb.like(root.get("deliver"),"%" + key + "%")
                         )
                 );
