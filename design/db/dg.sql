@@ -685,7 +685,6 @@ ALTER TABLE VOL_CONETXT
         ON DELETE RESTRICT
 ;
 
-
 -- BUSINESS_CATEGORY
 INSERT INTO BUSINESS_CATEGORY(CATEGORY_ID, NAME, PRIORITY) VALUES ('A','综合类',1);
 INSERT INTO BUSINESS_CATEGORY(CATEGORY_ID, NAME, PRIORITY) VALUES ('B','城市勘测类',2);
@@ -1718,12 +1717,12 @@ INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('Q.7.3-1',0,'{"sty
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('Q.7.3-1',2,'{"style": "col-lg-4 col-md-12","nullable":true,"key":true,"minLength":1, "maxLength":10 ,"label":"原档案位置","controlType":"textbox"}');
 INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW,_OPTION) VALUES('Q.7.3-2','说明','TEXT_AREA',4,4,'Q.7.3',4,'{"key":false,"nullable":true,"rows":4}');
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL) VALUES ('Q.7.3-2',0);
--- Q.1.03
-INSERT INTO FIELD_GROUP(GROUP_ID, NAME, TYPE, EDITOR_ORDINAL, DISPLAY_ORDINAL, DEFINE_ID,VIEW_ROW) VALUES ('Q.1.03-1','卷页数','SIMPLE',1,1,'Q.7.4',0);
-INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('Q.1.03-1',0,'{"style": "col-lg-4 col-md-12","nullable":true,"key":false,"minLength":1, "maxLength":5 ,"label":"卷页数","controlType":"textbox"}');
-INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('Q.1.03-1',2,'{"style": "col-lg-4 col-md-12","nullable":true,"key":true,"minLength":1, "maxLength":10 ,"label":"原档案位置","controlType":"textbox"}');
-INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW,_OPTION) VALUES('Q.1.03-2','说明','TEXT_AREA',4,4,'Q.7.4,4','{"key":false,"nullable":true,"rows":4}');
-INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL) VALUES ('Q.1.03-2',0);
+-- Q.7.4
+INSERT INTO FIELD_GROUP(GROUP_ID, NAME, TYPE, EDITOR_ORDINAL, DISPLAY_ORDINAL, DEFINE_ID,VIEW_ROW) VALUES ('Q.7.4-1','卷页数','SIMPLE',1,1,'Q.7.4',0);
+INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('Q.7.4-1',0,'{"style": "col-lg-4 col-md-12","nullable":true,"key":false,"minLength":1, "maxLength":5 ,"label":"卷页数","controlType":"textbox"}');
+INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('Q.7.4-1',2,'{"style": "col-lg-4 col-md-12","nullable":true,"key":true,"minLength":1, "maxLength":10 ,"label":"原档案位置","controlType":"textbox"}');
+INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW,_OPTION) VALUES('Q.7.4-2','说明','TEXT_AREA',4,4,'Q.7.4',4,'{"key":false,"nullable":true,"rows":4}');
+INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL) VALUES ('Q.7.4-2',0);
 -- Q.8.0
 INSERT INTO FIELD_GROUP(GROUP_ID, NAME, TYPE, EDITOR_ORDINAL, DISPLAY_ORDINAL, DEFINE_ID,VIEW_ROW) VALUES ('Q.8.0-1','卷页数','SIMPLE',1,1,'Q.8.0',0);
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('Q.8.0-1',0,'{"style": "col-lg-4 col-md-12","nullable":true,"key":false,"minLength":1, "maxLength":5 ,"label":"卷页数","controlType":"textbox"}');
@@ -1778,6 +1777,7 @@ INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('R.5.0-1',0,'{"sty
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL, _OPTION) VALUES ('R.5.0-1',2,'{"style": "col-lg-4 col-md-12","nullable":true,"key":true,"minLength":1, "maxLength":10 ,"label":"原档案位置","controlType":"textbox"}');
 INSERT INTO FIELD_GROUP(GROUP_ID,NAME,TYPE,EDITOR_ORDINAL,DISPLAY_ORDINAL,DEFINE_ID,VIEW_ROW,_OPTION) VALUES('R.5.0-2','说明','TEXT_AREA',4,4,'R.5.0',4,'{"key":false,"nullable":true,"rows":4}');
 INSERT INTO FIELD_DEFINE(GROUP_ID, _ORDINAL) VALUES ('R.5.0-2',0);
+
 
 
 --   ROOM
