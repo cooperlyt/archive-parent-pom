@@ -328,7 +328,7 @@ public class GovBusinessService {
             Volume volume = business.getVolume();
             volume.setBusiness(business);
             if (business.getId() == null){
-                volume.setId(business.getDefineId() + volume.getId());
+                volume.setId(business.getDefineId() + "." + volume.getId());
                 volume.setPageCount(0);
             }
 
